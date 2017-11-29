@@ -1,6 +1,6 @@
-package com.login.pojo;
+package com.login.dto;
 
-public class User {
+public class LoginDto {
 	private String account;
 	private String password;
 
@@ -20,12 +20,11 @@ public class User {
 		this.password = password;
 	}
 
-	
-	public User() {
+	public LoginDto() {
 		super();
 	}
 
-	public User(String account, String password) {
+	public LoginDto(String account, String password) {
 		super();
 		this.account = account;
 		this.password = password;
