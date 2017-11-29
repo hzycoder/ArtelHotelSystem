@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,26 +15,33 @@
 				<h1>后台登录</h1>
 			</header>
 			<div class="beg-login-main">
-				<form class="layui-form">
+				<form class="layui-form" action="">
 					<div class="layui-form-item">
 						<label class="beg-login-icon">
                         <i class="layui-icon">&#xe612;</i>
                     </label>
-						<input type="text" name="userName" lay-verify="userName" autocomplete="off" placeholder="这里输入登录名" class="layui-input">
+						<input id="userName" value="admin" type="text" name="userName" autocomplete="off" placeholder="这里输入登录名" class="layui-input">
 					</div>
 					<div class="layui-form-item">
 						<label class="beg-login-icon">
                         <i class="layui-icon">&#xe642;</i>
                     </label>
-						<input type="password" name="password" lay-verify="password" autocomplete="off" placeholder="这里输入密码" class="layui-input">
+						<input id="password" value="admin" type="password" name="password" autocomplete="off" placeholder="这里输入密码" class="layui-input">
 					</div>
 					<div class="layui-form-item">
-						<div class="beg-pull-left beg-login-remember">
+						<label class="beg-login-icon">
+                        <i class="layui-icon">&#xe6af;</i>
+                    </label>
+						<input id="password"  type="text" name="verifyCode" autocomplete="off" placeholder="这里输入验证码" class="layui-input">
+					</div>
+					<div class="layui-form-item">
+						<!--<div class="beg-pull-left beg-login-remember">
 							<label>记住帐号？</label>
 							<input type="checkbox" name="rememberMe" value="true" lay-skin="switch" checked title="记住帐号">
-						</div>
+						</div>-->
 						<div class="beg-pull-right">
-							<button class="login layui-btn layui-btn-primary" lay-submit lay-filter="login">
+							<!--一定要type="button"-->
+							<button type="button" lay-submit="" class="login layui-btn layui-btn-primary" lay-filter="login">
                             	<i class="layui-icon">&#xe650;</i> 登录
                         	</button>
 						</div>

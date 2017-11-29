@@ -1,0 +1,6 @@
+用sessionStorage来存储当前回话的内容
+
+
+了解session的机制并使用
+tomcat的sessionid叫jsessionid
+

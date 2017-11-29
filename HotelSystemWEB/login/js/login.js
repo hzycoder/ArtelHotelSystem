@@ -18,28 +18,63 @@
 		},
 		//登录
 		login: function() {
-			console.log("按了登录");
+			//			手动验证
+			//			if(!$("input[name='imgCode']").val()) {
+			//				layer.msg('请输入验证码', {
+			//					time: 1000,
+			//					icon: 5,
+			//					shade: .5,
+			//					anim: 6
+			//				});
+			//				return false;
+			//			}
+			var userName = $("#userName").val();
+			var password = $("#password").val()
+			var json = {
+				"account": userName,
+				"password": password
+			}
 			$.ajax({
-				type:"post",
-				url:"http://localhost:8080/HotelSystemServer/login",
-				contentType:"application/json",
-				dataType:"json",
-				data:'{"account":"admin","password":"admin"}',
-				async:false,
-				success:function(data){
-					console.log("回调成功");
-					console.log(JSON.stringify(data));
+				type: "POST",
+				url: "http://localhost:8080/HotelSystemServer/login",
+				contentType: "application/json;charset=UTF-8",
+				dataType: "json",
+				data: JSON.stringify(json),
+				success: function(data) {
+					console.log("======AjaxSUCCESS======");
+					if(data && data.success) {
+						layer.msg(data.msg, {
+							icon: 1,
+						});
+						setTimeout(function() {
+							window.location.href = "../index.html";
+						}, 1000);
+						console.log(JSON.stringify(data.result));
+					} else {
+						layer.msg(data.msg, {
+							icon: 2,
+						});
+					}
 				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.log("======AjaxERROR======");
+					//					console.log("readyState:"+jqXHR.readyState);
+					//					console.log("status:"+jqXHR.status);
+					//					console.log("statusText:"+jqXHR.statusText);
+					//					console.log("responseText:"+jqXHR.responseText);
+					//					console.log("======AjaxERROR end======");
+
+				}
 			});
 		},
 	};
 
 	window.onload = function() {
-//		alert("onload init")
-//		var w = document.body.scrollWidth;
-//		var h = document.body.scrollHeight;
+		//		alert("onload init")
+		//		var w = document.body.scrollWidth;
+		//		var h = document.body.scrollHeight;
 		iView.init();
 		iEvent.init();
 	};
-	
+
 }());
