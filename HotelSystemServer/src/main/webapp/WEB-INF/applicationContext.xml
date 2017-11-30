@@ -14,27 +14,14 @@
 		移除了。 <context:annotation-config /> -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="configLocation" value="classpath:hibernate.cfg.xml">
+		<property name="configLocation" value="/WEB-INF/hibernate.cfg.xml">
 		</property>
 	</bean>
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<tx:annotation-driven transaction-manager="txManager" />
-	<context:component-scan base-package="com.*" />
-	<!-- =========洋========= -->
-	<!-- 使用了<context:component-scan base-package="com.*" />、所有不用再收到添加bean，spring会自动扫描 -->
-	<!-- Controller层 -->
-	<!--  <bean id="logController" class="com.login.controller.LoginController"></bean>-->
-	<!-- Service 层 -->
-	<!-- <bean id="logService" class="com.login.services.LoginServiceImpl"></bean>-->
-	<!-- Dao 层 -->
-	<!-- <bean id="logDao" class="com.login.dao.LoginDaoImpl"></bean>-->
-	<!-- domain 层 -->
-	<!-- <bean id="user" class="com.common.pojo.SysUser"></bean>-->
-	<!-- List -->
-	<!-- 拦截器 -->
-	<!-- 过滤器 -->
+	<!-- spring可以自动去扫描base-pack下面或者子包下面的java文件，如果扫描到有@Component @Controller@Service等这些注解的类，则把这些类注册为bean -->
+	<!-- 扫描Dao Service层 domain层 -->
+	<context:component-scan base-package="com.**.dao.impl"></context:component-scan>
+	<context:component-scan base-package="com.**.services.impl"></context:component-scan>
+	<context:component-scan base-package="com.common.pojo"></context:component-scan>
+
 
 </beans>

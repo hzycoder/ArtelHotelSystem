@@ -1,4 +1,4 @@
-package com.login.dao;
+package com.login.dao.impl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.common.pojo.SysUser;
+import com.login.dao.LoginDao;
 import com.login.dto.LoginDto;
 
 @Repository
@@ -19,7 +20,7 @@ public class LoginDaoImpl implements LoginDao {
 	
 	@Override
 	public SysUser getUser(LoginDto loginDto) {
-		return (SysUser) sessionFactory.getCurrentSession().createQuery("from SysUser where account=?")
+		return (SysUser) sessionFactory.getCurrentSession().createQuery("from SysUser where userAccount=?")
 				.setParameter(0, loginDto.getAccount()).uniqueResult();
 	}
 

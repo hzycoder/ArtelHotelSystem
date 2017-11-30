@@ -42,6 +42,7 @@
 				data: JSON.stringify(json),
 				success: function(data) {
 					console.log("======AjaxSUCCESS======");
+					console.log("返回数据:"+JSON.stringify(data));
 					if(data && data.success) {
 						layer.msg(data.msg, {
 							icon: 1,

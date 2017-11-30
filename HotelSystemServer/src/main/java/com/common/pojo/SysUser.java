@@ -6,10 +6,12 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * SysUser entity. @author MyEclipse Persistence Tools
  */
-@Component
+@Component("user")
 public class SysUser implements java.io.Serializable {
 
 	// Fields

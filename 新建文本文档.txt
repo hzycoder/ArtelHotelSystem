@@ -4,3 +4,82 @@
 了解session的机制并使用
 tomcat的sessionid叫jsessionid
 
+
+
+在Controller中的request 和 response
+
+
+applicationcontext.xml和***-servlet.xml的关系
+
+
+
+	<!-- 如果没有指定的话，默认会去/WEB-INF/下加载applicationContext.xml -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+	<!-- 自动装配ApplicationContext的配置信息-->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener> -->
+
+
+后台报错：
+十一月 28, 2017 11:10:41 下午 org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver handleHttpMessageNotReadable
+警告: Failed to read HTTP message: org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Can not construct instance of com.login.pojo.User: no suitable constructor found, can not deserialize from Object value (missing default constructor or creator, or perhaps need to add/enable type information?); nested exception is com.fasterxml.jackson.databind.JsonMappingException: Can not construct instance of com.login.pojo.User: no suitable constructor found, can not deserialize from Object value (missing default constructor or creator, or perhaps need to add/enable type information?)
+ at [Source: java.io.PushbackInputStream@821f10d; line: 1, column: 2]
+
+pojo类需要默认构造方法
+
+
+跨域问题：
+一、在controller端如下配置，但无效
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+
+		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Pragma", "No-Cache");
+		response.setHeader("Cache-Control", "No-Cache");
+		response.setDateHeader("Expires", 0);
+二、在xml中配置：
+	<mvc:cors>
+		<mvc:mapping path="/**" />
+	</mvc:cors>
+注：全局配置
+
+
+
+三、使用spring注解报错 ：
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.common.pojo.SysUser' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1493)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1066)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:585)
+	... 28 more
+
+
+
+问题：com.common.pojo.SysUser bean注册失败
+解决方法：spring配置扫描pojo类
+<context:component-scan base-package="com.common.pojo"></context:component-scan>
+在pojo类中增加注解@Component
+
+
+四、懒加载
+原因：使用注解@ResponseBody返回由Hibernate DAO直接获得的pojo对象内存在Lazy关联对象，执行Jason转换时，会从数据库加载该对象，而此时session已关闭，导致加载失败，进而导致Jason转换失败。
+
+
+解决方法：一、配置文件关闭懒加载lazy="false"
+	二、使用dto
+
+
+
+四、ajax返回数据中文变成问号
+后台去除数据库是中文，但是显示在前台就变成问号
+原因：用了@ResponseBody，而spring源码中@ResponseBody 的实现类发现其默认的编码是 iso-8859-1，而项目用的编码为utf-8,所以传中文会出现乱码。
+
+解决办法：在@RequestMapping里的并发配置@RequestMapping(value="***",produces={"text/html;charset=UTF-8;","application/json;"})  
+
+注意：键值之间不能有空格符、而且用POSTMAPPING也不行？
