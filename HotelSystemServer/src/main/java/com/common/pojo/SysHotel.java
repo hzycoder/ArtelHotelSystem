@@ -4,16 +4,21 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 /**
  * SysHotel entity. @author MyEclipse Persistence Tools
  */
-
+@Component("hotel")
 public class SysHotel implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private SysUser sysUser;
+	private SysUser hotelManager;
 	private String hotelCode;
 	private String hotelName;
 	private String hotelProvince;
@@ -21,10 +26,10 @@ public class SysHotel implements java.io.Serializable {
 	private String hotelAddress;
 	private String hotelPhone;
 	private Date createTime;
-	private Set sysHotelUsers = new HashSet(0);
-	private Set sysRooms = new HashSet(0);
-	private Set dataRoomOperations = new HashSet(0);
-	private Set sysRepeaters = new HashSet(0);
+//	private Set sysHotelUsers = new HashSet(0);
+//	private Set sysRooms = new HashSet(0);
+//	private Set dataRoomOperations = new HashSet(0);
+//	private Set sysRepeaters = new HashSet(0);
 
 	// Constructors
 
@@ -38,23 +43,7 @@ public class SysHotel implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public SysHotel(Integer id, SysUser sysUser, String hotelCode, String hotelName, String hotelProvince,
-			String hotelCity, String hotelAddress, String hotelPhone, Date createTime, Set sysHotelUsers, Set sysRooms,
-			Set dataRoomOperations, Set sysRepeaters) {
-		this.id = id;
-		this.sysUser = sysUser;
-		this.hotelCode = hotelCode;
-		this.hotelName = hotelName;
-		this.hotelProvince = hotelProvince;
-		this.hotelCity = hotelCity;
-		this.hotelAddress = hotelAddress;
-		this.hotelPhone = hotelPhone;
-		this.createTime = createTime;
-		this.sysHotelUsers = sysHotelUsers;
-		this.sysRooms = sysRooms;
-		this.dataRoomOperations = dataRoomOperations;
-		this.sysRepeaters = sysRepeaters;
-	}
+
 
 	// Property accessors
 
@@ -62,16 +51,33 @@ public class SysHotel implements java.io.Serializable {
 		return this.id;
 	}
 
+
+
+	public SysHotel(Integer id, SysUser hotelManager, String hotelCode, String hotelName, String hotelProvince,
+			String hotelCity, String hotelAddress, String hotelPhone, Date createTime) {
+		super();
+		this.id = id;
+		this.hotelManager = hotelManager;
+		this.hotelCode = hotelCode;
+		this.hotelName = hotelName;
+		this.hotelProvince = hotelProvince;
+		this.hotelCity = hotelCity;
+		this.hotelAddress = hotelAddress;
+		this.hotelPhone = hotelPhone;
+		this.createTime = createTime;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public SysUser getSysUser() {
-		return this.sysUser;
+
+	public SysUser getHotelManager() {
+		return hotelManager;
 	}
 
-	public void setSysUser(SysUser sysUser) {
-		this.sysUser = sysUser;
+	public void setHotelManager(SysUser hotelManager) {
+		this.hotelManager = hotelManager;
 	}
 
 	public String getHotelCode() {
@@ -128,38 +134,6 @@ public class SysHotel implements java.io.Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public Set getSysHotelUsers() {
-		return this.sysHotelUsers;
-	}
-
-	public void setSysHotelUsers(Set sysHotelUsers) {
-		this.sysHotelUsers = sysHotelUsers;
-	}
-
-	public Set getSysRooms() {
-		return this.sysRooms;
-	}
-
-	public void setSysRooms(Set sysRooms) {
-		this.sysRooms = sysRooms;
-	}
-
-	public Set getDataRoomOperations() {
-		return this.dataRoomOperations;
-	}
-
-	public void setDataRoomOperations(Set dataRoomOperations) {
-		this.dataRoomOperations = dataRoomOperations;
-	}
-
-	public Set getSysRepeaters() {
-		return this.sysRepeaters;
-	}
-
-	public void setSysRepeaters(Set sysRepeaters) {
-		this.sysRepeaters = sysRepeaters;
 	}
 
 }

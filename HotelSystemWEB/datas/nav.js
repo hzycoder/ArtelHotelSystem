@@ -5,7 +5,7 @@ var navs = [{
 	"children": [{
 		"title": "实时房态查询",
 		"icon": "&#xe641;",
-		"href": "table.html"
+		"href": "sys_roomStatus/table.html"
 	}, {
 		"title": "历史房态查询",
 		"icon": "&#xe63c;",

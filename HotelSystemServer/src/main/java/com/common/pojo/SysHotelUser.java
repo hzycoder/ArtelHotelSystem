@@ -1,9 +1,14 @@
 package com.common.pojo;
 
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 /**
  * SysHotelUser entity. @author MyEclipse Persistence Tools
  */
-
+@Component("hotelUser")
 public class SysHotelUser implements java.io.Serializable {
 
 	// Fields

@@ -1,23 +1,23 @@
 package com.common.pojo;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * SysUser entity. @author MyEclipse Persistence Tools
  */
+
 @Component("user")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property="id")
 public class SysUser implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private SysUser sysUser;
+	private SysUser creator;		//creator
 	private String userCode;
 	private String userAccount;
 	private String userPassword;
@@ -28,11 +28,11 @@ public class SysUser implements java.io.Serializable {
 	private String userPosition;
 	private Short userPermission;
 	private Date createTime;
-	private Date lastTime;
-	private Short retryCount;
-	private Set sysHotelUsers = new HashSet(0);
-	private Set sysHotels = new HashSet(0);
-	private Set sysUsers = new HashSet(0);
+	private Date lastTime;		
+	private Short retryCount;	
+//	private Set sysHotelUsers = new HashSet(0);	//�Ƶ����������˼���
+//	private Set sysHotels = new HashSet(0);	//�Ƶ����ܼ���
+//	private Set sysUsers = new HashSet(0);	//�����˼���
 
 	// Constructors
 
@@ -46,12 +46,20 @@ public class SysUser implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public SysUser(Integer id, SysUser sysUser, String userCode, String userAccount, String userPassword,
+
+
+	// Property accessors
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public SysUser(Integer id, SysUser creator, String userCode, String userAccount, String userPassword,
 			String passwordSalt, Short userSex, String username, String userPhone, String userPosition,
-			Short userPermission, Date createTime, Date lastTime, Short retryCount, Set sysHotelUsers, Set sysHotels,
-			Set sysUsers) {
+			Short userPermission, Date createTime, Date lastTime, Short retryCount) {
+		super();
 		this.id = id;
-		this.sysUser = sysUser;
+		this.creator = creator;
 		this.userCode = userCode;
 		this.userAccount = userAccount;
 		this.userPassword = userPassword;
@@ -64,27 +72,19 @@ public class SysUser implements java.io.Serializable {
 		this.createTime = createTime;
 		this.lastTime = lastTime;
 		this.retryCount = retryCount;
-		this.sysHotelUsers = sysHotelUsers;
-		this.sysHotels = sysHotels;
-		this.sysUsers = sysUsers;
-	}
-
-	// Property accessors
-
-	public Integer getId() {
-		return this.id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public SysUser getSysUser() {
-		return this.sysUser;
+
+	public SysUser getCreator() {
+		return creator;
 	}
 
-	public void setSysUser(SysUser sysUser) {
-		this.sysUser = sysUser;
+	public void setCreator(SysUser creator) {
+		this.creator = creator;
 	}
 
 	public String getUserCode() {
@@ -183,28 +183,28 @@ public class SysUser implements java.io.Serializable {
 		this.retryCount = retryCount;
 	}
 
-	public Set getSysHotelUsers() {
-		return this.sysHotelUsers;
-	}
-
-	public void setSysHotelUsers(Set sysHotelUsers) {
-		this.sysHotelUsers = sysHotelUsers;
-	}
-
-	public Set getSysHotels() {
-		return this.sysHotels;
-	}
-
-	public void setSysHotels(Set sysHotels) {
-		this.sysHotels = sysHotels;
-	}
-
-	public Set getSysUsers() {
-		return this.sysUsers;
-	}
-
-	public void setSysUsers(Set sysUsers) {
-		this.sysUsers = sysUsers;
-	}
+//	public Set getSysHotelUsers() {
+//		return this.sysHotelUsers;
+//	}
+//
+//	public void setSysHotelUsers(Set sysHotelUsers) {
+//		this.sysHotelUsers = sysHotelUsers;
+//	}
+//
+//	public Set getSysHotels() {
+//		return this.sysHotels;
+//	}
+//
+//	public void setSysHotels(Set sysHotels) {
+//		this.sysHotels = sysHotels;
+//	}
+//
+//	public Set getSysUsers() {
+//		return this.sysUsers;
+//	}
+//
+//	public void setSysUsers(Set sysUsers) {
+//		this.sysUsers = sysUsers;
+//	}
 
 }

@@ -1,5 +1,5 @@
 #MyEclipse Hibernate Properties
-#Wed Nov 29 21:59:33 CST 2017
+#Sat Dec 02 23:03:48 CST 2017
 genBasicCompId=false
 sessionFactoryName=com.common.util.HibernateSessionFactory
 profile=
@@ -10,7 +10,7 @@ reStrategyClass=
 detectO2O=false
 springDaoFile=
 useJavaTypes=true
-keyGenerator=
+keyGenerator=increment
 genVersionTag=false
 sessionFactoryId=
 basePersistenceClass=
@@ -18,3 +18,4 @@ genAnnotations=false
 reSettingsFile=/HotelSystemServer/hibernate.reveng.xml
 configFile=/HotelSystemServer/src/main/java/hibernate.cfg.xml
 createConfigFile=true
+baseDaoClass=BaseHibernateDAO

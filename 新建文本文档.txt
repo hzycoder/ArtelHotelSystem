@@ -83,3 +83,14 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 解决办法：在@RequestMapping里的并发配置@RequestMapping(value="***",produces={"text/html;charset=UTF-8;","application/json;"})  
 
 注意：键值之间不能有空格符、而且用POSTMAPPING也不行？
+
+五、由于数据库的一对多、多对一、多对多关系、导致json序列化的时候会出现无限循环序列化、从而导致无限递归、内存溢出
+
+报错：org.springframework.http.converter.HttpMessageNotWritableException: Could not write content: Infinite recursion (StackOverflowError) (through reference chain: com.pojo.SysUser["**"]->com.pojo.SysUser["**"]->......
+
+解决办法：使用@jsonIdentityInfo注解
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+
+原理：用一个标识符标识递归的对象
+
+五、如果js文件和html文件不在同一个路径下，js文件中的资源绝对路径，以html为起点

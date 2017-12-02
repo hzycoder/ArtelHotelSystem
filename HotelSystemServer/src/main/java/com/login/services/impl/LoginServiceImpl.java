@@ -2,6 +2,7 @@ package com.login.services.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -26,22 +27,26 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public Map<String, Object> login(LoginDto loginDto) {
-//		���ݿ��ȡ������תΪdto
-		UserDto user = new UserDto();
-		try {
-			BeanUtils.copyProperties(user, loginDao.getUser(loginDto));
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("user"+user.toString());
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("result",user);
-		System.out.println("JSON dto"+JSON.toJSONString(user));
-		return map;
+		Integer id = loginDao.existUser(loginDto); // 判断用户是否存在
+		System.out.println("====id:"+id);
+		if (null != id) {// 用户存在
+			UserDto user = new UserDto();
+			try {
+				BeanUtils.copyProperties(user, loginDao.getUser(id));
+			} catch (Exception e) {
+				map.put("error", e.getMessage());
+				e.printStackTrace();
+				return map;
+			}
+			map.put("result", user);
+			System.out.println(map.toString());
+			return map;
+		} else {// 用户不存在
+			map.put("error", "用户不存在");
+			return map;
+		}
+
 	}
 
 }

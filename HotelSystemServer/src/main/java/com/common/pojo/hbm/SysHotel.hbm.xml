@@ -10,7 +10,7 @@
             <column name="ID" />
             <generator class="increment" />
         </id>
-        <many-to-one name="sysUser" class="com.common.pojo.SysUser" fetch="select">
+        <many-to-one name="hotelManager" class="com.common.pojo.SysUser" fetch="select">
             <column name="HOTEL_MANAGER" />
         </many-to-one>
         <property name="hotelCode" type="java.lang.String">
@@ -34,29 +34,5 @@
         <property name="createTime" type="java.util.Date">
             <column name="CREATE_TIME" length="10" />
         </property>
-        <set name="sysHotelUsers" inverse="true">
-            <key>
-                <column name="HOTELID" />
-            </key>
-            <one-to-many class="com.common.pojo.SysHotelUser" />
-        </set>
-        <set name="sysRooms" inverse="true">
-            <key>
-                <column name="HOTEL_ID" />
-            </key>
-            <one-to-many class="com.common.pojo.SysRoom" />
-        </set>
-        <set name="dataRoomOperations" inverse="true">
-            <key>
-                <column name="HOTEL_ID" />
-            </key>
-            <one-to-many class="com.common.pojo.DataRoomOperation" />
-        </set>
-        <set name="sysRepeaters" inverse="true">
-            <key>
-                <column name="HOTEL_ID" />
-            </key>
-            <one-to-many class="com.common.pojo.SysRepeater" />
-        </set>
     </class>
 </hibernate-mapping>

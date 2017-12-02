@@ -10,7 +10,7 @@ import com.common.pojo.SysUser;
 public class UserDto {
 
 	private Integer id;
-	private SysUser sysUser;
+	private SysUser creator;		//creator
 	private String userCode;
 	private String userAccount;
 	private String userPassword;
@@ -21,26 +21,21 @@ public class UserDto {
 	private String userPosition;
 	private Short userPermission;
 	private Date createTime;
-	private Date lastTime;
-	private Short retryCount;
-	@JSONField(serialize=false)
-	private Set sysHotelUsers = new HashSet(0);
-	@JSONField(serialize=false)
-	private Set sysHotels = new HashSet(0);
-	@JSONField(serialize=false)
-	private Set sysUsers = new HashSet(0);
+	private Date lastTime;		
+	private Short retryCount;	
 
 	public UserDto() {
 		super();
 	}
 
-	public UserDto(Integer id, SysUser sysUser, String userCode, String userAccount, String userPassword,
+
+
+	public UserDto(Integer id, SysUser creator, String userCode, String userAccount, String userPassword,
 			String passwordSalt, Short userSex, String username, String userPhone, String userPosition,
-			Short userPermission, Date createTime, Date lastTime, Short retryCount, Set sysHotelUsers, Set sysHotels,
-			Set sysUsers) {
+			Short userPermission, Date createTime, Date lastTime, Short retryCount) {
 		super();
 		this.id = id;
-		this.sysUser = sysUser;
+		this.creator = creator;
 		this.userCode = userCode;
 		this.userAccount = userAccount;
 		this.userPassword = userPassword;
@@ -53,10 +48,9 @@ public class UserDto {
 		this.createTime = createTime;
 		this.lastTime = lastTime;
 		this.retryCount = retryCount;
-		this.sysHotelUsers = sysHotelUsers;
-		this.sysHotels = sysHotels;
-		this.sysUsers = sysUsers;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -66,12 +60,12 @@ public class UserDto {
 		this.id = id;
 	}
 
-	public SysUser getSysUser() {
-		return sysUser;
+	public SysUser getCreator() {
+		return creator;
 	}
 
-	public void setSysUser(SysUser sysUser) {
-		this.sysUser = sysUser;
+	public void setCreator(SysUser creator) {
+		this.creator = creator;
 	}
 
 	public String getUserCode() {
@@ -170,38 +164,15 @@ public class UserDto {
 		this.retryCount = retryCount;
 	}
 
-	public Set getSysHotelUsers() {
-		return sysHotelUsers;
-	}
 
-	public void setSysHotelUsers(Set sysHotelUsers) {
-		this.sysHotelUsers = sysHotelUsers;
-	}
-
-	public Set getSysHotels() {
-		return sysHotels;
-	}
-
-	public void setSysHotels(Set sysHotels) {
-		this.sysHotels = sysHotels;
-	}
-
-	public Set getSysUsers() {
-		return sysUsers;
-	}
-
-	public void setSysUsers(Set sysUsers) {
-		this.sysUsers = sysUsers;
-	}
 
 	@Override
 	public String toString() {
-		return "UserDto [id=" + id + ", sysUser=" + sysUser + ", userCode=" + userCode + ", userAccount=" + userAccount
+		return "UserDto [id=" + id + ", creator=" + creator + ", userCode=" + userCode + ", userAccount=" + userAccount
 				+ ", userPassword=" + userPassword + ", passwordSalt=" + passwordSalt + ", userSex=" + userSex
 				+ ", username=" + username + ", userPhone=" + userPhone + ", userPosition=" + userPosition
 				+ ", userPermission=" + userPermission + ", createTime=" + createTime + ", lastTime=" + lastTime
-				+ ", retryCount=" + retryCount + ", sysHotelUsers=" + sysHotelUsers + ", sysHotels=" + sysHotels
-				+ ", sysUsers=" + sysUsers + "]";
+				+ ", retryCount=" + retryCount + "]";
 	}
 
 	

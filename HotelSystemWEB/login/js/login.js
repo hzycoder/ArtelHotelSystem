@@ -1,6 +1,8 @@
 //使用匿名函数
 (function() {
+	//全局变量定义：
 	var layer, form;
+	//view方法：
 	var iView = {
 		init: function() {
 			$(".login").on("click", function() {
@@ -9,6 +11,7 @@
 		},
 
 	};
+	//event方法：
 	var iEvent = {
 		init: function() {
 			layui.use(["layer", "form"], function() {
@@ -43,6 +46,8 @@
 				success: function(data) {
 					console.log("======AjaxSUCCESS======");
 					console.log("返回数据:"+JSON.stringify(data));
+					console.log(typeof data);
+					console.log(data.result.sysUser)
 					if(data && data.success) {
 						layer.msg(data.msg, {
 							icon: 1,
@@ -50,7 +55,7 @@
 						setTimeout(function() {
 							window.location.href = "../index.html";
 						}, 1000);
-						console.log(JSON.stringify(data.result));
+						console.log(data.result);
 					} else {
 						layer.msg(data.msg, {
 							icon: 2,

@@ -2,10 +2,15 @@ package com.common.pojo;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 /**
  * DataRoomOperation entity. @author MyEclipse Persistence Tools
  */
-
+@Component("roomOperation")
 public class DataRoomOperation implements java.io.Serializable {
 
 	// Fields

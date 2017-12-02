@@ -3,10 +3,15 @@ package com.common.pojo;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 /**
  * SysRoom entity. @author MyEclipse Persistence Tools
  */
-
+@Component("room")
 public class SysRoom implements java.io.Serializable {
 
 	// Fields

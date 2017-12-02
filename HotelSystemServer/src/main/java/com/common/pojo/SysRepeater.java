@@ -1,9 +1,14 @@
 package com.common.pojo;
 
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 /**
  * SysRepeater entity. @author MyEclipse Persistence Tools
  */
-
+@Component("repeater")
 public class SysRepeater implements java.io.Serializable {
 
 	// Fields

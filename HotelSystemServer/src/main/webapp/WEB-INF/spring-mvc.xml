@@ -17,10 +17,8 @@
 	<!-- 使用默认的注解映射 <mvc:annotation-driven />会自动注册DefaultAnnotationHandlerMapping 
 		与AnnotationMethodHandlerAdapter 两个bean, 是spring MVC为@Controllers分发请求所必须的。 -->
 	<mvc:annotation-driven>
-		<!-- 解决pojo返回前台显示$ref的问题 -->
-		 <mvc:message-converters register-defaults="true">
-			<bean id="fastJsonHttpMessageConverter"
-				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+		<mvc:message-converters register-defaults="true">
+			<bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
 						<value>text/html;charset=UTF-8</value>
