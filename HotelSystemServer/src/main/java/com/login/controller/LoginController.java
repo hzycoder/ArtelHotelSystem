@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.common.base.BaseController;
 import com.login.dto.LoginDto;
 import com.login.services.LoginService;
 
 @Controller
-public class LoginController {
-	private boolean success;
-	private String msg;
+public class LoginController extends BaseController{
 	@Autowired
 	LoginService loginService;
 

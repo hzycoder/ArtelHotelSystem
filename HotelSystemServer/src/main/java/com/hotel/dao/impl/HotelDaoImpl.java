@@ -1,5 +1,7 @@
 package com.hotel.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,10 +16,12 @@ public class HotelDaoImpl implements HotelDao {
 	@Autowired
 	SysUser user;
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public SysHotel gethotels(SysUser user) {
+	public List<SysHotel> gethotels(SysUser user) {
+		return sessionFactory.getCurrentSession().createQuery("FROM SysHotel where hotelManager = ?")
+				.setParameter(0, user.getId()).list();
 //		return SessionFactory.getcurr
-		return null;
 	}
 
 }

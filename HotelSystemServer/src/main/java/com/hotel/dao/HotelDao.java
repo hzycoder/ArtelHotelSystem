@@ -1,9 +1,11 @@
 package com.hotel.dao;
 
+import java.util.List;
+
 import com.common.pojo.SysHotel;
 import com.common.pojo.SysUser;
 
 public interface HotelDao {
-	public SysHotel gethotels(SysUser user);
+	public List<SysHotel> gethotels(SysUser user);
 
 }
