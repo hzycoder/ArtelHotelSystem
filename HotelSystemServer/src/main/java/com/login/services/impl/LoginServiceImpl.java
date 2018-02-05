@@ -25,28 +25,32 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	LoginDao loginDao;
 
+	@SuppressWarnings("finally")
 	@Override
 	public Map<String, Object> login(LoginDto loginDto) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer id = loginDao.existUser(loginDto); // 判断用户是否存在
 		System.out.println("====id:"+id);
-		if (null != id) {// 用户存在
-			UserDto user = new UserDto();
-			try {
-				BeanUtils.copyProperties(user, loginDao.getUser(id));
-			} catch (Exception e) {
-				map.put("error", e.getMessage());
-				e.printStackTrace();
-				return map;
-			}
-			map.put("result", user);
-			System.out.println(map.toString());
-			return map;
-		} else {// 用户不存在
+		if (null == id) {
 			map.put("error", "用户不存在");
 			return map;
+		} else {
+			SysUser sysUser = loginDao.getUser(id);
+			if (!sysUser.getUserPassword().equals(loginDto.getPassword())) {
+				map.put("error", "密码错误");
+				return map;
+			}else {
+				UserDto user = new UserDto();
+				try {
+					BeanUtils.copyProperties(user, loginDao.getUser(id));
+				} catch (Exception e) {
+					map.put("error", e.getMessage());
+					e.printStackTrace();
+				}finally {
+					map.put("result", user);
+					return map;
+				}
+			}
 		}
-
 	}
-
 }

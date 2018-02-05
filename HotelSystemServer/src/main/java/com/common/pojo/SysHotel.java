@@ -18,7 +18,7 @@ public class SysHotel implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private SysUser hotelManager;
+	private Integer hotelManager;
 	private String hotelCode;
 	private String hotelName;
 	private String hotelProvince;
@@ -43,17 +43,17 @@ public class SysHotel implements java.io.Serializable {
 	}
 
 	/** full constructor */
-
+	
 
 	// Property accessors
 
+	
 	public Integer getId() {
 		return this.id;
 	}
 
 
-
-	public SysHotel(Integer id, SysUser hotelManager, String hotelCode, String hotelName, String hotelProvince,
+	public SysHotel(Integer id, Integer hotelManager, String hotelCode, String hotelName, String hotelProvince,
 			String hotelCity, String hotelAddress, String hotelPhone, Date createTime) {
 		super();
 		this.id = id;
@@ -72,11 +72,11 @@ public class SysHotel implements java.io.Serializable {
 	}
 
 
-	public SysUser getHotelManager() {
+	public Integer getHotelManager() {
 		return hotelManager;
 	}
 
-	public void setHotelManager(SysUser hotelManager) {
+	public void setHotelManager(Integer hotelManager) {
 		this.hotelManager = hotelManager;
 	}
 

@@ -114,6 +114,7 @@ layui.define(['layer', 'laypage', 'laytpl'], function (exports) {
             url: _config.url,
             data: _config.params,
             dataType: 'json',
+            contentType: "application/json;charset=UTF-8",
             success: function (result, status, xhr) {
                 if (loadIndex !== undefined)
                     layer.close(loadIndex); //关闭等待层

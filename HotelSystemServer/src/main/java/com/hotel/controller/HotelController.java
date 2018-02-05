@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.common.base.BaseController;
 import com.hotel.services.HotelService;
+import com.login.dto.UserDto;
 
 @Controller
 public class HotelController extends BaseController {
@@ -19,10 +20,11 @@ public class HotelController extends BaseController {
 
 	@ResponseBody
 	@RequestMapping(value = "getHotels", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-	public Map<String, Object> getHotels(@RequestBody String id) throws Exception {
+	public Map<String, Object> getHotels(@RequestBody UserDto user) throws Exception {
+		System.out.println("id"+user.getId());
 		Map<String, Object> map = null;
 		try {
-			map = hotelService.getHotels(id);
+			map = hotelService.getHotels(user);
 			msg = "获取数据成功";
 			success = true;
 		} catch (Exception e) {

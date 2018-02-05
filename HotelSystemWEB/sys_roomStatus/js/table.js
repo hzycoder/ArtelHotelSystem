@@ -11,7 +11,16 @@
 	//view方法：
 	var iView = {
 		init: function() {
-
+			$(".elementContent").on("mouseover",function(e){
+//				alert(this+"\n"+e.target);
+//				alert(e.target.className.indexOf('roomElement'))
+					iEvent.roomElementTips(e.target);
+			}).on("mouseout",function(e){
+				layer.closeAll('tips');
+			});
+			$("#switchTemplate").on("click",function(){
+				iEvent.switchTemplate();
+			});
 		},
 	};
 	//event方法：
@@ -22,7 +31,7 @@
 				layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 				layer = layui.layer; //获取当前窗口的layer对象
 				form = layui.form();
-				iEvent.initPage();//可以这样写
+//				iEvent.initPage();//可以这样写
 			});
 		},
 		//初始化表格
@@ -68,10 +77,28 @@
 				},
 			});
 		},
-		function2: function() {
-
+		roomElementTips: function(target) {
+//			target.stopPropagation();
+//			alert(target)
+			layer.open({
+			  type: 4,
+			  content: ['当前时间：'+new Date()+'</br>地址：广州天河区</br>编号：#1236565</br>数据1：***</br>数据2：***', target], //数组第二项即吸附元素选择器或者DOM
+			  shade: 0,
+			});  
 		},
-
+		switchTemplate:function(){
+//			alert($('#switchTemplate').text());
+			if($('#switchTemplate').text().indexOf("以中继形式显示")!=-1){
+				$('#switchTemplate').text("以房间形式显示");
+				$('#roomTemplate').hide();
+				$('#repeaterTemplate').show();
+			}else{
+				$('#switchTemplate').text("以中继形式显示");
+				$('#repeaterTemplate').hide();
+				$('#roomTemplate').show();
+			}
+			
+		},
 	};
 
 	window.onload = function() {

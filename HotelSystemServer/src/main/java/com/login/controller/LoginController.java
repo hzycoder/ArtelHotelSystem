@@ -28,14 +28,23 @@ public class LoginController extends BaseController{
 			HttpServletResponse response) throws IOException {
 		System.out.println("接收到的参数" + loginDto.toString());
 		Map<String, Object> map = null;
-		map = loginService.login(loginDto);
-		success = true;
-		msg = "登录成功";
-		map.put("success", success);
-		map.put("msg", msg);
-		// response.setCharacterEncoding("utf-8");
-		// response.getWriter().write(JSON.toJSONString(map));
-		// response.getWriter().close();
+		try {
+			map = loginService.login(loginDto);
+			System.out.println(map.toString());
+			if (null != map.get("error")) {
+				success = false;
+				map.put("success", success);
+				return map;
+			}
+			success = true;
+			msg = "登录成功";
+			map.put("msg", msg);
+		} catch (Exception e) {
+			map.put("error", e.getMessage());
+			success = false;
+		}finally {
+			map.put("success", success);
+		}
 		return map;
 
 	}

@@ -10,11 +10,17 @@
             <column name="ID" />
             <generator class="increment" />
         </id>
-        <many-to-one name="sysUser" class="com.common.pojo.SysUser" fetch="select">
+        <property name="userId" type="java.lang.Integer">
+        	<column name="USERID" />
+        </property>
+         <property name="hotelId" type="java.lang.Integer">
+        	<column name="HOTELID" />
+        </property>
+        <!-- <many-to-one name="sysUser" class="com.common.pojo.SysUser" fetch="select">
             <column name="USERID" />
         </many-to-one>
         <many-to-one name="sysHotel" class="com.common.pojo.SysHotel" fetch="select">
             <column name="HOTELID" />
-        </many-to-one>
+        </many-to-one> -->
     </class>
 </hibernate-mapping>

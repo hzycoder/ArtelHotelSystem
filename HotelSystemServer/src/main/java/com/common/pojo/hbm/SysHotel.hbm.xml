@@ -10,9 +10,12 @@
             <column name="ID" />
             <generator class="increment" />
         </id>
-        <many-to-one name="hotelManager" class="com.common.pojo.SysUser" fetch="select">
+        <!-- <many-to-one name="hotelManager" class="com.common.pojo.SysUser" fetch="select">
             <column name="HOTEL_MANAGER" />
-        </many-to-one>
+        </many-to-one> -->
+        <property name="hotelManager" type="java.lang.Integer">
+        	<column name="HOTEL_MANAGER" />
+        </property>
         <property name="hotelCode" type="java.lang.String">
             <column name="HOTEL_CODE" />
         </property>

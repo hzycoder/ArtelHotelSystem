@@ -15,8 +15,9 @@
 	//view方法：
 	var iView = {
 		init: function() {
+//			console.log("init");
 			iView.iframeResize(); //iframe自适应
-			iView.initNavbar();
+//			iView.initNavbar();
 			$("#clearCached").on("click", function() {
 				iEvent.clearCached();
 			});
@@ -46,33 +47,6 @@
 				});
 			}).resize();
 		},
-		initNavbar: function() {
-			//			var options = {
-			//				spreadOne: true,
-			//				elem: '#admin-navbar-side',
-			//				cached: true,
-			//				data: navs //设置左侧导航的菜单内容
-			//				/*cached:true,
-			//				url: 'datas/nav.json'*/
-			//			};
-			//			return options;
-//			console.log(JSON.stringify(navbar));
-//			navbar.set({
-//				spreadOne: true,
-//				elem: '#admin-navbar-side',
-//				cached: true,
-//				data: navs //设置左侧导航的菜单内容
-//				/*cached:true,
-//				url: 'datas/nav.json'*/
-//			});
-//			//渲染navbar
-//			navbar.render();
-//			//监听点击事件
-//			navbar.on('click(side)', function(data) {
-//				console.log("tap!\n" + JSON.stringify(data.field));
-//				tab.tabAdd(data.field);
-//			});
-		},
 
 	};
 	//event方法：
@@ -82,7 +56,7 @@
 				element = layui.element(); //
 				navbar = layui.navbar();
 				layer = layui.layer;
-				console.log("   "+JSON.stringify(navbar));
+//				console.log("   " + JSON.stringify(navbar));
 				//清除缓存
 				$('#clearCached').on('click', function() {
 					navbar.cleanCached();
@@ -93,6 +67,7 @@
 						location.reload(); //刷新
 					});
 				});
+				//tab 初始化
 				tab = layui.tab({
 					elem: '.admin-nav-card' //设置选项卡容器
 						,
@@ -138,6 +113,24 @@
 						return true;
 					}
 				});
+				//tab初始化 end
+				//navbar初始化
+				navbar.set({
+					spreadOne: true,
+					elem: '#admin-navbar-side',
+					cached: true,
+					data: navs //设置左侧导航的菜单内容
+					/*cached:true,
+					url: 'datas/nav.json'*/
+				});
+				//渲染navbar
+				navbar.render();
+				//监听点击事件
+				navbar.on('click(side)', function(data) {
+					console.log("tap!\n" + JSON.stringify(data.field));
+					tab.tabAdd(data.field);
+				});
+				//navbar初始化 end
 			});
 		},
 		clearCached: function() {

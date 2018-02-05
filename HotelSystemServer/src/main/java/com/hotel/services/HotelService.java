@@ -1,11 +1,10 @@
 package com.hotel.services;
 
-import java.util.List;
 import java.util.Map;
-
-import com.common.pojo.SysHotel;
+import com.common.pojo.SysUser;
+import com.login.dto.UserDto;
 
 public interface HotelService {
-	public  Map<String, Object> getHotels(String id);
+	public  Map<String, Object> getHotels(UserDto user);
 
 }
