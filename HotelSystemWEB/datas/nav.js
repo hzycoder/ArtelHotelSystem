@@ -7,17 +7,17 @@ var navs = [
 	{
 		"title": "用户查询",
 		"icon": "&#xe615;",
-		"href": ""
+		"href": "sys_user/user.html"
 	},
 	{
 		"title": "添加用户",
 		"icon": "&#xe654;",
-		"href": ""
+		"href": "sys_user/addUser.html"
 	},
 	{
 		"title": "删除用户",
 		"icon": "&#xe640;",
-		"href": ""
+		"href": "city.html"
 	},
 	]
 },
@@ -29,26 +29,26 @@ var navs = [
 	{
 		"title": "添加设备",
 		"icon": "&#xe654;",
-		"href": ""
+		"href": "city.html"
 	},
 	{
 		"title": "删除设备",
 		"icon": "&#xe640;",
-		"href": ""
+		"href": "city.html"
 	},
 	{
 		"title": "设备组网",
 		"icon": "&#xe64c;",
-		"href": ""
+		"href": "city.html"
 	},
 	{
 		"title": "在线升级",
 		"icon": "&#xe681;",
-		"href": ""
+		"href": "city.html"
 	},{
 		"title": "在线监测",
 		"icon": "&#xe62c;",
-		"href": ""
+		"href": "city.html"
 	}
 	]
 },
@@ -60,12 +60,12 @@ var navs = [
 	{
 		"title": "故障检索",
 		"icon": "&#xe615;",
-		"href": ""
+		"href": "city.html"
 	},
 	{
 		"title": "用户信息",
 		"icon": "&#xe613;",
-		"href": ""
+		"href": "city.html"
 	},
 	]
 },
@@ -77,12 +77,12 @@ var navs = [
 	{
 		"title": "添加",
 		"icon": "&#xe654;",
-		"href": ""
+		"href": "city.html"
 	},
 	]
 },
 {
-	"title": "房态查询",
+	"title": "————————房态查询",
 	"icon": "fa-cubes",
 	"spread": false,		//是否默认展开
 	"children": [{
@@ -137,7 +137,7 @@ var navs = [
 //},{
 //	"title": "电卡管理",
 //	"icon": "fa-address-book",
-//	"href": "",
+//	"href": "city.html",
 //	"spread": false,
 //	"children": [{
 //		"title": "Github",
@@ -164,7 +164,7 @@ var navs = [
 //}, {
 //	"title": "其他",
 //	"icon": "fa-stop-circle",
-//	"href": "#",
+//	"href": "city.html",
 //	"spread": false,
 //	"children": [{
 //		"title": "子窗体中打开选项卡",

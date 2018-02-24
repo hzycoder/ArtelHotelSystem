@@ -1,9 +1,8 @@
 package com.common.base;
 
 public class BaseController {
-	protected boolean success;
-	protected String msg;
-	protected String error;
+	protected boolean success = false;
+	protected String msg = "";
 	protected int start;
 	protected int limit;
 	
@@ -30,12 +29,6 @@ public class BaseController {
 	}
 	public void setLimit(int limit) {
 		this.limit = limit;
-	}
-	public String getError() {
-		return error;
-	}
-	public void setError(String error) {
-		this.error = error;
 	}
 
 }

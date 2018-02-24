@@ -6,20 +6,12 @@
 <hibernate-configuration>
 
 	<session-factory>
-		<property name="myeclipse.connection.profile">
-			HOTELSYSTEM_DATABASE_DRIVER
-		</property>
-		<property name="dialect">
-			org.hibernate.dialect.SQLServerDialect
-		</property>
+		<property name="myeclipse.connection.profile">aliyun</property>
+		<property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
 		<property name="connection.password">123456</property>
 		<property name="connection.username">sa</property>
-		<property name="connection.url">
-			jdbc:sqlserver://localhost:1433;databaseName=HotelSystemDatabase
-		</property>
-		<property name="connection.driver_class">
-			com.microsoft.sqlserver.jdbc.SQLServerDriver
-		</property>
+		<property name="connection.url">jdbc:sqlserver://39.108.233.97:1433;databaseName=room_manager_db</property>
+		<property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
 		<property name="maxPoolSize">40</property>
 		<property name="minPoolSize">1</property>
 		<property name="initialPoolSize">10</property>

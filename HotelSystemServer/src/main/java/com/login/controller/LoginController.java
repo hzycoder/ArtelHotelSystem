@@ -33,19 +33,20 @@ public class LoginController extends BaseController{
 			System.out.println(map.toString());
 			if (null != map.get("error")) {
 				success = false;
-				map.put("success", success);
 				return map;
 			}
 			success = true;
 			msg = "登录成功";
 			map.put("msg", msg);
 		} catch (Exception e) {
-			map.put("error", e.getMessage());
+			msg = e.getMessage();
 			success = false;
 		}finally {
+			System.out.println(success);
+			map.put("msg", msg);
 			map.put("success", success);
+			return map;
 		}
-		return map;
 
 	}
 

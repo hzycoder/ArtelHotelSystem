@@ -156,6 +156,13 @@
 				<!-- Config: contextPath and Port (Default - /HelloSpringMVC : 8080) -->
 				<!-- <configuration> <path>/</path> <port>8899</port> </configuration> -->
 			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

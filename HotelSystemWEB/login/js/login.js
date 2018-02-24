@@ -31,53 +31,54 @@
 			//				});
 			//				return false;
 			//			}
+			console.log("2222");
 			var userName = $("#userName").val();
 			var password = $("#password").val()
 			var json = {
 				"account": userName,
 				"password": password
 			}
-			layer.msg("登录成功！",{
-				time:1500,
-				icon:1,
-				end:function(){
-					window.location.href = "../index.html";
+			//			layer.msg("登录成功！",{
+			//				time:1500,
+			//				icon:1,
+			//				end:function(){
+			//					window.location.href = "../index.html";
+			//				},
+			//			})
+			$.ajax({
+				type: "POST",
+				url: "http://localhost:8080/HotelSystemServer/login",
+				contentType: "application/json;charset=UTF-8",
+				dataType: "json",
+				data: JSON.stringify(json),
+				success: function(data) {
+					console.log("======AjaxSUCCESS======");
+					console.log("返回数据:" + JSON.stringify(data));
+					if(data && data.success) { //如果登录成功
+						layer.msg(data.msg, { //显示成功信息
+							icon: 1,
+						});
+						//跳转页面
+						sessionStorage.setItem("user", JSON.stringify(data.result));
+						setTimeout(function() {
+							window.location.href = "../index.html";
+						}, 1000);
+					} else {
+						layer.msg(data.error, { //显示失败信息
+							icon: 2,
+						});
+					}
 				},
-			})
-//			$.ajax({
-//				type: "POST",
-//				url: "http://localhost:8080/HotelSystemServer/login",
-//				contentType: "application/json;charset=UTF-8",
-//				dataType: "json",
-//				data: JSON.stringify(json),
-//				success: function(data) {
-//					console.log("======AjaxSUCCESS======");
-//					console.log("返回数据:"+JSON.stringify(data));
-//					if(data && data.success) {//如果登录成功
-//						layer.msg(data.msg, {//显示成功信息
-//							icon: 1,
-//						});
-//						//跳转页面
-//						sessionStorage.setItem("user",JSON.stringify(data.result));
-//						setTimeout(function() {
-//							window.location.href = "../index.html";
-//						}, 1000);
-//					} else {
-//						layer.msg(data.error, {//显示失败信息
-//							icon: 2,
-//						});
-//					}
-//				},
-//				error: function(jqXHR, textStatus, errorThrown) {
-//					console.log("======AjaxERROR======");
-//					//					console.log("readyState:"+jqXHR.readyState);
-//					//					console.log("status:"+jqXHR.status);
-//					//					console.log("statusText:"+jqXHR.statusText);
-//					//					console.log("responseText:"+jqXHR.responseText);
-//					//					console.log("======AjaxERROR end======");
-//
-//				}
-//			});
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.log("======AjaxERROR======");
+					console.log("readyState:" + jqXHR.readyState);
+					console.log("status:" + jqXHR.status);
+					console.log("statusText:" + jqXHR.statusText);
+					console.log("responseText:" + jqXHR.responseText);
+					console.log("======AjaxERROR end======");
+
+				}
+			});
 		},
 	};
 
