@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加用户</title>
+		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<style type="text/css">
+			.layui-elem-field {}
+		</style>
+	</head>
+
+	<body>
+		<fieldset class="layui-elem-field">
+			<legend>添加用户</legend>
+			<div class="layui-field-box">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<label class="layui-form-label">用户账号</label>
+						<div class="layui-input-block">
+							<input type="text" name="title" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">用户名称</label>
+						<div class="layui-input-block">
+							<input type="text" name="title" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">密码</label>
+						<div class="layui-input-block">
+							<input type="password" name="title" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">重复密码</label>
+						<div class="layui-input-block">
+							<input type="password" name="title" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">用户地址</label>
+						<div class="layui-input-block">
+							<input type="text" name="title" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					
+					<!--<div class="layui-form-item">
+						<label class="layui-form-label">城市</label>
+						<div class="layui-input-inline">
+							<select name="org_province" lay-filter="org_province" datatype="*" errormsg="请选择所在省份!" sucmsg=" " id="org_province" runat="server" nullmsg="请选择所在省份!">
+							</select>
+							<input type="hidden" id="org_province_hidden" runat="server" />
+						</div>
+						<div class="layui-input-inline">
+							<select name="org_city" lay-filter="org_city" id="org_city" datatype="*" errormsg="请选择所在城市！" nullmsg="请选择所在城市!" sucmsg=" " runat="server">
+							</select>
+							<input type="hidden" id="org_city_hidden" runat="server" />
+						</div>
+						<div class="layui-input-inline">
+							<select name="org_area" lay-filter="org_area" id="org_area" datatype="*" errormsg="请选择所在县区！" nullmsg="请选择所在县区!" sucmsg=" " runat="server">
+							</select>
+							<input type="hidden" id="org_area_hidden" runat="server" />
+						</div>
+					</div>-->
+				</form>
+			</div>
+		</fieldset>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/addUser.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/PCASClass.js" type="text/javascript" charset="utf-8"></script>-->
+		<!--<script>
+			var province = '<%=task_org.org_province %>';
+			var city = '<%=task_org.org_city %>';
+			var area = '<%=task_org.org_area %>';
+			var mypcas = new PCAS("org_province", "org_city", "org_area");
+			layui.use(['form'], function() {
+				var form = layui.form;
+//				mypcas.set(province, city, area);
+				form.render('select');
+				form.on('select(org_province)', function(data) {
+					province = data.value;
+					mypcas.SetP(data.value, "", "");
+					form.render('select');
+				});
+				form.on('select(org_city)', function(data) {
+					city = data.value;
+					mypcas.SetC(province, data.value, "");
+					form.render('select');
+				});
+				form.on('select(org_area)', function(data) {
+					mypcas.SetA(province, city, data.value);
+					form.render('select');
+					$('#org_province_hidden').val(province);
+					$('#org_city_hidden').val(city);
+					$('#org_area_hidden').val(data.value);
+				});
+			});
+		</script>-->
+	</body>
+
+</html>
