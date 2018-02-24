@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.common.pojo.SysUser;
+import com.common.pojo.LoginUserList;
 import com.user.dao.UserDao;
 
 @Repository
@@ -17,15 +17,15 @@ public class UserDaoImpl implements UserDao {
 	SessionFactory sessionFactory;
 
 	@Autowired
-	SysUser user;
+	LoginUserList user;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SysUser> getAllUser() {
+	public List<LoginUserList> getAllUser() {
 		System.out.println("getDao");
-		String hql = "FROM SysUser";
+		String hql = "FROM LoginUserList";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List<SysUser> userList = query.list();
+		List<LoginUserList> userList = query.list();
 		return userList;
 		
 	}
@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public Integer getUserCount() {
 		long temp = (Long) sessionFactory.getCurrentSession()
-				.createQuery("SELECT COUNT(*) FROM SysUser").uniqueResult();
+				.createQuery("SELECT COUNT(*) FROM LoginUserList").uniqueResult();
 		return (int) temp;
 	}
 

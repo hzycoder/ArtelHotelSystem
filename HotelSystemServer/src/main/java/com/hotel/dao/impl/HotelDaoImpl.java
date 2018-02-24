@@ -6,8 +6,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.common.pojo.SysHotel;
-import com.common.pojo.SysUser;
+import com.common.pojo.HotelList;
+import com.common.pojo.LoginUserList;
 import com.hotel.dao.HotelDao;
 import com.login.dto.UserDto;
 @Repository
@@ -16,11 +16,11 @@ public class HotelDaoImpl implements HotelDao {
 	@Autowired
 	SessionFactory sessionFactory;
 	@Autowired
-	SysUser user;
+	LoginUserList user;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SysHotel> gethotels(UserDto user) {
+	public List<HotelList> gethotels(UserDto user) {
 		return sessionFactory.getCurrentSession().createQuery("FROM SysHotel where hotelManager = ?")
 				.setParameter(0, user.getId()).list();
 //		return SessionFactory.getcurr

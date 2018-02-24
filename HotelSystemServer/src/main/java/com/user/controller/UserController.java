@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.common.base.BaseController;
-import com.common.pojo.SysUser;
+import com.common.pojo.LoginUserList;
 import com.user.services.UserService;
 
 @Controller
@@ -22,7 +22,7 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "getAllUser", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public Map<String,Object> getAllUser(){
 		System.out.println("获取用户");
-		List<SysUser> userList = null;
+		List<LoginUserList> userList = null;
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			map = userService.getAllUser();

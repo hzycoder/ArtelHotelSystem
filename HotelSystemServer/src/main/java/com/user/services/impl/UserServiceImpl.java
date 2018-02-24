@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.common.pojo.SysUser;
+import com.common.pojo.LoginUserList;
 import com.user.dao.UserDao;
 import com.user.services.UserService;
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
-	SysUser user;
+	LoginUserList user;
 	@Autowired
 	UserDao userDao;
 
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Map<String,Object> getAllUser() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<SysUser> userList = userDao.getAllUser();
+		List<LoginUserList> userList = userDao.getAllUser();
 		int count = userDao.getUserCount();
 		map.put("count",count);
 		map.put("result", userList);

@@ -5,12 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.common.pojo.SysUser;
+import com.common.pojo.LoginUserList;
 
 public class UserDto {
 
 	private Integer id;
-	private SysUser creator;		//creator
+	private LoginUserList creator;		//creator
 	private String userCode;
 	private String userAccount;
 	private String userPassword;
@@ -30,7 +30,7 @@ public class UserDto {
 
 
 
-	public UserDto(Integer id, SysUser creator, String userCode, String userAccount, String userPassword,
+	public UserDto(Integer id, LoginUserList creator, String userCode, String userAccount, String userPassword,
 			String passwordSalt, Short userSex, String username, String userPhone, String userPosition,
 			Short userPermission, Date createTime, Date lastTime, Short retryCount) {
 		super();
@@ -60,11 +60,11 @@ public class UserDto {
 		this.id = id;
 	}
 
-	public SysUser getCreator() {
+	public LoginUserList getCreator() {
 		return creator;
 	}
 
-	public void setCreator(SysUser creator) {
+	public void setCreator(LoginUserList creator) {
 		this.creator = creator;
 	}
 

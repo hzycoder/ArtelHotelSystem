@@ -7,7 +7,7 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.common.pojo.SysUser;
+import com.common.pojo.LoginUserList;
 import com.login.dao.LoginDao;
 import com.login.dto.LoginDto;
 
@@ -17,7 +17,7 @@ public class LoginDaoImpl implements LoginDao {
 	@Autowired
 	SessionFactory sessionFactory;
 	@Autowired
-	SysUser user;
+	LoginUserList user;
 
 //	@Override
 //	public List<?> getUserInfo(Integer id) {//
@@ -48,13 +48,13 @@ public class LoginDaoImpl implements LoginDao {
 
 	@Override
 	public Integer existUser(LoginDto loginDto) {
-		return (Integer) sessionFactory.getCurrentSession().createQuery("SELECT id FROM SysUser WHERE userAccount = ?")
+		return (Integer) sessionFactory.getCurrentSession().createQuery("SELECT id FROM LoginUserList WHERE userAccount = ?")
 		.setParameter(0, loginDto.getAccount()).uniqueResult();
 		
 	}
 
 	@Override
-	public List<SysUser> getUserList(int maxResult, int firstResult, int permission) {
+	public List<LoginUserList> getUserList(int maxResult, int firstResult, int permission) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -66,8 +66,8 @@ public class LoginDaoImpl implements LoginDao {
 	}
 
 	@Override
-	public SysUser getUser(Integer id) {
-		return (SysUser) sessionFactory.getCurrentSession().createQuery("FROM SysUser WHERE id = ?")
+	public LoginUserList getUser(Integer id) {
+		return (LoginUserList) sessionFactory.getCurrentSession().createQuery("FROM LoginUserList WHERE id = ?")
 				.setParameter(0, id).uniqueResult();
 	}
 

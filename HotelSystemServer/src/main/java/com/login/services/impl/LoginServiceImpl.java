@@ -1,19 +1,12 @@
 package com.login.services.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Resource;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.alibaba.fastjson.JSON;
-import com.common.pojo.SysUser;
+import com.common.pojo.LoginUserList;
 import com.login.dao.LoginDao;
 import com.login.dto.LoginDto;
 import com.login.dto.UserDto;
@@ -35,8 +28,8 @@ public class LoginServiceImpl implements LoginService {
 			map.put("error", "用户不存在");
 			return map;
 		} else {
-			SysUser sysUser = loginDao.getUser(id);
-			if (!sysUser.getUserPassword().equals(loginDto.getPassword())) {
+			LoginUserList LoginUserList = loginDao.getUser(id);
+			if (!LoginUserList.getPassword().equals(loginDto.getPassword())) {
 				map.put("error", "密码错误");
 				return map;
 			}else {
