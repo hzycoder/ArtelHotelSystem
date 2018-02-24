@@ -1,3 +1,5 @@
 # Ignore everything in this directory
 # Except this file
 !.gitignore
+*.properties
+HotelSystemServer/target/m2e-jee/web-resources/META-INF/maven/com/hotelSystem/pom.properties
