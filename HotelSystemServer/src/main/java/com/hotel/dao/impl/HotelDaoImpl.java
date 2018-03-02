@@ -10,8 +10,6 @@ import com.common.pojo.HotelList;
 import com.common.pojo.LoginUserList;
 import com.common.pojo.RoomList;
 import com.hotel.dao.HotelDao;
-import com.hotel.dto.HotelDto;
-import com.login.dto.UserDto;
 @Repository
 public class HotelDaoImpl implements HotelDao {
 	

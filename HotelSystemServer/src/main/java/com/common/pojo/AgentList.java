@@ -16,33 +16,23 @@ public class AgentList implements java.io.Serializable {
 	private String macAddress;
 	private Timestamp createTime;
 	private Integer deviceCount;
-	private Set soltConfigures = new HashSet(0);
-	private Set hotelAgentLists = new HashSet(0);
-	private Set soltLists = new HashSet(0);
 
 	// Constructors
-
-	/** default constructor */
 	public AgentList() {
+		super();
 	}
 
-	/** minimal constructor */
-	public AgentList(String macAddress, Timestamp createTime, Integer deviceCount) {
+	
+
+	public AgentList(Integer idAgentList, String macAddress, Timestamp createTime, Integer deviceCount) {
+		super();
+		this.idAgentList = idAgentList;
 		this.macAddress = macAddress;
 		this.createTime = createTime;
 		this.deviceCount = deviceCount;
 	}
 
-	/** full constructor */
-	public AgentList(String macAddress, Timestamp createTime, Integer deviceCount, Set soltConfigures,
-			Set hotelAgentLists, Set soltLists) {
-		this.macAddress = macAddress;
-		this.createTime = createTime;
-		this.deviceCount = deviceCount;
-		this.soltConfigures = soltConfigures;
-		this.hotelAgentLists = hotelAgentLists;
-		this.soltLists = soltLists;
-	}
+
 
 	// Property accessors
 
@@ -78,28 +68,6 @@ public class AgentList implements java.io.Serializable {
 		this.deviceCount = deviceCount;
 	}
 
-	public Set getSoltConfigures() {
-		return this.soltConfigures;
-	}
-
-	public void setSoltConfigures(Set soltConfigures) {
-		this.soltConfigures = soltConfigures;
-	}
-
-	public Set getHotelAgentLists() {
-		return this.hotelAgentLists;
-	}
-
-	public void setHotelAgentLists(Set hotelAgentLists) {
-		this.hotelAgentLists = hotelAgentLists;
-	}
-
-	public Set getSoltLists() {
-		return this.soltLists;
-	}
-
-	public void setSoltLists(Set soltLists) {
-		this.soltLists = soltLists;
-	}
+	
 
 }

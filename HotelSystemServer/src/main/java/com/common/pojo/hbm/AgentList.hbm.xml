@@ -19,7 +19,7 @@
         <property name="deviceCount" type="java.lang.Integer">
             <column name="deviceCount" not-null="true" />
         </property>
-        <set name="soltConfigures" inverse="true">
+        <!-- <set name="soltConfigures" inverse="true">
             <key>
                 <column name="AgentList_idAgentList" not-null="true" />
             </key>
@@ -36,6 +36,6 @@
                 <column name="AgentList_idAgentList" not-null="true" />
             </key>
             <one-to-many class="com.common.pojo.SoltList" />
-        </set>
+        </set> -->
     </class>
 </hibernate-mapping>

@@ -7,31 +7,98 @@
 		layerTips,
 		layer,
 		form;
-
+	layui.use(["paging", "form"], function() {
+		paging = layui.paging();
+		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
+		layer = layui.layer; //获取当前窗口的layer对象
+		form = layui.form();
+		layer.ready(function() {
+			iEvent.init();
+			iView.init();
+		});
+	});
 	//view方法：
 	var iView = {
 		init: function() {
-			$(".elementContent").on("mouseover",function(e){
-//				alert(this+"\n"+e.target);
-//				alert(e.target.className.indexOf('roomElement'))
-					iEvent.roomElementTips(e.target);
-			}).on("mouseout",function(e){
+			iEvent.getAllHotel();
+			//监听酒店选择下拉框
+			form.on('select(hotelSelect)', function(data) {
+				iEvent.getAgent(data.value);
+				console.log(data.elem); //得到select原始DOM对象
+				console.log(data.value); //得到被选中的值
+				console.log(data.othis); //得到美化后的DOM对象
+			});
+			$(".elementContent").on("mouseover", function(e) {
+				iEvent.roomElementTips(e.target);
+			}).on("mouseout", function(e) {
 				layer.closeAll('tips');
 			});
-			$("#switchTemplate").on("click",function(){
+			$("#switchTemplate").on("click", function() {
 				iEvent.switchTemplate();
 			});
 		},
 	};
 	//event方法：
 	var iEvent = {
-		init: function() {
-			layui.use(["paging", "form"], function() {
-				paging = layui.paging();
-				layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
-				layer = layui.layer; //获取当前窗口的layer对象
-				form = layui.form();
-//				iEvent.initPage();//可以这样写
+		init: function() {},
+		//获取用户列表(酒店列表)
+		getAllHotel: function() {
+			layer.msg('加载数据中...', {
+				icon: 16,
+				shade: 0.01
+			});
+			ZYAjax.ajax({
+				"url": "HotelSystemServer/getHotels",
+				"type": "GET",
+				"contentType": "application/json;charset=UTF-8",
+				"success": function(data) {
+					console.log("获取的酒店" + JSON.stringify(data));
+					iEvent.initHotelSelect(data.data);
+					layer.closeAll();
+				}
+			});
+		},
+		//渲染酒店select
+		initHotelSelect: function(hotelData) {
+			$(hotelData).each(function(i) {
+				$("#hotelSelect").append('<option value="' + hotelData[i].idHotelList + '">酒店名称：' + hotelData[i].hotelName + ' #酒店编号：' + hotelData[i].hotelId + ' #酒店地址：' + hotelData[i].address + '</option>')
+			});
+			form.render('select');
+		},
+		//渲染中继select
+		initDeviceSelect: function(deviceData) {
+			$("#deviceSelect").empty();
+			$("#deviceSelect").append('<option value=""></option>');
+			console.log($("#deviceSelect").html())
+			if (deviceData.length == 0) {
+				console.log("=====0")
+				$("#deviceSelect").append('<option disabled>该酒店暂无设备，请先添加设备</option>');
+				form.render('select');
+				return ;
+			} 
+			$(deviceData).each(function(i) {
+				console.log("进入循环");
+				$("#deviceSelect").append('<option value="' + deviceData[i].idAgentList + '">设备地址：' + deviceData[i].macAddress + '</option>')
+			});
+			form.render('select');
+		},
+		//获取指定酒店的中继
+		getAgent: function(hotelId) {
+			layer.msg('加载酒店中继中,请稍等...', {
+				icon: 16,
+				shade: 0.01
+			});
+			ZYAjax.ajax({
+				"url": "HotelSystemServer/getAgentByHotelId",
+				"type": "GET",
+				"data": {
+					"hotelId": hotelId
+				},
+				"contentType": "application/json;charset=UTF-8",
+				"success": function(data) {
+					iEvent.initDeviceSelect(data.data);
+					console.log("获取的中继" + JSON.stringify(data));
+				}
 			});
 		},
 		//初始化表格
@@ -78,31 +145,25 @@
 			});
 		},
 		roomElementTips: function(target) {
-//			target.stopPropagation();
-//			alert(target)
+			//			target.stopPropagation();
 			layer.open({
-			  type: 4,
-			  content: ['当前时间：'+new Date()+'</br>地址：广州天河区</br>编号：#1236565</br>数据1：***</br>数据2：***', target], //数组第二项即吸附元素选择器或者DOM
-			  shade: 0,
-			});  
+				type: 4,
+				content: ['当前时间：' + new Date() + '</br>地址：广州天河区</br>编号：#1236565</br>数据1：***</br>数据2：***', target], //数组第二项即吸附元素选择器或者DOM
+				shade: 0,
+			});
 		},
-		switchTemplate:function(){
-//			alert($('#switchTemplate').text());
-			if($('#switchTemplate').text().indexOf("以中继形式显示")!=-1){
+		switchTemplate: function() {
+			//			alert($('#switchTemplate').text());
+			if($('#switchTemplate').text().indexOf("以中继形式显示") != -1) {
 				$('#switchTemplate').text("以房间形式显示");
 				$('#roomTemplate').hide();
 				$('#repeaterTemplate').show();
-			}else{
+			} else {
 				$('#switchTemplate').text("以中继形式显示");
 				$('#repeaterTemplate').hide();
 				$('#roomTemplate').show();
 			}
-			
-		},
-	};
 
-	window.onload = function() {
-		iView.init();
-		iEvent.init();
+		},
 	};
 }());
