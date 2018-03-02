@@ -30,7 +30,6 @@ public class LoginController extends BaseController{
 		Map<String, Object> map = null;
 		try {
 			map = loginService.login(loginDto);
-			System.out.println(map.toString());
 			if (null != map.get("error")) {
 				success = false;
 				return map;
@@ -42,7 +41,6 @@ public class LoginController extends BaseController{
 			msg = e.getMessage();
 			success = false;
 		}finally {
-			System.out.println(success);
 			map.put("msg", msg);
 			map.put("success", success);
 			return map;

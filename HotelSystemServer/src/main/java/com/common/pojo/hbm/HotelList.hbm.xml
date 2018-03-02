@@ -11,22 +11,22 @@
             <generator class="increment" />
         </id>
         <property name="hotelId" type="java.lang.String">
-            <column name="hotelID" length="20" not-null="true" />
+            <column name="hotelID" length="20"/>
         </property>
         <property name="hotelName" type="java.lang.String">
-            <column name="hotelName" length="100" not-null="true" />
+            <column name="hotelName" length="100"/>
         </property>
         <property name="country" type="java.lang.String">
-            <column name="country" length="40" not-null="true" />
+            <column name="country" length="40"/>
         </property>
         <property name="province" type="java.lang.String">
-            <column name="province" length="40" not-null="true" />
+            <column name="province" length="40"/>
         </property>
         <property name="city" type="java.lang.String">
-            <column name="city" length="40" not-null="true" />
+            <column name="city" length="40"/>
         </property>
         <property name="address" type="java.lang.String">
-            <column name="address" length="50" not-null="true" />
+            <column name="address" length="50"/>
         </property>
         <property name="hotelPhone" type="java.lang.String">
             <column name="hotelPhone" length="23" />
@@ -35,25 +35,34 @@
             <column name="hotelManager" length="10" />
         </property>
         <property name="createTime" type="java.sql.Timestamp">
-            <column name="createTime" length="23" not-null="true" />
+            <column name="createTime" length="23"/>
         </property>
-        <set name="hotelAgentLists" inverse="true">
+        <property name="repeaterCount" type="java.lang.String">
+            <column name="REPEATERS_COUNT" length="100" not-null="false" />
+        </property>
+        <property name="deviceCount" type="java.lang.String">
+            <column name="DEVICES_COUNT" length="100" not-null="false" />
+        </property>
+        <property name="status" type="java.lang.String">
+            <column name="STATUS" length="50" not-null="false" />
+        </property>
+        <!-- <set name="hotelAgentLists" inverse="true">
             <key>
-                <column name="HotelList_idHotelList" not-null="true" />
+                <column name="HotelList_idHotelList"/>
             </key>
             <one-to-many class="com.common.pojo.HotelAgentList" />
         </set>
         <set name="roomLists" inverse="true">
             <key>
-                <column name="HotelList_idHotelList" not-null="true" />
+                <column name="HotelList_idHotelList"/>
             </key>
             <one-to-many class="com.common.pojo.RoomList" />
         </set>
         <set name="userHotelLists" inverse="true">
             <key>
-                <column name="HotelList_idHotelList" not-null="true" />
+                <column name="HotelList_idHotelList"/>
             </key>
             <one-to-many class="com.common.pojo.UserHotelList" />
-        </set>
+        </set> -->
     </class>
 </hibernate-mapping>

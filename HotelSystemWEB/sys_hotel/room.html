@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加房间</title>
+		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<style type="text/css">
+			.layui-elem-field {
+				margin: 20px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			
+			.layui-field-box {
+				width: 60%;
+			}
+		</style>
+	</head>
+	<body>
+		<blockquote class="layui-elem-quote">
+			<div class="layui-form">
+				<div class="layui-form-item" style="margin-bottom: 0px;">
+					<label class="layui-form-label">选择酒店</label>
+					<div class="layui-input-inline" style="width: 600px;">
+						<select name="hotelManager" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</blockquote>
+		<fieldset class="layui-elem-field">
+			<legend>房间列表</legend>
+			<table id="roomTable" lay-filter="roomTableFilter"></table>
+			<div class="admin-table-page">
+				<div id="paged" class="page">
+				</div>
+			</div>
+		</fieldset>
+		<!--  表头工具   -->
+		<script type="text/html" id="roomTableBar">
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
+		<!--  分页模板    -->
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZYAjax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/room.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

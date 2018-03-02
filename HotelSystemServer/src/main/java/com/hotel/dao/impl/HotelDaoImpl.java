@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.common.pojo.HotelList;
 import com.common.pojo.LoginUserList;
+import com.common.pojo.RoomList;
 import com.hotel.dao.HotelDao;
+import com.hotel.dto.HotelDto;
 import com.login.dto.UserDto;
 @Repository
 public class HotelDaoImpl implements HotelDao {
@@ -20,16 +22,39 @@ public class HotelDaoImpl implements HotelDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<HotelList> gethotels(UserDto user) {
-		return sessionFactory.getCurrentSession().createQuery("FROM SysHotel where hotelManager = ?")
-				.setParameter(0, user.getId()).list();
-//		return SessionFactory.getcurr
+	public List<HotelList> gethotels() {
+		return sessionFactory.getCurrentSession().createQuery("FROM HotelList")
+				.list();
 	}
 
 	@Override
-	public Integer getHotelCounts(UserDto user) {
+	public Integer getHotelsCount() {
 		long temp = (Long) sessionFactory.getCurrentSession()
-				.createQuery("SELECT COUNT(*) FROM SysHotel WHERE hotelManager = ?").setParameter(0, user.getId()).uniqueResult();
+				.createQuery("SELECT COUNT(*) FROM HotelList").uniqueResult();
+		return (int) temp;
+	}
+
+	@Override
+	public int delHotel(String HotelID) {
+		int result = sessionFactory.getCurrentSession().createQuery("DELETE FROM HotelList WHERE idHotelList = ?").setParameter(0, Integer.parseInt(HotelID)).executeUpdate();
+		return result;
+	}
+
+	@Override
+	public void addHotel(HotelList hotelList) {
+		sessionFactory.getCurrentSession().saveOrUpdate(hotelList);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RoomList> getRooms(String hotelId) {
+		return sessionFactory.getCurrentSession().createQuery("FROM RoomList WHERE hotelId = ?").setParameter(0, Integer.parseInt(hotelId)).list();
+	}
+
+	@Override
+	public Integer getRoomsCount(String hotelId) {
+		long temp = (Long) sessionFactory.getCurrentSession()
+				.createQuery("SELECT COUNT(*) FROM RoomList WHERE hotelId = ?").setParameter(0, Integer.parseInt(hotelId)).uniqueResult();
 		return (int) temp;
 	}
 

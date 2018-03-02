@@ -40,7 +40,7 @@
         <property name="createTime" type="java.sql.Timestamp">
             <column name="createTime" length="23" not-null="true" />
         </property>
-        <set name="userHotelLists" inverse="true">
+        <!-- <set name="userHotelLists" inverse="true">
             <key>
                 <column name="UserList_idUserList" not-null="true" />
             </key>
@@ -51,6 +51,6 @@
                 <column name="LoginUserList_idUserList" not-null="true" />
             </key>
             <one-to-many class="com.common.pojo.LoginUserInfo" />
-        </set>
+        </set> -->
     </class>
 </hibernate-mapping>

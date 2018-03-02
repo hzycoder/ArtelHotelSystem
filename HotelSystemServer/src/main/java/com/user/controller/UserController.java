@@ -21,15 +21,12 @@ public class UserController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "getAllUser", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public Map<String,Object> getAllUser(){
-		System.out.println("获取用户");
-		List<LoginUserList> userList = null;
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			map = userService.getAllUser();
-			System.out.println("sysout:"+map.toString());
 			msg = "获取数据成功！";
-			map.put("result", userList);
 			success = true;
+			System.out.println("sysout:"+map.toString());
 		} catch (Exception e) {
 			e.printStackTrace();//注意不要漏了
 			msg = e.getMessage();

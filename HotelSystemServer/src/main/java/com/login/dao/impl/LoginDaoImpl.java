@@ -48,7 +48,7 @@ public class LoginDaoImpl implements LoginDao {
 
 	@Override
 	public Integer existUser(LoginDto loginDto) {
-		return (Integer) sessionFactory.getCurrentSession().createQuery("SELECT id FROM LoginUserList WHERE userAccount = ?")
+		return (Integer) sessionFactory.getCurrentSession().createQuery("SELECT id FROM LoginUserList WHERE account = ?")
 		.setParameter(0, loginDto.getAccount()).uniqueResult();
 		
 	}

@@ -15,9 +15,9 @@
 	//view方法：
 	var iView = {
 		init: function() {
-//			console.log("init");
+			//			console.log("init");
 			iView.iframeResize(); //iframe自适应
-//			iView.initNavbar();
+			//			iView.initNavbar();
 			$("#clearCached").on("click", function() {
 				iEvent.clearCached();
 			});
@@ -56,7 +56,7 @@
 				element = layui.element(); //
 				navbar = layui.navbar();
 				layer = layui.layer;
-//				console.log("   " + JSON.stringify(navbar));
+				//				console.log("   " + JSON.stringify(navbar));
 				//清除缓存
 				$('#clearCached').on('click', function() {
 					navbar.cleanCached();
@@ -84,7 +84,7 @@
 						console.log(tab.getCurrentTabId())
 					},
 					closeBefore: function(obj) { //tab 关闭之前触发的事件
-						console.log(obj);
+						console.log(JSON.stringify(obj));
 						//obj.title  -- 标题
 						//obj.url    -- 链接地址
 						//obj.id     -- id
@@ -127,7 +127,18 @@
 				navbar.render();
 				//监听点击事件
 				navbar.on('click(side)', function(data) {
-					console.log("tap!\n" + JSON.stringify(data.field));
+					console.log("tap!\n" + data.field.title);
+					switch(data.field.title) {
+						case "酒店查询":
+						console.log(999)
+//						tab.deleteTab(obj.tabId);
+//						tab.tabAdd(data.filed);
+//							iEvent.getAllUser();
+							break;
+						default:
+							break;
+					}
+					
 					tab.tabAdd(data.field);
 				});
 				//navbar初始化 end

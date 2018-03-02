@@ -17,7 +17,8 @@ public class RoomList implements java.io.Serializable {
 	private String roomNum;
 	private String soltNum;
 	private Short floor;
-	private Set roomSoltLists = new HashSet(0);
+	private Integer hotelId;
+//	private Set roomSoltLists = new HashSet(0);
 
 	// Constructors
 
@@ -34,16 +35,16 @@ public class RoomList implements java.io.Serializable {
 		this.floor = floor;
 	}
 
-	/** full constructor */
-	public RoomList(HotelList hotelList, String roomId, String roomNum, String soltNum, Short floor,
-			Set roomSoltLists) {
-		this.hotelList = hotelList;
-		this.roomId = roomId;
-		this.roomNum = roomNum;
-		this.soltNum = soltNum;
-		this.floor = floor;
-		this.roomSoltLists = roomSoltLists;
-	}
+//	/** full constructor */
+//	public RoomList(HotelList hotelList, String roomId, String roomNum, String soltNum, Short floor,
+//			Set roomSoltLists) {
+//		this.hotelList = hotelList;
+//		this.roomId = roomId;
+//		this.roomNum = roomNum;
+//		this.soltNum = soltNum;
+//		this.floor = floor;
+//		this.roomSoltLists = roomSoltLists;
+//	}
 
 	// Property accessors
 
@@ -95,12 +96,21 @@ public class RoomList implements java.io.Serializable {
 		this.floor = floor;
 	}
 
-	public Set getRoomSoltLists() {
-		return this.roomSoltLists;
+	public Integer getHotelId() {
+		return hotelId;
 	}
 
-	public void setRoomSoltLists(Set roomSoltLists) {
-		this.roomSoltLists = roomSoltLists;
+	public void setHotelId(Integer hotelId) {
+		this.hotelId = hotelId;
 	}
+	
+//
+//	public Set getRoomSoltLists() {
+//		return this.roomSoltLists;
+//	}
+//
+//	public void setRoomSoltLists(Set roomSoltLists) {
+//		this.roomSoltLists = roomSoltLists;
+//	}
 
 }

@@ -22,9 +22,12 @@ public class HotelList implements java.io.Serializable {
 	private String hotelPhone;
 	private String hotelManager;
 	private Timestamp createTime;
-	private Set hotelAgentLists = new HashSet(0);
-	private Set roomLists = new HashSet(0);
-	private Set userHotelLists = new HashSet(0);
+	private String repeaterCount;
+	private String deviceCount;
+	private String status;
+	// private Set hotelAgentLists = new HashSet(0);
+	// private Set roomLists = new HashSet(0);
+	// private Set userHotelLists = new HashSet(0);
 
 	// Constructors
 
@@ -42,24 +45,6 @@ public class HotelList implements java.io.Serializable {
 		this.city = city;
 		this.address = address;
 		this.createTime = createTime;
-	}
-
-	/** full constructor */
-	public HotelList(String hotelId, String hotelName, String country, String province, String city, String address,
-			String hotelPhone, String hotelManager, Timestamp createTime, Set hotelAgentLists, Set roomLists,
-			Set userHotelLists) {
-		this.hotelId = hotelId;
-		this.hotelName = hotelName;
-		this.country = country;
-		this.province = province;
-		this.city = city;
-		this.address = address;
-		this.hotelPhone = hotelPhone;
-		this.hotelManager = hotelManager;
-		this.createTime = createTime;
-		this.hotelAgentLists = hotelAgentLists;
-		this.roomLists = roomLists;
-		this.userHotelLists = userHotelLists;
 	}
 
 	// Property accessors
@@ -144,28 +129,52 @@ public class HotelList implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
-	public Set getHotelAgentLists() {
-		return this.hotelAgentLists;
+	public String getRepeaterCount() {
+		return repeaterCount;
 	}
 
-	public void setHotelAgentLists(Set hotelAgentLists) {
-		this.hotelAgentLists = hotelAgentLists;
+	public void setRepeaterCount(String repeaterCount) {
+		this.repeaterCount = repeaterCount;
 	}
 
-	public Set getRoomLists() {
-		return this.roomLists;
+	public String getDeviceCount() {
+		return deviceCount;
 	}
 
-	public void setRoomLists(Set roomLists) {
-		this.roomLists = roomLists;
+	public void setDeviceCount(String deviceCount) {
+		this.deviceCount = deviceCount;
 	}
 
-	public Set getUserHotelLists() {
-		return this.userHotelLists;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setUserHotelLists(Set userHotelLists) {
-		this.userHotelLists = userHotelLists;
+	public void setStatus(String status) {
+		this.status = status;
 	}
+
+	// public Set getHotelAgentLists() {
+	// return this.hotelAgentLists;
+	// }
+	//
+	// public void setHotelAgentLists(Set hotelAgentLists) {
+	// this.hotelAgentLists = hotelAgentLists;
+	// }
+	//
+	// public Set getRoomLists() {
+	// return this.roomLists;
+	// }
+	//
+	// public void setRoomLists(Set roomLists) {
+	// this.roomLists = roomLists;
+	// }
+	//
+	// public Set getUserHotelLists() {
+	// return this.userHotelLists;
+	// }
+	//
+	// public void setUserHotelLists(Set userHotelLists) {
+	// this.userHotelLists = userHotelLists;
+	// }
 
 }

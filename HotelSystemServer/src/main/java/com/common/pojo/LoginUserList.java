@@ -4,10 +4,12 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
 /**
  * LoginUserList entity. @author MyEclipse Persistence Tools
  */
-
+@Component("user")
 public class LoginUserList implements java.io.Serializable {
 
 	// Fields
@@ -23,8 +25,8 @@ public class LoginUserList implements java.io.Serializable {
 	private Integer permission;
 	private String creator;
 	private Timestamp createTime;
-	private Set userHotelLists = new HashSet(0);
-	private Set loginUserInfos = new HashSet(0);
+//	private Set userHotelLists = new HashSet(0);
+//	private Set loginUserInfos = new HashSet(0);
 
 	// Constructors
 
@@ -58,8 +60,8 @@ public class LoginUserList implements java.io.Serializable {
 		this.permission = permission;
 		this.creator = creator;
 		this.createTime = createTime;
-		this.userHotelLists = userHotelLists;
-		this.loginUserInfos = loginUserInfos;
+//		this.userHotelLists = userHotelLists;
+//		this.loginUserInfos = loginUserInfos;
 	}
 
 	// Property accessors
@@ -152,20 +154,20 @@ public class LoginUserList implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
-	public Set getUserHotelLists() {
-		return this.userHotelLists;
-	}
-
-	public void setUserHotelLists(Set userHotelLists) {
-		this.userHotelLists = userHotelLists;
-	}
-
-	public Set getLoginUserInfos() {
-		return this.loginUserInfos;
-	}
-
-	public void setLoginUserInfos(Set loginUserInfos) {
-		this.loginUserInfos = loginUserInfos;
-	}
+//	public Set getUserHotelLists() {
+//		return this.userHotelLists;
+//	}
+//
+//	public void setUserHotelLists(Set userHotelLists) {
+//		this.userHotelLists = userHotelLists;
+//	}
+//
+//	public Set getLoginUserInfos() {
+//		return this.loginUserInfos;
+//	}
+//
+//	public void setLoginUserInfos(Set loginUserInfos) {
+//		this.loginUserInfos = loginUserInfos;
+//	}
 
 }

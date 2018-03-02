@@ -10,9 +10,9 @@
             <column name="idRoomList" />
             <generator class="increment" />
         </id>
-        <many-to-one name="hotelList" class="com.common.pojo.HotelList" fetch="select">
+        <!-- <many-to-one name="hotelList" class="com.common.pojo.HotelList" fetch="select">
             <column name="HotelList_idHotelList" not-null="true" />
-        </many-to-one>
+        </many-to-one> -->
         <property name="roomId" type="java.lang.String">
             <column name="RoomID" length="15" not-null="true" />
         </property>
@@ -25,11 +25,14 @@
         <property name="floor" type="java.lang.Short">
             <column name="floor" not-null="true" />
         </property>
-        <set name="roomSoltLists" inverse="true">
+        <property name="hotelId" type="java.lang.Integer">
+        	<column name="HotelList_idHotelList" not-null="true" />
+        </property>
+        <!-- <set name="roomSoltLists" inverse="true">
             <key>
                 <column name="RoomList_idRoomList" not-null="true" />
             </key>
             <one-to-many class="com.common.pojo.RoomSoltList" />
-        </set>
+        </set> -->
     </class>
 </hibernate-mapping>
