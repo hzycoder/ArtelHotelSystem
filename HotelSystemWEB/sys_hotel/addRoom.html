@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加房间</title>
+		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<style type="text/css">
+			.layui-elem-field {
+				margin: 20px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<blockquote class="layui-elem-quote">
+			<div class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label">选择酒店</label>
+					<div class="layui-input-inline" style="width: 600px;">
+						<select name="hotelID" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</blockquote>
+		<fieldset class="layui-elem-field">
+			<legend>添加房间</legend>
+			<div class="layui-field-box">
+				<form class="layui-form">
+					<div class="layui-form-item" style="display: none;">
+						<label class="layui-form-label"></label>
+						<div class="layui-input-block">
+							<input id="hotelID" type="text" name="hotelID" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item" style="display: none;">
+						<label class="layui-form-label"></label>
+						<div class="layui-input-block">
+							<input id="hotelNum" type="text" name="hotelNum" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">房间编号</label>
+						<div class="layui-input-block">
+							<input type="text" name="roomNum" required lay-verify="required" class="layui-input" value="测试编号">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">楼层</label>
+						<div class="layui-input-block">
+							<input type="text" name="floor" required lay-verify="required" class="layui-input" value="测试楼层">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button type="button" class="layui-btn" lay-submit lay-filter="addRoom">立即提交</button>
+							<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZYAjax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/addRoom.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

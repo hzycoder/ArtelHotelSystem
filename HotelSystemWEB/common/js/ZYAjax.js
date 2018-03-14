@@ -21,9 +21,9 @@
 					//服务器返回响应，根据响应结果，分析是否登录成功；
 					//动态创建列表信息
 					option.success && option.success(data);
-					setTimeout(function() {
+//					setTimeout(function() {
 						layer.closeAll(); //1.5s关闭layer等待框等等
-					}, 1500)
+//					}, 1500)
 				},
 				/**
 				 * 

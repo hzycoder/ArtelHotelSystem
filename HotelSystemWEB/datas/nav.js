@@ -1,7 +1,7 @@
 var navs = [{
 		"title": "酒店管理",
-		"icon": "&#xe613;",
-		"spread": false,
+		"icon": "&#xe68e;",
+		"spread": true,
 		"children": [{
 				"title": "酒店查询",
 				"icon": "&#xe615;",
@@ -12,31 +12,44 @@ var navs = [{
 				"icon": "&#xe654;",
 				"href": "sys_hotel/addHotel.html"
 			},
+		]
+	},
+	{
+		"title": "房间管理",
+		"icon": "&#xe68e;",
+		"spread": false,
+		"children": [
 			{
-				"title": "房间管理",
-				"icon": "&#xe654;",
+				"title": "房间查询",
+				"icon": "&#xe615;",
 				"href": "sys_hotel/room.html"
+			},
+			{
+				"title": "添加房间",
+				"icon": "&#xe654;",
+				"href": "sys_hotel/addRoom.html"
 			},
 		]
 	},
 	{
 		"title": "设备管理",
 		"icon": "&#xe631;",
-		"spread": true,
+		"spread": false,
 		"children": [{
 				"title": "在线监测",
 				"icon": "&#xe62c;",
 				"href": "sys_device/monitor.html"
-			}, {
+			}, 
+			{
 				"title": "查询设备",
 				"icon": "&#xe654;",
 				"href": "sys_device/addDevice.html"
 			},
-			{
-				"title": "删除设备",
-				"icon": "&#xe640;",
-				"href": "city.html"
-			},
+//			{
+//				"title": "删除设备",
+//				"icon": "&#xe640;",
+//				"href": "city.html"
+//			},
 
 			{
 				"title": "设备组网",
@@ -46,7 +59,7 @@ var navs = [{
 			{
 				"title": "设备绑定",
 				"icon": "&#xe64c;",
-				"href": "city.html"
+				"href": "sys_binding/binding.html"
 			},
 			{
 				"title": "在线升级",
@@ -85,23 +98,29 @@ var navs = [{
 			"href": "city.html"
 		}, ]
 	},
-	//	{
-	//		"title": "————————房态查询",
-	//		"icon": "fa-cubes",
-	//		"spread": false, //是否默认展开
-	//		"children": [{
-	//			"title": "实时房态查询",
-	//			"icon": "&#xe641;",
-	//			"href": "sys_roomStatus/table.html"
-	//		}, ]
-	//	}, {
-	//		"title": "中继器管理",
-	//		"icon": "&#xe60c;",
-	//		"spread": false,
-	//		"children": [{
-	//			"title": "实时中继器情况",
-	//			"icon": "fa-check-square-o",
-	//			"href": "sys_roomStatus/rep.html"
-	//		}]
-	//	},
+];
+
+var navs2 = [{
+		"title": "酒店管理",
+		"icon": "&#xe68e;",
+		"spread": true,
+		"children": [{
+				"title": "酒店查询",
+				"icon": "&#xe615;",
+				"href": "sys_hotel/hotel.html"
+			},
+		]
+	},
+	{
+		"title": "设备管理",
+		"icon": "&#xe631;",
+		"spread": false,
+		"children": [
+		{
+				"title": "在线监测",
+				"icon": "&#xe62c;",
+				"href": "sys_device/monitor.html"
+			}, 
+		]
+	},
 ];

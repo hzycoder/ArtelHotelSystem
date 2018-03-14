@@ -22,6 +22,7 @@ public class LoginController extends BaseController{
 	@Autowired
 	LoginService loginService;
 
+	@SuppressWarnings("finally")
 	@ResponseBody
 	@RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public Map<String, Object> login(@RequestBody LoginDto loginDto, HttpServletRequest request,

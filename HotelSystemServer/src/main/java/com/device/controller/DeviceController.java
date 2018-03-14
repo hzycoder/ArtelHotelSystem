@@ -34,4 +34,23 @@ public class DeviceController extends BaseController{
 		}
 		return map;
 	}
+	@ResponseBody
+	@RequestMapping(value = "getSoltByAgentId", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> getSoltByAgentId(String agentId) throws Exception {
+		Map<String,Object> map = null;
+		try {
+			map = deviceService.getSoltByAgentId(agentId);
+			success = true;
+			msg="获取数据成功！";
+		} catch (Exception e) {
+			e.printStackTrace();
+			success = false;
+			msg=e.getMessage();
+		}finally {
+			map.put("msg", msg);
+			map.put("success",success);
+		}
+		return map;
+	}
+	
 }

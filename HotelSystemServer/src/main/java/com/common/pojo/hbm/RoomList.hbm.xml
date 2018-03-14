@@ -14,19 +14,19 @@
             <column name="HotelList_idHotelList" not-null="true" />
         </many-to-one> -->
         <property name="roomId" type="java.lang.String">
-            <column name="RoomID" length="15" not-null="true" />
+            <column name="RoomID" length="15" />
         </property>
         <property name="roomNum" type="java.lang.String">
-            <column name="roomNum" length="10" not-null="true" />
+            <column name="roomNum" length="10"  />
         </property>
         <property name="soltNum" type="java.lang.String">
-            <column name="soltNum" length="20" not-null="true" />
+            <column name="soltNum" length="20"/>
         </property>
-        <property name="floor" type="java.lang.Short">
-            <column name="floor" not-null="true" />
+        <property name="floor" type="java.lang.String">
+            <column name="floor" length="15" />
         </property>
         <property name="hotelId" type="java.lang.Integer">
-        	<column name="HotelList_idHotelList" not-null="true" />
+        	<column name="HotelList_idHotelList" />
         </property>
         <!-- <set name="roomSoltLists" inverse="true">
             <key>

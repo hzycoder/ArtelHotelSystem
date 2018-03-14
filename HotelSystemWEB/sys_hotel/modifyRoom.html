@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>修改房间</title>
+		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<style type="text/css">
+			.layui-elem-field {
+				margin: 8px;
+				padding: 16px 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<fieldset class="layui-elem-field">
+			<form class="layui-form">
+				<div class="layui-form-item" style="display: none;">
+					<label class="layui-form-label"></label>
+					<div class="layui-input-block">
+						<input id="idRoomList" type="text" name="idRoomList" required lay-verify="required" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item" style="display: none;">
+					<label class="layui-form-label"></label>
+					<div class="layui-input-block">
+						<input id="hotelID" type="text" name="hotelID" required lay-verify="required" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item" style="display: none;">
+					<label class="layui-form-label"></label>
+					<div class="layui-input-block">
+						<input id="roomId" type="text" name="roomId" required lay-verify="required" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">房间编号</label>
+					<div class="layui-input-block">
+						<input id="roomNum" type="text" name="roomNum" required lay-verify="required" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">设备编号</label>
+					<div class="layui-input-block">
+						<input id="soltNum" type="text" name="soltNum" class="layui-input" disabled="disabled">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">楼层</label>
+					<div class="layui-input-block">
+						<input id="floor" type="text" name="floor" required lay-verify="required" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item" style="display: none;">
+					<div class="layui-input-block">
+						<button type="button" class="layui-btn" id="modifyRoomCommit" lay-submit lay-filter="modifyRoomCommit">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
+					</div>
+				</div>
+			</form>
+		</fieldset>
+		<script>
+			window.onload = function() {
+				layui.use(['layer', 'form'], function() {
+					var layer = layui.layer;
+					var form = layui.form;
+					var index = parent.layer.getFrameIndex(window.name);
+					form.on('submit(modifyRoomCommit)', function(data) {
+						console.log(data.field);
+						ZYAjax.ajax({
+							"url": "HotelSystemServer/addRoom",
+							"type": "POST",
+							"data": JSON.stringify(data.field),
+							"contentType": "application/json;charset=UTF-8",
+							"success": function(data) {
+								if(data && data.success) { //如果登录成功
+									layer.msg(data.msg, { //显示成功信息
+										icon: 1,
+									});
+								} else {
+									layer.msg("系统内部错误！", { //显示失败信息
+										icon: 2,
+									});
+								}
+							}
+						});
+						parent.layer.close(index);
+					});
+				});
+			}
+		</script>
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZYAjax.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

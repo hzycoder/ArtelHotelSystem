@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>修改酒店</title>
+		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<style type="text/css">
+			.layui-elem-field {
+				margin: 20px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			
+			.layui-field-box {
+				width: 60%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<fieldset class="layui-elem-field">
+			<legend>修改酒店</legend>
+			<div class="layui-field-box">
+				<form class="layui-form">
+					<div class="layui-form-item" style="display: none;">
+						<label class="layui-form-label">酒店名称</label>
+						<div class="layui-input-block">
+							<input id="idHotelList" type="text" name="idHotelList" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">酒店名称</label>
+						<div class="layui-input-block">
+							<input id="hotelName" type="text" name="hotelName" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">编号</label>
+						<div class="layui-input-block">
+							<input id="hotelId" type="text" name="hotelId" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">地址</label>
+						<div class="layui-input-block">
+							<textarea id="address" type="" name="address" required lay-verify="required" class="layui-textarea" style="resize: none;"></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">状态</label>
+						<div class="layui-input-inline">
+							<select name="status" lay-verify="required">
+								<option value=""></option>
+								<option value="正常使用">正常使用</option>
+								<option value="离线">离线</option>
+								<option value="其他">其他</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="font-size: 13px;">酒店联系电话</label>
+						<div class="layui-input-inline">
+							<input id="hotelPhone" name="hotelPhone" required lay-verify="required" class="layui-input" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="font-size: 13px;">酒店所属账户</label>
+						<div class="layui-input-inline">
+							<select name="hotelManager" lay-verify="required" id="accountSelect">
+								<option value=""></option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item" style="display: none;">
+						<div class="layui-input-block">
+							<button id="modifyHotelCommit" type="button" class="layui-btn" lay-submit lay-filter="modifyHotelCommit">立即提交</button>
+							<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+		<script>
+			window.onload = function() {
+				layui.use(["form", ], function() {
+					layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
+					layer = layui.layer; //获取当前窗口的layer对象
+					form = layui.form;
+					var index = parent.layer.getFrameIndex(window.name);
+					ZYAjax.ajax({
+						"url": "HotelSystemServer/getAllUser",
+						"type": "GET",
+						"contentType": "application/json;charset=UTF-8",
+						"success": function(data) {
+							$(data.result).each(function(i) {
+								$("#accountSelect").append('<option value="' + data.result[i].idUserList + '">' + data.result[i].account + '</option>')
+							});
+							form.render('select')
+							if(data && data.success) { //如果登录成功
+							} else {
+								layer.msg("系统内部错误！", { //显示失败信息
+									icon: 2,
+								});
+							}
+						}
+					});
+					form.on('submit(modifyHotelCommit)', function(data) {
+						console.log(JSON.stringify(data.field));
+						ZYAjax.ajax({
+							"url": "HotelSystemServer/addHotel",
+							"type": "POST",
+							"data": JSON.stringify(data.field),
+							"contentType": "application/json;charset=UTF-8",
+							"success": function(data) {
+								if(data && data.success) { //如果登录成功
+									layer.msg(data.msg, { //显示成功信息
+										icon: 1,
+									});
+								} else {
+									console.log(data.msg)
+									layer.msg("系统内部错误！", { //显示失败信息
+										icon: 2,
+									});
+								}
+							}
+						});
+						parent.layer.close(index);
+					});
+				});
+			}
+		</script>
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZYAjax.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

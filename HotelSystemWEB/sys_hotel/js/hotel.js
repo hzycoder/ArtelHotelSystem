@@ -8,6 +8,9 @@
 		layer,
 		form,
 		table;
+	var btnArray = new Array();
+	btnArray.push('<span style="color: #ffffff;transition:color 1s linear;">确定</span>');
+	btnArray.push('<span>取消<span>');
 	layui.use(["paging", "form", ], function() {
 		paging = layui.paging();
 		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
@@ -20,16 +23,46 @@
 	});
 	//view方法：
 	var iView = {
-		init: function() {},
+		init: function() {
+			$("#research").on("click",function(){
+				iEvent.researchHotel();
+			});
+		},
 	};
 	//event方法：
 	var iEvent = {
 		init: function() {
 			iEvent.getAllHotel(); //获取所有酒店并分页初始化
 		},
-		/*
-		 * 获取用户列表(酒店列表)
-		 */
+		//条件搜索酒店
+		researchHotel:function(){
+			console.log($("#hotelNameInput").val())
+			layer.load(2);
+			ZYAjax.ajax({
+				"url": "HotelSystemServer/getHotelByConditions",
+				"type": "GET",
+//				"contentType": "application/json;charset=UTF-8",
+				"data": {
+					"hotelName":$("#hotelNameInput").val(),
+					"address" : $("#addressInput").val()
+				},
+				"success": function(data) {
+					console.log(JSON.stringify(data))
+					layer.closeAll();
+					iEvent.hotelPaging(data.data);
+					if(data && data.success) { //如果登录成功
+						layer.msg(data.msg, { //显示成功信息
+							icon: 1,
+						});
+					} else {
+						layer.msg("获取数据失败！", { //显示失败信息
+							icon: 2,
+						});
+					}
+				}
+			});
+		},
+		//获取用户列表(酒店列表)
 		getAllHotel: function() {
 			layer.load(2);
 			ZYAjax.ajax({
@@ -74,7 +107,7 @@
 							{
 								field: 'hotelName',
 								title: '客户名称',
-								width: 80,
+								width: 135,
 								sort: true
 							}, {
 								field: 'hotelId',
@@ -84,16 +117,6 @@
 								field: 'address',
 								title: '地址',
 								width: 80,
-								sort: true
-							}, {
-								field: 'repeaterCount',
-								title: '中继',
-								width: 135,
-								sort: true
-							}, {
-								field: 'deviceCount',
-								title: '设备',
-								width: 135,
 								sort: true
 							}, {
 								field: 'status',
@@ -108,38 +131,50 @@
 							}, {
 								field: '',
 								title: '操作',
-								width: 135,
+								width: 150,
 								toolbar: "#hotelTableBar",
 							}
-							//			      ,{field: 'hotelManager', title: '职业', width: 80}
 						]
 					]
 				});
 				//监听工具条操作
 				table.on('tool(hotelTableFilter)', function(obj) {
-					console.log(JSON.stringify(obj.data))
-					var data = obj.data;
-					layer.confirm('确定要删除编号为：' + obj.data.hotelId + "的酒店吗？", {
-						btn: ['确定', '取消'],
-						yes: function(index, layero) {//确定
-//							for (var i = 0; i<hotelData.length;i++) {
-//								if (hotelData[i]["idHotelList"] == obj.data.idHotelList) {
-//									delete hotelData[i];
-//								} 
-//							}
-//							hotelTabelId.reload({
-//								data: hotelData,
-//								page: {
-//									curr: 1 //重新从第 1 页开始
-//								}
-//							});
-//							obj.del();
-							iEvent.delHotel(obj.data);
-						},
-						btn2: function(index, layero) {
-							//取消
-						}
-					});
+					var layEvent = obj.event; //获取当前点击的事件
+					var data = obj.data; //获取当行数据
+					console.log("======"+JSON.stringify(data));
+					if(layEvent == "del") {
+						layer.confirm('确定要删除编号为：' + obj.data.hotelId + "的酒店吗？", {
+							btn: ['确定', '取消'],
+							yes: function(index, layero) { //确定
+								iEvent.delHotel(obj.data);
+							},
+							btn2: function(index, layero) {
+								//取消
+							}
+						});
+					} else if(layEvent == "mod") {
+						layer.open({
+							type: 2,
+							title: "修改酒店信息",
+							area: ["900px", "550px"],
+							content: ["modifyHotel.html"],
+							btn: btnArray,
+							btnAlign: "c",
+							success: function(layero, index) {
+								console.log("SUCCESS!!!!")
+								var $body = layer.getChildFrame("body", index);
+								$body.find("#hotelId").val(data.hotelId);
+								$body.find("#hotelName").val(data.hotelName);
+								$body.find("#idHotelList").val(data.idHotelList);
+								$body.find("#address").val(data.address);
+								$body.find("#hotelPhone").val(data.hotelPhone);
+							},
+							yes: function(index, layero) {
+								var $body = layer.getChildFrame("body", index);
+								$body.find("#modifyHotelCommit").click();
+							},
+						});
+					}
 				});
 			});
 		},

@@ -2,6 +2,9 @@
 	//全局变量定义：
 	var layer,
 		form;
+	var btnArray = new Array();
+	btnArray.push('<span style="color: #ffffff;transition:color 1s linear;">确定</span>');
+	btnArray.push('<span>取消<span>');
 	layui.use(["form", ], function() {
 		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 		layer = layui.layer; //获取当前窗口的layer对象
@@ -23,7 +26,6 @@
 				console.log(data.othis); //得到美化后的DOM对象
 			});
 		},
-
 	};
 	//event方法：
 	var iEvent = {
@@ -69,45 +71,101 @@
 							{
 								field: 'roomNum',
 								title: '房间名称',
-								width: 130,
+								width: 200,
 								sort: true
-							}, {
-								field: 'roomId',
-								title: '房间编号',
-								width: 130
-							}, {
+							},
+							{
 								field: 'soltNum',
 								title: '设备编号',
-								width: 180,
+								width: 240,
 								sort: true
 							}, {
 								field: 'floor',
 								title: '层数',
-								width: 90,
+								width: 180,
 								sort: true
 							}, {
 								field: '',
 								title: '操作',
-								width: 135,
+								width: 200,
 								toolbar: "#roomTableBar",
 							}
 						]
 					]
 				});
 				//监听工具条操作
-				table.on('tool(hotelTableFilter)', function(obj) {
-					var data = obj.data;
-					layer.confirm('确定要删除编号为：' + obj.data.hotelId + "的酒店吗？", {
-						btn: ['确定', '取消'],
-						yes: function(index, layero) {
-							//确定
-							iEvent.delHotel(obj.data);
-						},
-						btn2: function(index, layero) {
-							//取消
-						}
-					});
+				table.on('tool(roomTableFilter)', function(obj) {
+					var layEvent = obj.event; //获取当前点击的事件
+					var data = obj.data; //获取当行数据
+					console.log(JSON.stringify(data))
+					if(layEvent == "del") { //删除房间
+						layer.confirm('确定要删除房间号为：' + data.roomNum + "的房间吗？", {
+							btn: ['确定', '取消'],
+							yes: function(index, layero) {
+								//确定
+								iEvent.delRoom(data);
+							},
+							btn2: function(index, layero) {
+								//取消
+							}
+						});
+					} else if(layEvent == "mod") { //修改房间
+						layer.open({
+							type: 2,
+							title: "修改房间信息",
+							area:["600px","310px"],
+							content: ["modifyRoom.html"],
+							btn: btnArray,
+							btnAlign: "c",
+							success:function(layero,index){
+								console.log("SUCCESS!!!!")
+								var $body = layer.getChildFrame("body",index);
+								$body.find("#idRoomList").val(data.idRoomList);
+								$body.find("#hotelID").val(data.hotelId);
+								$body.find("#roomId").val(data.roomId);
+								$body.find("#roomNum").val(data.roomNum);
+								$body.find("#soltNum").val(data.soltNum);
+								$body.find("#floor").val(data.floor);
+							},
+							yes:function(index,layero){
+//								var iframeWin = window[layero.find("iframe")[0]["name"]];
+//								iframeWin.document.getElementById("modifyRoomCommit").click();
+								var $body = layer.getChildFrame("body",index);
+								$body.find("#modifyRoomCommit").click();
+							},
+						});
+					}
 				});
+			});
+		},
+		//删除房间
+		delRoom: function(roomData) {
+			console.log(roomData)
+			layer.msg('删除中', {
+				icon: 16,
+				shade: 0.01,
+				time: false,
+			});
+			ZYAjax.ajax({
+				"url": "HotelSystemServer/delRoom",
+				"type": "POST",
+				"data": {
+					"roomID": roomData.idRoomList,
+				},
+				//"contentType": "application/json;charset=UTF-8",//单个参数 不需要这个
+				"success": function(data) {
+					console.log(JSON.stringify(data));
+					layer.closeAll();
+					if(data && data.success) {
+						layer.msg(data.msg, { //显示成功信息
+							icon: 1,
+						});
+					} else {
+						layer.msg(data.msg, { //显示失败信息
+							icon: 2,
+						});
+					}
+				}
 			});
 		},
 		//渲染酒店select

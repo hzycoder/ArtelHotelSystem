@@ -19,6 +19,12 @@
 				iEvent.addHotel(data.field);
 				return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 			});
+			$("#hotelID").blur(function(){
+				iView.verifyHotelID();
+			});
+		},
+		verifyHotelID:function(){
+			console.log("验证")
 		},
 	};
 	//event方法：
@@ -37,13 +43,14 @@
 							icon: 1,
 						});
 					} else {
+						console.log(data.msg)
 						layer.msg("系统内部错误！", { //显示失败信息
 							icon: 2,
 						});
 					}
 				}
 			});
-			$('#resetBtn').click();
+			$('#resetBtn').click();//重置表单
 		},
 		//渲染
 		initUserSelect: function(userData) {

@@ -10,6 +10,10 @@
 		<link rel="stylesheet" type="text/css" href="../css/table.css" />
 		<link rel="stylesheet" type="text/css" href="../css/layui.css" />
 		<style type="text/css">
+			body {
+				overflow-x: hidden;
+			}
+			
 			#badgeList {
 				display: inline;
 				margin-left: 30px;
@@ -34,52 +38,174 @@
 				margin: 15px 10px;
 			}
 			
-			.roomElement:hover {
-				cursor: pointer;
+			.main {
+				width: auto;
+				height: 600px;
+				/*border: 1px solid black;*/
 			}
-			/*header*/
-			
-			.roomElement .elementHeader {
-				height: 20%;
-				text-align: center;
-				font-family: Verdana;
+			#repeaters {
+				width: 100%;
+				height: 80px;
+				/*border: 1px solid black;*/
+			}
+			.repeater {
+				width: 119px;
+				height: 78%;
+				margin: 0 auto;
+				border-radius: 50%;
+				border: 1px solid black;
+				background-color: #007cc2;
+			}
+			.agentNum{
 				color: white;
+				font-size: 22px;
+				padding-top: 15px;
+				text-align: center;
+				display: block;
+				margin: 0 auto;
+				height: 100%;
 			}
-			/*房号*/
-			
-			.roomElement .elementHeader .headerWords {
+			.connect {
+				width: 100%;
+				height: 40px;
+				/*border: 1px solid black;*/
 				position: relative;
-				display: inline-block;
-				margin-top: 3px;
-				padding: 2px 5px;
-				border: 1px white solid;
-				border-radius: 8px;
 			}
-			/*content*/
-			
-			.roomElement .elementContent {
-				height: 60%;
-				border-bottom: 1px white solid;
+			#toRepeaterLine{
+				padding-top: 1px;
+				height: 96%;
+				width: 0px;
+				border: 1px dashed black;
+				border-left: none;
+				margin: 0 auto;
 			}
-			/*footer*/
-			
-			.roomElement .elementFooter {
-				padding-top: 3px;
+			#mainLine {
+				width: 100%;
+				height: 0px;
+				border: 1px dashed  black;
+				border-bottom: none;
+				position: absolute;
+				bottom: 0px;
+			}
+			#soltList {
 				text-align: center;
-				height: 20%;
-				font-size: 18px;
+				float: left;
+				width: 100%;
+				height: 300px;
+				overflow-x: auto;
+				overflow-y: hidden;
+				white-space: nowrap;
+				/*以上设置滚动*/
 			}
-			/*图标*/
 			
-			.roomElement .elementFooter .layui-icon {
+			.solt {
+				margin: 0 10px;
+				width: 160px;
+				height: 250px;
+				display: inline-block;
+				/*border: 1px solid black;*/
+				border-top: none;
+			}
+			
+			.upLine {
+				height: 15%;
+				width: 0px;
+				border: 1px dashed black;
+				border-right: none;
+				margin: 0 auto;
+			}
+			/*房间号*/
+			.soltHead {
+				margin: 0 auto;
+				border-radius: 50%;
+				height: 25%;
+				border: 1px solid black;
+				background-color: #007cc2;
+			}
+			.roomNum{
 				color: white;
+				font-size: 30px;
+				padding-top: 11px;
+				text-align: center;
+				display: block;
+				margin: 0 auto;
+				height: 100%;
 			}
-			/*图标悬浮效果*/
+			.tridentLine {
+				height: 30%;
+			}
 			
-			.roomElement .layui-icon:hover {
-				text-decoration: underline;
+			.downLine {
+				height: 25%;
+				width: 0px;
+				border: 1px dashed black;
+				border-right: none;
+				margin: 0 auto;
+			}
+			
+			.threeLine {
+				margin: 0 auto;
+				height: 75%;
+				width: 70%;
+				border: 1px dashed black;
+				border-bottom: none;
+			}
+			
+			.innerLine {
+				height: 100%;
+				width: 0px;
+				border: 1px dashed black;
+				border-right: none;
+				margin: 0 auto;
+			}
+			
+			.soltOperations {
+				padding-top: 4px;
+				height: 15%;
+				/*border: 1px solid black;*/
+			}
+			/*按钮css*/
+			.soltOperations div{
 				cursor: pointer;
-				color: #E56C69;
+				background-color: #007cc2;
+			}
+			.soltOperations span{
+				color: white;
+				font-size: 15px;
+				padding-top: 8px;
+				text-align: center;
+				display: block;
+				margin: 0 auto;
+				height: 100%;
+			}
+			.lockerBtn {
+				width: 31%;
+				height: 100%;
+				border-radius: 50%;
+				border: 1px solid black;
+				display: inline-block;
+			}
+			
+			.remoteBtn {
+				width: 31%;
+				height: 100%;
+				border-radius: 50%;
+				border: 1px solid black;
+				display: inline-block;
+			}
+			
+			.infraredBtn {
+				width: 31%;
+				height: 100%;
+				border-radius: 50%;
+				border: 1px solid black;
+				display: inline-block;
+			}
+			#zero{
+				font-size: 24px;
+			    color: #D2D2D2;
+			    display: inline-block;
+			    margin-top: 19px;
 			}
 		</style>
 	</head>
@@ -96,15 +222,15 @@
 							</select>
 						</div>
 					</div>
-					<div class="layui-form-item">
+					<div class="layui-form-item"  style="margin-bottom: 0px; margin-top: 6px;">
 						<label class="layui-form-label">选择中继</label>
 						<div class="layui-input-inline" style="width: 600px;">
-							<select name="devices" lay-verify="required" id="deviceSelect" lay-filter="deviceSelect">
+							<select name="agents" lay-verify="required" id="agentSelect" lay-filter="agentSelect">
 								<option value=""></option>
 							</select>
 						</div>
 					</div>
-					<div id="badgeList" class="layui-form-item">
+					<!--<div id="badgeList" class="layui-form-item">
 						<span class="layui-badge-dot"></span>
 						<a>状态1</a>
 						<span class="layui-badge-dot layui-bg-orange"></span>
@@ -117,337 +243,52 @@
 						<a>状态5</a>
 						<span class="layui-badge-dot layui-bg-black"></span>
 						<a>状态6</a>
-					</div>
+					</div>-->
 				</div>
-				<!--<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 添加信息
-				</a>
-				<a href="#" class="layui-btn layui-btn-small" id="import">
-					<i class="layui-icon">&#xe608;</i> 导入信息
-				</a>
-				<a href="#" class="layui-btn layui-btn-small">
-					<i class="fa fa-shopping-cart" aria-hidden="true"></i> 导出信息
-				</a>
-				<a href="#" class="layui-btn layui-btn-small" id="getSelected">
-					<i class="fa fa-shopping-cart" aria-hidden="true"></i> 获取全选信息
-				</a>-->
-				<!--<a href="javascript:;" class="layui-btn layui-btn-small" id="switchTemplate">
-					<!--<i class="layui-icon">&#xe615;</i> 搜索-->
-				<!--以中继形式显示-->
-				<!--</a>-->
-
 			</blockquote>
-			<!--<div id="roomTemplate">
-				<fieldset class="layui-elem-field">
-					<legend>二楼</legend>
-					<div class="roomList">
-						<ul>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">
-											201
-										</div>
-										<span class="layui-badge-dot layui-bg-orange"></span>
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">202</div>
-										<span class="layui-badge-dot layui-bg-green">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">203</div>
-										<span class="layui-badge-dot layui-bg-green">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">204</div>
-										<span class="layui-badge-dot layui-bg-green">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">205</div>
-										<span class="layui-badge-dot layui-bg-red">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">206</div>
-										<span class="layui-badge-dot layui-bg-orange">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-						</ul>
+			<!--  实时监控div    -->
+			<div id="main">
+				<!--<div id="repeaters">-->
+					<!--<div class="repeater">
+						<span class="agentNum">
+							GSM1
+						</span>
 					</div>
-				</fieldset>
-				<fieldset class="layui-elem-field">
-					<legend>三楼</legend>
-					<div class="roomList">
-						<ul>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">301</div>
-										<span class="layui-badge-dot layui-bg-green">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</fieldset>
-				<fieldset class="layui-elem-field">
-				<legend>四楼</legend>
-				<div class="roomList">
-					<ul>
-						<li>
-							<div class="roomElement">
-								<div class="layui-row elementHeader">
-									<div class="headerWords">401</div>
-									<span class="layui-badge-dot">
-								</div>
-								<div class="layui-row elementContent"></div>
-								<div class="layui-row elementFooter">
-									<i class="layui-icon">&#xe612;</i>
-									<i class="layui-icon">&#xe615;</i>
-									<i class="layui-icon">&#xe61f;</i>
-									<i class="layui-icon">&#xe641;</i>
-									<i class="layui-icon">&#xe614;</i>
-								</div>
+				</div>
+				<div class="connect">
+					<div id="toRepeaterLine"></div>
+					<div id="mainLine"></div>
+				</div>-->
+				<!-- 卡槽列表  -->
+				<!--<div id="soltList">-->
+					<!--<div class="solt" id="">
+						<div class="upLine"></div>
+						<div class="soltHead">
+							<span class="roomNum">
+								1024
+							</span>
+						</div>
+						<div class="tridentLine">
+							<div class="downLine"></div>
+							<div class="threeLine">
+								<div class="innerLine"></div>
 							</div>
-						</li>
-					</ul>
-				</div>
-			</fieldset>
-			</div>-->
-			<div id="repeaterTemplate">
-				<fieldset class="layui-elem-field">
-					<legend>中继A</legend>
-					<div class="roomList">
-						<ul>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">
-											201
-										</div>
-										<span class="layui-badge-dot layui-bg-orange"></span>
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">202</div>
-										<span class="layui-badge-dot layui-bg-green">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">203</div>
-										<span class="layui-badge-dot layui-bg-green">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">204</div>
-										<span class="layui-badge-dot layui-bg-green">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">205</div>
-										<span class="layui-badge-dot layui-bg-red">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</fieldset>
-				<fieldset class="layui-elem-field">
-					<legend>中继B</legend>
-					<div class="roomList">
-						<ul>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">206</div>
-										<span class="layui-badge-dot layui-bg-orange">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="roomElement">
-									<div class="layui-row elementHeader">
-										<div class="headerWords">301</div>
-										<span class="layui-badge-dot layui-bg-green">
-									</div>
-									<div class="layui-row elementContent"></div>
-									<div class="layui-row elementFooter">
-										<i class="layui-icon">&#xe612;</i>
-										<i class="layui-icon">&#xe615;</i>
-										<i class="layui-icon">&#xe61f;</i>
-										<i class="layui-icon">&#xe641;</i>
-										<i class="layui-icon">&#xe614;</i>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</fieldset>
-				<fieldset class="layui-elem-field">
-				<legend>中继C</legend>
-				<div class="roomList">
-					<ul>
-						<li>
-							<div class="roomElement">
-								<div class="layui-row elementHeader">
-									<div class="headerWords">401</div>
-									<span class="layui-badge-dot">
-								</div>
-								<div class="layui-row elementContent"></div>
-								<div class="layui-row elementFooter">
-									<i class="layui-icon">&#xe612;</i>
-									<i class="layui-icon">&#xe615;</i>
-									<i class="layui-icon">&#xe61f;</i>
-									<i class="layui-icon">&#xe641;</i>
-									<i class="layui-icon">&#xe614;</i>
-								</div>
+						</div>
+						<div class="soltOperations">
+							<div class="lockerBtn">
+								<span> 门锁</span>
 							</div>
-						</li>
-					</ul>
-				</div>
-			</fieldset>
-			</div>
-			
-			<div class="admin-table-page">
-				<div id="paged" class="page">
-				</div>
-			</div>
+							<div class="remoteBtn">
+								<span>遥控</span>
+							</div>
+							<div class="infraredBtn">
+								<span>红外</span>
+							</div>
+						</div>
+					</div>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--  实时监控div  end   -->
 		</div>
 		<!--模板-->
 		<script type="text/html" id="tpl">

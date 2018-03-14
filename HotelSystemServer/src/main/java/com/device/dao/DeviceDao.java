@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.common.pojo.AgentList;
 import com.common.pojo.HotelAgentList;
+import com.common.pojo.RoomList;
+import com.common.pojo.SoltList;
+import com.device.dto.DeviceDto;
 
 public interface DeviceDao {
-	public List<HotelAgentList> getHotelAgentListByHotelId(String hotelId);
-	public AgentList getAgentListByAgentId(int agentId);
+	public List<AgentList> getAgentListByHotelId(String hotelId);
+	public List<DeviceDto> getSoltByAgentId(String agentId);
 }

@@ -3,6 +3,7 @@ package com.hotel.dto;
 import java.sql.Timestamp;
 
 public class HotelDto {
+	private String idHotelList;
 	private String hotelId;
 	private String hotelName;
 	private String country;
@@ -18,6 +19,14 @@ public class HotelDto {
 	public HotelDto() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getIdHotelList() {
+		return idHotelList;
+	}
+
+	public void setIdHotelList(String idHotelList) {
+		this.idHotelList = idHotelList;
 	}
 
 	public String getHotelId() {

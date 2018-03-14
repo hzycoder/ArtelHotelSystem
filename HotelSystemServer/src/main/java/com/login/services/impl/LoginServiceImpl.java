@@ -41,6 +41,7 @@ public class LoginServiceImpl implements LoginService {
 					e.printStackTrace();
 				}finally {
 					map.put("result", user);
+					System.out.println(user.toString());
 					return map;
 				}
 			}

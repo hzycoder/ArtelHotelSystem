@@ -1,5 +1,6 @@
 package com.login.dto;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,111 +10,51 @@ import com.common.pojo.LoginUserList;
 
 public class UserDto {
 
-	private Integer id;
-	private LoginUserList creator;		//creator
-	private String userCode;
-	private String userAccount;
-	private String userPassword;
-	private String passwordSalt;
-	private Short userSex;
-	private String username;
+	private Integer idUserList;
+	private String account;
+	// private String password;
+	// private String passwordSalt;
+	private String userName;
+	private String userId;
 	private String userPhone;
-	private String userPosition;
-	private Short userPermission;
-	private Date createTime;
-	private Date lastTime;		
-	private Short retryCount;	
+	private String position;
+	private Integer permission;
+	private String creator;
+	private Timestamp createTime;
 
 	public UserDto() {
-		super();
 	}
 
-
-
-	public UserDto(Integer id, LoginUserList creator, String userCode, String userAccount, String userPassword,
-			String passwordSalt, Short userSex, String username, String userPhone, String userPosition,
-			Short userPermission, Date createTime, Date lastTime, Short retryCount) {
-		super();
-		this.id = id;
-		this.creator = creator;
-		this.userCode = userCode;
-		this.userAccount = userAccount;
-		this.userPassword = userPassword;
-		this.passwordSalt = passwordSalt;
-		this.userSex = userSex;
-		this.username = username;
-		this.userPhone = userPhone;
-		this.userPosition = userPosition;
-		this.userPermission = userPermission;
-		this.createTime = createTime;
-		this.lastTime = lastTime;
-		this.retryCount = retryCount;
+	public Integer getIdUserList() {
+		return idUserList;
 	}
 
-
-
-	public Integer getId() {
-		return id;
+	public void setIdUserList(Integer idUserList) {
+		this.idUserList = idUserList;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public String getAccount() {
+		return account;
 	}
 
-	public LoginUserList getCreator() {
-		return creator;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
-	public void setCreator(LoginUserList creator) {
-		this.creator = creator;
+	public String getUserName() {
+		return userName;
 	}
 
-	public String getUserCode() {
-		return userCode;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
+	public String getUserId() {
+		return userId;
 	}
 
-	public String getUserAccount() {
-		return userAccount;
-	}
-
-	public void setUserAccount(String userAccount) {
-		this.userAccount = userAccount;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
-	public String getPasswordSalt() {
-		return passwordSalt;
-	}
-
-	public void setPasswordSalt(String passwordSalt) {
-		this.passwordSalt = passwordSalt;
-	}
-
-	public Short getUserSex() {
-		return userSex;
-	}
-
-	public void setUserSex(Short userSex) {
-		this.userSex = userSex;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getUserPhone() {
@@ -124,57 +65,36 @@ public class UserDto {
 		this.userPhone = userPhone;
 	}
 
-	public String getUserPosition() {
-		return userPosition;
+	public String getPosition() {
+		return position;
 	}
 
-	public void setUserPosition(String userPosition) {
-		this.userPosition = userPosition;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
-	public Short getUserPermission() {
-		return userPermission;
+	public Integer getPermission() {
+		return permission;
 	}
 
-	public void setUserPermission(Short userPermission) {
-		this.userPermission = userPermission;
+	public void setPermission(Integer permission) {
+		this.permission = permission;
 	}
 
-	public Date getCreateTime() {
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
-
-	public Date getLastTime() {
-		return lastTime;
-	}
-
-	public void setLastTime(Date lastTime) {
-		this.lastTime = lastTime;
-	}
-
-	public Short getRetryCount() {
-		return retryCount;
-	}
-
-	public void setRetryCount(Short retryCount) {
-		this.retryCount = retryCount;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "UserDto [id=" + id + ", creator=" + creator + ", userCode=" + userCode + ", userAccount=" + userAccount
-				+ ", userPassword=" + userPassword + ", passwordSalt=" + passwordSalt + ", userSex=" + userSex
-				+ ", username=" + username + ", userPhone=" + userPhone + ", userPosition=" + userPosition
-				+ ", userPermission=" + userPermission + ", createTime=" + createTime + ", lastTime=" + lastTime
-				+ ", retryCount=" + retryCount + "]";
-	}
-
-	
 
 }

@@ -23,7 +23,29 @@
 			iEvent.getAllHotel();
 			//监听酒店选择下拉框
 			form.on('select(hotelSelect)', function(data) {
+				$("#main").empty();
 				iEvent.getAgent(data.value);
+				console.log(data.elem); //得到select原始DOM对象
+				console.log(data.value); //得到被选中的值
+				console.log(data.othis); //得到美化后的DOM对象
+			});
+			//监听中继选择下拉框
+			form.on('select(agentSelect)', function(data) {
+				$("#main").empty();
+				var html = '<div id="repeaters">' +
+					'<div class="repeater">' +
+					'<span class="agentNum">' + "当前中继" + '</span>' +
+					'</div>' +
+					'</div>' +
+					'<div class="connect">' +
+					'<div id="toRepeaterLine"></div>' +
+					'<div id="mainLine"></div>' +
+					'<div id="soltList">' +
+					'</div>' +
+					'</div>';
+				var $html = $(html);
+				$("#main").append($html);
+				iEvent.getSolt(data.value);
 				console.log(data.elem); //得到select原始DOM对象
 				console.log(data.value); //得到被选中的值
 				console.log(data.othis); //得到美化后的DOM对象
@@ -37,6 +59,9 @@
 				iEvent.switchTemplate();
 			});
 		},
+		initLine: function() {
+
+		}
 	};
 	//event方法：
 	var iEvent = {
@@ -66,21 +91,71 @@
 			form.render('select');
 		},
 		//渲染中继select
-		initDeviceSelect: function(deviceData) {
-			$("#deviceSelect").empty();
-			$("#deviceSelect").append('<option value=""></option>');
-			console.log($("#deviceSelect").html())
-			if (deviceData.length == 0) {
+		initAgentSelect: function(deviceData) {
+			$("#agentSelect").empty();
+			$("#agentSelect").append('<option value=""></option>');
+			if(deviceData.length == 0) {
 				console.log("=====0")
-				$("#deviceSelect").append('<option disabled>该酒店暂无设备，请先添加设备</option>');
+				$("#agentSelect").append('<option disabled>该酒店暂无设备，请先添加设备</option>');
 				form.render('select');
-				return ;
-			} 
+				return;
+			}
 			$(deviceData).each(function(i) {
-				console.log("进入循环");
-				$("#deviceSelect").append('<option value="' + deviceData[i].idAgentList + '">设备地址：' + deviceData[i].macAddress + '</option>')
+				$("#agentSelect").append('<option value="' + deviceData[i].idAgentList + '">设备地址：' + deviceData[i].macAddress + '</option>')
 			});
 			form.render('select');
+		},
+		//获取中继下的卡槽设备
+		getSolt: function(agentId) {
+			layer.msg('加载卡槽设备中,请稍等...', {
+				icon: 16,
+				shade: 0.01
+			});
+			ZYAjax.ajax({
+				"url": "HotelSystemServer/getSoltByAgentId",
+				"type": "GET",
+				"data": {
+					"agentId": agentId
+				},
+				"contentType": "application/json;charset=UTF-8",
+				"success": function(data) {
+					if (data.data.length == 0) {
+						var zero = '<span id="zero">当前中继下无设备</span>'
+						var $zero = $(zero);
+						$("#soltList").append($zero);
+						return;
+					}
+					$.each(data.data, function(index, item) {
+						var soltHtml = '<div class="solt" id="' + item.idSoltList + '">' +
+							'<div class="upLine"></div>' +
+							'<div class="soltHead">' +
+							'<span class="roomNum">' +
+							item.roomId +
+							'</span>' +
+							'</div>' +
+							'<div class="tridentLine">' +
+							'<div class="downLine"></div>' +
+							'<div class="threeLine">' +
+							'<div class="innerLine"></div>' +
+							'</div>' +
+							'</div>' +
+							'<div class="soltOperations">' +
+							'<div class="lockerBtn">' +
+							'<span> 门锁</span>' +
+							'</div>' +
+							'<div class="remoteBtn">' +
+							'<span>遥控</span>' +
+							'</div>' +
+							'<div class="infraredBtn">' +
+							'<span>红外</span>' +
+							'</div>' +
+							'</div>' +
+							'</div>';
+						var $soltHtml = $(soltHtml);
+						$("#soltList").append($soltHtml);
+					});
+				}
+			});
 		},
 		//获取指定酒店的中继
 		getAgent: function(hotelId) {
@@ -96,7 +171,7 @@
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					iEvent.initDeviceSelect(data.data);
+					iEvent.initAgentSelect(data.data);
 					console.log("获取的中继" + JSON.stringify(data));
 				}
 			});
@@ -145,7 +220,6 @@
 			});
 		},
 		roomElementTips: function(target) {
-			//			target.stopPropagation();
 			layer.open({
 				type: 4,
 				content: ['当前时间：' + new Date() + '</br>地址：广州天河区</br>编号：#1236565</br>数据1：***</br>数据2：***', target], //数组第二项即吸附元素选择器或者DOM
@@ -153,7 +227,6 @@
 			});
 		},
 		switchTemplate: function() {
-			//			alert($('#switchTemplate').text());
 			if($('#switchTemplate').text().indexOf("以中继形式显示") != -1) {
 				$('#switchTemplate').text("以房间形式显示");
 				$('#roomTemplate').hide();

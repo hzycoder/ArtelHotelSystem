@@ -52,6 +52,8 @@
 	//event方法：
 	var iEvent = {
 		init: function() {
+			var userData = JSON.parse(sessionStorage.getItem("user"));
+			console.log(sessionStorage.getItem("user"));
 			layui.use(["layer", "element", "navbar", "tab"], function() {
 				element = layui.element(); //
 				navbar = layui.navbar();
@@ -114,15 +116,26 @@
 					}
 				});
 				//tab初始化 end
-				//navbar初始化
-				navbar.set({
-					spreadOne: true,
-					elem: '#admin-navbar-side',
-					cached: true,
-					data: navs //设置左侧导航的菜单内容
-					/*cached:true,
-					url: 'datas/nav.json'*/
-				});
+				if(userData.permission == 0) {
+					//navbar初始化
+					navbar.set({
+						spreadOne: true,
+						elem: '#admin-navbar-side',
+						cached: true,
+						data: navs //设置左侧导航的菜单内容
+						/*cached:true,
+						url: 'datas/nav.json'*/
+					});
+				} else {
+					navbar.set({
+						spreadOne: true,
+						elem: '#admin-navbar-side',
+						cached: true,
+						data: navs2 //设置左侧导航的菜单内容
+						/*cached:true,
+						url: 'datas/nav.json'*/
+					});
+				}
 				//渲染navbar
 				navbar.render();
 				//监听点击事件
@@ -130,15 +143,11 @@
 					console.log("tap!\n" + data.field.title);
 					switch(data.field.title) {
 						case "酒店查询":
-						console.log(999)
-//						tab.deleteTab(obj.tabId);
-//						tab.tabAdd(data.filed);
-//							iEvent.getAllUser();
 							break;
 						default:
 							break;
 					}
-					
+
 					tab.tabAdd(data.field);
 				});
 				//navbar初始化 end
@@ -207,7 +216,6 @@
 	};
 
 	window.onload = function() {
-
 		iView.init();
 		iEvent.init();
 	};

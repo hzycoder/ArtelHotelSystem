@@ -10,9 +10,13 @@ import com.login.dto.UserDto;
 
 public interface HotelDao {
 	public List<HotelList> gethotels();
-	public Integer getHotelsCount();
-	public int delHotel(String HotelID);
+	public Integer getHotelsCount(String sql);
+	public int delHotel(String hotelID);
 	public void addHotel(HotelList hotelList);
 	public List<RoomList> getRooms(String hotelId);
 	public Integer getRoomsCount(String hotelId);
+	public int delRoom(String roomID);
+	public void addRoom(RoomList roomList);
+	public Integer getRoomCountByHotelID(int hotelID);
+	public List<HotelList> gethotelsByConditions(String hotelName,String hotelAddress);
 }

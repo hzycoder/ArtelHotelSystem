@@ -4,7 +4,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>添加房间</title>
-		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="../plugins/layui/css/layui.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/global.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/table.css"/>
 		<style type="text/css">
 			.layui-elem-field {
 				margin: 20px;
@@ -14,6 +17,13 @@
 			
 			.layui-field-box {
 				width: 60%;
+			}
+				
+			.layui-laypage-skip .layui-input {
+				display: inline;
+				/*防止分页layui-laypage-skip 跳行*/
+				height: 26px;
+				line-height: 26px;
 			}
 		</style>
 	</head>
@@ -40,6 +50,7 @@
 		</fieldset>
 		<!--  表头工具   -->
 		<script type="text/html" id="roomTableBar">
+			<a class="layui-btn layui-btn-xs" lay-event="mod">修改</a>
 			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		</script>
 		<!--  分页模板    -->

@@ -12,11 +12,10 @@ public class RoomList implements java.io.Serializable {
 	// Fields
 
 	private Integer idRoomList;
-	private HotelList hotelList;
 	private String roomId;
 	private String roomNum;
 	private String soltNum;
-	private Short floor;
+	private String floor;
 	private Integer hotelId;
 //	private Set roomSoltLists = new HashSet(0);
 
@@ -27,8 +26,7 @@ public class RoomList implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public RoomList(HotelList hotelList, String roomId, String roomNum, String soltNum, Short floor) {
-		this.hotelList = hotelList;
+	public RoomList(String roomId, String roomNum, String soltNum, String floor) {
 		this.roomId = roomId;
 		this.roomNum = roomNum;
 		this.soltNum = soltNum;
@@ -56,14 +54,6 @@ public class RoomList implements java.io.Serializable {
 		this.idRoomList = idRoomList;
 	}
 
-	public HotelList getHotelList() {
-		return this.hotelList;
-	}
-
-	public void setHotelList(HotelList hotelList) {
-		this.hotelList = hotelList;
-	}
-
 	public String getRoomId() {
 		return this.roomId;
 	}
@@ -88,11 +78,11 @@ public class RoomList implements java.io.Serializable {
 		this.soltNum = soltNum;
 	}
 
-	public Short getFloor() {
+	public String getFloor() {
 		return this.floor;
 	}
 
-	public void setFloor(Short floor) {
+	public void setFloor(String floor) {
 		this.floor = floor;
 	}
 
@@ -103,6 +93,14 @@ public class RoomList implements java.io.Serializable {
 	public void setHotelId(Integer hotelId) {
 		this.hotelId = hotelId;
 	}
+
+	@Override
+	public String toString() {
+		return "RoomList [idRoomList=" + idRoomList + ", roomId=" + roomId + ", roomNum=" + roomNum + ", soltNum="
+				+ soltNum + ", floor=" + floor + ", hotelId=" + hotelId + "]";
+	}
+	
+	
 	
 //
 //	public Set getRoomSoltLists() {

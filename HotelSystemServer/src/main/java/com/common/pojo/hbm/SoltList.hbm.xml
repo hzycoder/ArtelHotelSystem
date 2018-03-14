@@ -10,13 +10,16 @@
             <column name="idsoltList" />
             <generator class="increment" />
         </id>
-        <many-to-one name="agentList" class="com.common.pojo.AgentList" fetch="select">
+        <!-- <many-to-one name="agentList" class="com.common.pojo.AgentList" fetch="select">
             <column name="AgentList_idAgentList" not-null="true" />
-        </many-to-one>
+        </many-to-one> -->
+        <property name="agentId" type="java.lang.Integer">
+            <column name="AgentList_idAgentList" not-null="true" />
+        </property>
         <property name="subNetNum" type="java.lang.Integer">
             <column name="subNetNum" not-null="true" />
         </property>
-        <set name="slotStatuses" inverse="true">
+        <!-- <set name="slotStatuses" inverse="true">
             <key>
                 <column name="soltList_idsoltList" not-null="true" />
             </key>
@@ -27,6 +30,6 @@
                 <column name="soltList_idsoltList" not-null="true" />
             </key>
             <one-to-many class="com.common.pojo.RoomSoltList" />
-        </set>
+        </set> -->
     </class>
 </hibernate-mapping>
