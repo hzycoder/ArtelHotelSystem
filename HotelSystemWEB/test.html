@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="common/layui/css/layui.css" />
+		<style type="text/css">
+			.layui-elem-field {
+				margin: 20px;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<fieldset class="layui-elem-field">
+			<legend>记录</legend>
+			<div class="layui-field-box">
+				<form class="layui-form">
+					<div class="layui-form-item">
+						<label class="layui-form-label">俯卧撑</label>
+						<div class="layui-input-block">
+							<input id="fuwocheng" type="number" name="fuwocheng" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">仰卧起坐</label>
+						<div class="layui-input-block">
+							<input id="yangwoqizuo" type="number" name="yangwoqizuo" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button id="commit" type="button" class="layui-btn" lay-submit lay-filter="addRoom">立即提交</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+		<script>
+			window.onload = function(){
+				console.log(localStorage.getItem("sportData"));
+				var sportData = JSON.parse(localStorage.getItem("sportData"));
+				$("#fuwocheng").val(sportData.fuwocheng);
+				$("#yangwoqizuo").val(sportData.yangwoqizuo);
+				$("#commit").click("click", function() {
+				var data = {
+						"fuwocheng":$("#fuwocheng").val(),
+						"yangwoqizuo":$("#yangwoqizuo").val()
+				}
+				localStorage.setItem("sportData",JSON.stringify(data));
+			});
+			}
+		</script>
+		<script src="common/js/jQuery/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>
