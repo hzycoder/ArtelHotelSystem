@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,28 +9,39 @@
 		<link rel="stylesheet" type="text/css" href="../plugins/layui/css/layui.css" media="all" />
 		<link rel="stylesheet" type="text/css" href="css/login.css" />
 		<style type="text/css">
-			#logoDiv{
+			#logoDiv {
 				text-align: center;
 			}
-			#logo{
+			#logo {
 				width: 198px;
 				height: 72px;
 			}
-			.beg-login-box{
+			
+			.beg-login-box {
 				background-color: white;
 				height: auto;
 			}
-			.beg-login-main{
+			
+			.beg-login-main {
 				border-top: 1px solid black;
+			}
+			#codeImg{
+				display: inline-block;
+				width: 53%;
+				height: 36px;
+			}
+			#code{
+				display: inline-block;
+				width: 45%;
 			}
 		</style>
 	</head>
 
 	<body class="beg-login-bg">
 		<div class="beg-login-box">
-				<div id="logoDiv" >
-					<img id="logo" src="../common/img/ArtelLogo.jpg"/>
-				</div>
+			<div id="logoDiv">
+				<img id="logo" src="../common/img/ArtelLogo.jpg" />
+			</div>
 			<div class="beg-login-main">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
@@ -44,17 +56,15 @@
                     </label>
 						<input id="password" value="admin" type="password" name="password" autocomplete="off" placeholder="这里输入密码" class="layui-input">
 					</div>
+					<!--验证码-->
 					<div class="layui-form-item">
 						<label class="beg-login-icon">
-                        <i class="layui-icon">&#xe6af;</i>
-                    </label>
-						<input  type="text" name="verifyCode" autocomplete="off" placeholder="这里输入验证码" class="layui-input">
+                        		<i class="layui-icon">&#xe6af;</i>
+                        	</label>
+							<input type="text" id="code"  placeholder="验证码" class="layui-input">
+							<img id="codeImg" class="img-responsive" >
 					</div>
 					<div class="layui-form-item">
-						<!--<div class="beg-pull-left beg-login-remember">
-							<label>记住帐号？</label>
-							<input type="checkbox" name="rememberMe" value="true" lay-skin="switch" checked title="记住帐号">
-						</div>-->
 						<div class="beg-pull-right">
 							<!--一定要type="button"-->
 							<button type="button" lay-submit="" class="login layui-btn layui-btn-primary" lay-filter="login">

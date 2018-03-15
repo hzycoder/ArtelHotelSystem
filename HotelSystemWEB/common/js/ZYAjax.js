@@ -13,7 +13,7 @@
 			$.ajax(url, {
 				type: option.type, //HTTP请求类型
 				data: option.data || {},
-				dataType: 'json', //服务器返回json格式数据
+				dataType: 'json' || option.dataType, //服务器返回数据格式数据
 				contentType: option.contentType || 'application/x-www-form-urlencoded',
 				timeout: option.timeout || 10000, //超时时间设置为60秒;
 				async: option.async,
@@ -22,7 +22,7 @@
 					//动态创建列表信息
 					option.success && option.success(data);
 //					setTimeout(function() {
-						layer.closeAll(); //1.5s关闭layer等待框等等
+//						layer.closeAll(); //1.5s关闭layer等待框等等
 //					}, 1500)
 				},
 				/**

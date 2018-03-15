@@ -13,6 +13,7 @@
 	//view方法：
 	var iView = {
 		init: function() {
+			$("#codeImg").attr("src","http://localhost:8080/HotelSystemServer/base/captcha");
 			$(".login").on("click", function() {
 				iEvent.login();
 			});

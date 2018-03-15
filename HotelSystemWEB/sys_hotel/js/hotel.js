@@ -194,9 +194,7 @@
 				"data": {
 					"hotelID": hotel.idHotelList
 				},
-				//				"contentType": "application/json;charset=UTF-8",//单个参数 不需要这个
 				"success": function(data) {
-					console.log(JSON.stringify(data));
 					layer.closeAll();
 					if(data && data.success) {
 						layer.msg(data.msg, { //显示成功信息
@@ -209,6 +207,7 @@
 					}
 				}
 			});
+			iEvent.getAllHotel();
 		},
 		/*
 		 * 使用laypage分页 

@@ -52,8 +52,8 @@
 	//event方法：
 	var iEvent = {
 		init: function() {
+			iEvent.welcome();
 			var userData = JSON.parse(sessionStorage.getItem("user"));
-			console.log(sessionStorage.getItem("user"));
 			layui.use(["layer", "element", "navbar", "tab"], function() {
 				element = layui.element(); //
 				navbar = layui.navbar();
@@ -152,6 +152,12 @@
 				});
 				//navbar初始化 end
 			});
+		},
+		//设置欢迎信息
+		welcome: function() {
+			console.log(sessionStorage.getItem("user"));
+			var user = JSON.parse(sessionStorage.getItem("user"));
+			$("#welcome").text("欢迎您！"+user.account);
 		},
 		clearCached: function() {
 			navbar.cleanCached();
