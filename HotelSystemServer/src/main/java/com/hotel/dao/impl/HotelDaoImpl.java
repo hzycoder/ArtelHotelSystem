@@ -19,6 +19,7 @@ public class HotelDaoImpl implements HotelDao {
 	@Autowired
 	LoginUserList user;
 
+	// 超管查询
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<HotelList> gethotels() {
@@ -27,15 +28,28 @@ public class HotelDaoImpl implements HotelDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<HotelList> gethotelsByConditions(String hotelName, String hotelAddress) {
-		return sessionFactory.getCurrentSession()
-				.createQuery("FROM HotelList WHERE hotelName like :hotelName and address like :address").setString("hotelName", "%"+hotelName+"%").setString("address", "%"+hotelAddress+"%").list();
+	public List<HotelList> gethotels(String userID) {
+		return sessionFactory.getCurrentSession().createQuery("FROM HotelList where hotelManager = ?")
+				.setParameter(0, userID).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Integer getHotelsCount(String sql) {
-		long temp = (Long) sessionFactory.getCurrentSession().createQuery(sql).uniqueResult();
-		return (int) temp;
+	public List<HotelList> gethotelsByConditions(String hotelName, String hotelAddress, String userID) {
+		return sessionFactory.getCurrentSession()
+				.createQuery(
+						"FROM HotelList WHERE hotelName like :hotelName and address like :address and hotelManager = :hotelManager")
+				.setString("hotelName", "%" + hotelName + "%").setString("address", "%" + hotelAddress + "%")
+				.setString("hotelManager", userID).list();
+	}
+
+	// 超管查询
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<HotelList> gethotelsByConditions(String hotelName, String hotelAddress) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("FROM HotelList WHERE hotelName like :hotelName and address like :address")
+				.setString("hotelName", "%" + hotelName + "%").setString("address", "%" + hotelAddress + "%").list();
 	}
 
 	@Override
@@ -74,7 +88,6 @@ public class HotelDaoImpl implements HotelDao {
 
 	@Override
 	public void addRoom(RoomList roomList) {
-		System.out.println(roomList.toString());
 		sessionFactory.getCurrentSession().saveOrUpdate(roomList);
 	}
 

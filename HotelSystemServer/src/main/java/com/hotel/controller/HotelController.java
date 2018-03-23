@@ -3,6 +3,10 @@ package com.hotel.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,21 +18,22 @@ import com.common.base.BaseController;
 import com.hotel.dto.HotelDto;
 import com.hotel.dto.RoomDto;
 import com.hotel.services.HotelService;
-import com.login.dto.UserDto;
+import com.user.dto.UserDto;
 
 @Controller
+@RequestMapping("/hotel")
 public class HotelController extends BaseController {
+	private static final Logger logger = Logger.getLogger(HotelController.class);
 	@Autowired
 	private HotelService hotelService;
 
 	@ResponseBody
 	@RequestMapping(value = "getHotels", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	// public Map<String, Object> getHotels(@RequestBody UserDto user) throws
-	// Exception {
-	public Map<String, Object> getHotels() throws Exception {
+	public Map<String, Object> getHotels(String userID,String permission) throws Exception {
+		logger.info("测试logger");
 		Map<String, Object> map = null;
 		try {
-			map = hotelService.getHotels();
+			map = hotelService.getHotels(userID,permission);
 			msg = "获取数据成功";
 			success = true;
 		} catch (Exception e) {
@@ -43,12 +48,11 @@ public class HotelController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "getHotelByConditions", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public Map<String, Object> getHotelsByConditions(String hotelName, String address) throws Exception {
-		System.out.println(hotelName + "---" + address);
+	@RequestMapping(value = "getHotelsByConditions", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> getHotelsByConditions(String hotelName, String address,String userID,String permission) throws Exception {
 		Map<String, Object> map = null;
 		try {
-			map = hotelService.getHotelsByConditions(hotelName, address);
+			map = hotelService.getHotelsByConditions(hotelName, address,userID,permission);
 			msg = "获取数据成功";
 			success = true;
 		} catch (Exception e) {
@@ -99,7 +103,6 @@ public class HotelController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "addRoom", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public Map<String, Object> addRoom(@RequestBody RoomDto roomDto) throws Exception {
-		System.out.println("roomDto::::" + roomDto.toString());
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			hotelService.addRoom(roomDto);
@@ -119,7 +122,6 @@ public class HotelController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "getRooms", method = RequestMethod.GET)
 	public Map<String, Object> getRooms(String hotelId) throws Exception {
-		System.out.println("getRoom:" + hotelId);
 		Map<String, Object> map = null;
 		try {
 			map = hotelService.getRooms(hotelId);

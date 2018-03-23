@@ -12,6 +12,7 @@ import com.common.base.BaseController;
 import com.device.services.DeviceService;
 
 @Controller
+@RequestMapping("/device")
 public class DeviceController extends BaseController{
 	@Autowired
 	DeviceService deviceService;

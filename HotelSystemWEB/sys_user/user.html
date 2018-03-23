@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户列表</title>
+		<link rel="stylesheet" type="text/css" href="../plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/table.css" />
+		<style type="text/css">
+			.layui-elem-field {
+				margin: 10px 0 0px 20px;
+			}
+			
+			#userDataForm input {
+				/*cursor: not-allowed!important;*/
+			}
+			
+			.layui-laypage-skip .layui-input {
+				display: inline;
+				/*防止分页layui-laypage-skip 跳行*/
+				height: 26px;
+				line-height: 26px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--<blockquote class="layui-elem-quote">
+			<div class="layui-inline">
+				<label class="layui-form-label">客户名称</label>
+				<div class="layui-input-inline">
+					<input id="hotelNameInput" type="text" name="title" placeholder="请输入客户名称" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">地址</label>
+				<div class="layui-input-inline">
+					<input id="addressInput" type="text" name="title" placeholder="请输入地址" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<button class="layui-btn" id="research">
+					<i class="layui-icon">&#xe615;</i>搜索
+				</button>
+			<button class="layui-btn" id="refresh">
+					<i class="layui-icon">&#xe615;</i>刷新
+				</button>
+		</blockquote>-->
+		<fieldset class="layui-elem-field">
+			<legend>用户列表</legend>
+			<table id="userTable" lay-filter="userTableFilter"></table>
+			<div class="admin-table-page">
+				<div id="paged" class="page">
+				</div>
+			</div>
+		</fieldset>
+		</div>
+		<!--  表头工具   -->
+		<script type="text/html" id="userTableBar">
+			<a class="layui-btn  layui-btn-xs" lay-event="mod">修改</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/Data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/user.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

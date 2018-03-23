@@ -1,7 +1,5 @@
 package com.hotel.dto;
 
-import java.sql.Timestamp;
-
 public class HotelDto {
 	private String idHotelList;
 	private String hotelId;

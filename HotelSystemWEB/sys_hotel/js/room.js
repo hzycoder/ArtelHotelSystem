@@ -1,7 +1,8 @@
 (function() {
 	//全局变量定义：
 	var layer,
-		form;
+		form,
+		table;
 	var btnArray = new Array();
 	btnArray.push('<span style="color: #ffffff;transition:color 1s linear;">确定</span>');
 	btnArray.push('<span>取消<span>');
@@ -20,10 +21,13 @@
 			iEvent.getAllHotel();
 			//监听酒店选择下拉框
 			form.on('select(hotelSelect)', function(data) {
+				$("#layui-elem-field").empty();
+				if (data.value == "") {
+//					$(".pleaseSelect").show();
+					return;
+				}
+//				$(".pleaseSelect").hide();
 				iEvent.getRoom(data.value);
-				console.log(data.elem); //得到select原始DOM对象
-				console.log(data.value); //得到被选中的值
-				console.log(data.othis); //得到美化后的DOM对象
 			});
 		},
 	};
@@ -32,20 +36,21 @@
 		init: function() {},
 		//获取酒店房间
 		getRoom: function(hotelId) {
-			layer.msg('加载房间中,请稍等...', {
+			var index = layer.msg('加载房间中,请稍等...', {
 				icon: 16,
 				shade: 0.01
 			});
-			ZYAjax.ajax({
-				"url": "HotelSystemServer/getRooms",
+			ZY.ajax({
+				"url": "hotel/getRooms",
 				"type": "GET",
 				"data": {
 					"hotelId": hotelId
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
+					console.log("获取的房间"+JSON.stringify(data))
+					layer.close(index);
 					iEvent.roomPaging(data.data);
-					console.log("获取的房间" + JSON.stringify(data));
 				}
 			});
 		},
@@ -72,18 +77,15 @@
 								field: 'roomNum',
 								title: '房间名称',
 								width: 200,
-								sort: true
 							},
 							{
 								field: 'soltNum',
 								title: '设备编号',
 								width: 240,
-								sort: true
 							}, {
 								field: 'floor',
 								title: '层数',
 								width: 180,
-								sort: true
 							}, {
 								field: '',
 								title: '操作',
@@ -91,17 +93,20 @@
 								toolbar: "#roomTableBar",
 							}
 						]
-					]
+					],
+					done:function(){
+						console.log("表格渲染完成!")
+					},
 				});
 				//监听工具条操作
 				table.on('tool(roomTableFilter)', function(obj) {
 					var layEvent = obj.event; //获取当前点击的事件
 					var data = obj.data; //获取当行数据
-					console.log(JSON.stringify(data))
 					if(layEvent == "del") { //删除房间
 						layer.confirm('确定要删除房间号为：' + data.roomNum + "的房间吗？", {
 							btn: ['确定', '取消'],
 							yes: function(index, layero) {
+//								obj.del();
 								//确定
 								iEvent.delRoom(data);
 							},
@@ -118,7 +123,6 @@
 							btn: btnArray,
 							btnAlign: "c",
 							success:function(layero,index){
-								console.log("SUCCESS!!!!")
 								var $body = layer.getChildFrame("body",index);
 								$body.find("#idRoomList").val(data.idRoomList);
 								$body.find("#hotelID").val(data.hotelId);
@@ -137,25 +141,25 @@
 					}
 				});
 			});
+			
 		},
 		//删除房间
 		delRoom: function(roomData) {
-			console.log(roomData)
-			layer.msg('删除中', {
+			var index = layer.msg('删除中', {
 				icon: 16,
 				shade: 0.01,
 				time: false,
 			});
-			ZYAjax.ajax({
-				"url": "HotelSystemServer/delRoom",
+			ZY.ajax({
+				"url": "hotel/delRoom",
 				"type": "POST",
+				"async":false,	//不同步的话 重新渲染表格的时候有可能还没删除该列数据
 				"data": {
 					"roomID": roomData.idRoomList,
 				},
 				//"contentType": "application/json;charset=UTF-8",//单个参数 不需要这个
 				"success": function(data) {
-					console.log(JSON.stringify(data));
-					layer.closeAll();
+					layer.close(index);
 					if(data && data.success) {
 						layer.msg(data.msg, { //显示成功信息
 							icon: 1,
@@ -167,6 +171,7 @@
 					}
 				}
 			});
+			iEvent.getRoom($("#hotelSelect").val());
 		},
 		//渲染酒店select
 		initHotelSelect: function(hotelData) {
@@ -177,16 +182,20 @@
 		},
 		//获取用户列表(酒店列表)
 		getAllHotel: function() {
+			var userData = JSON.parse(sessionStorage.getItem("user"));
 			layer.msg('加载数据中...', {
 				icon: 16,
 				shade: 0.01
 			});
-			ZYAjax.ajax({
-				"url": "HotelSystemServer/getHotels",
+			ZY.ajax({
+				"url": "hotel/getHotels",
 				"type": "GET",
+				"data": {
+					"userID": userData.idUserList,
+					"permission": userData.permission
+				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					console.log("获取的酒店" + JSON.stringify(data));
 					iEvent.initHotelSelect(data.data);
 					layer.closeAll();
 				}

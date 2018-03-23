@@ -92,8 +92,8 @@
 						icon: 16,
 						shade: 0.01
 					});
-					ZYAjax.ajax({
-						"url": "HotelSystemServer/getAllUser",
+					ZY.ajax({
+						"url": "user/getAllUser",
 						"type": "GET",
 						"contentType": "application/json;charset=UTF-8",
 						"success": function(data) {
@@ -112,8 +112,8 @@
 					layer.close(index);
 					form.on('submit(modifyHotelCommit)', function(data) {
 						console.log(JSON.stringify(data.field));
-						ZYAjax.ajax({
-							"url": "HotelSystemServer/addHotel",
+						ZY.ajax({
+							"url": "hotel/addHotel",
 							"type": "POST",
 							"data": JSON.stringify(data.field),
 							"contentType": "application/json;charset=UTF-8",
@@ -138,7 +138,7 @@
 		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../common/js/ZYAjax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 
 </html>

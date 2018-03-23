@@ -157,7 +157,7 @@
 		welcome: function() {
 			console.log(sessionStorage.getItem("user"));
 			var user = JSON.parse(sessionStorage.getItem("user"));
-			$("#welcome").text("欢迎您！"+user.account);
+			$("#welcome").text("欢迎您！"+user.userName);
 		},
 		clearCached: function() {
 			navbar.cleanCached();

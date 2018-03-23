@@ -1,5 +1,9 @@
 package com.common.base;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class BaseController {
 	protected boolean success = false;
 	protected String msg = "";

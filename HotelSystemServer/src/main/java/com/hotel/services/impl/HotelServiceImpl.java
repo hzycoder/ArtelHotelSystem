@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
+import com.common.dao.CommonDao;
 import com.common.pojo.HotelList;
 import com.common.pojo.LoginUserList;
 import com.common.pojo.RoomList;
@@ -26,24 +27,45 @@ public class HotelServiceImpl implements HotelService {
 	HotelDao hotelDao;
 	@Autowired
 	LoginUserList user;
+	@Autowired
+	CommonDao commonDao;
 
+	// 酒店查询
 	@Override
-	public Map<String, Object> getHotels() {
+	public Map<String, Object> getHotels(String userID, String permission) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<HotelList> hotelList = hotelDao.gethotels();
-		String sql = "SELECT COUNT(*) FROM HotelList";
-		int count = hotelDao.getHotelsCount(sql);
+		List<HotelList> hotelList = null;
+		String sql = "";
+		if (Integer.valueOf(permission) == 0) {
+			hotelList = hotelDao.gethotels();
+			sql = "SELECT COUNT(*) FROM HotelList";
+		} else {
+			hotelList = hotelDao.gethotels(userID);
+			sql = "SELECT COUNT(*) FROM HotelList WHERE hotelManager = '" + userID + "'";
+		}
+		int count = commonDao.getCount(sql);
 		map.put("data", hotelList);
 		map.put("count", count);
 		return map;
 	}
 
+	// 酒店条件查询
 	@Override
-	public Map<String, Object> getHotelsByConditions(String hotelName, String address) {
+	public Map<String, Object> getHotelsByConditions(String hotelName, String address, String userID,
+			String permission) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<HotelList> hotelList = hotelDao.gethotelsByConditions(hotelName, address);
-		String sql = "SELECT COUNT(*) FROM HotelList WHERE hotelName like '%"+hotelName+"%' and address like '%"+address+"%'";
-		int count = hotelDao.getHotelsCount(sql);
+		List<HotelList> hotelList;
+		String sql = "";
+		if (Integer.valueOf(permission) == 0) {
+			hotelList = hotelDao.gethotelsByConditions(hotelName, address);
+			sql = "SELECT COUNT(*) FROM HotelList WHERE hotelName like '%" + hotelName + "%' and address like '%"
+					+ address + "%'";
+		} else {
+			hotelList = hotelDao.gethotelsByConditions(hotelName, address, userID);
+			sql = "SELECT COUNT(*) FROM HotelList WHERE hotelName like '%" + hotelName + "%' and address like '%"
+					+ address + "%' and hotelManager = '" + userID + "'";
+		}
+		int count = commonDao.getCount(sql);
 		map.put("data", hotelList);
 		map.put("count", count);
 		return map;

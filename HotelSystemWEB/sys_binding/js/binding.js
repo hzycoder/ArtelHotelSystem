@@ -16,6 +16,9 @@
 			iEvent.getAllHotel();
 			//监听酒店选择下拉框
 			form.on('select(hotelSelect)', function(data) {
+				if (data.value == "") {
+					return;
+				}
 				iEvent.getRoom(data.value);
 				console.log(data.elem); //得到select原始DOM对象
 				console.log(data.value); //得到被选中的值
@@ -35,13 +38,18 @@
 		},
 		//获取用户列表(酒店列表)
 		getAllHotel: function() {
+			var userData = JSON.parse(sessionStorage.getItem("user"));
 			layer.msg('加载数据中...', {
 				icon: 16,
 				shade: 0.01
 			});
-			ZYAjax.ajax({
-				"url": "HotelSystemServer/getHotels",
+			ZY.ajax({
+				"url": "hotel/getHotels",
 				"type": "GET",
+				"data": {
+					"userID": userData.idUserList,
+					"permission": userData.permission
+				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
 					console.log("获取的酒店" + JSON.stringify(data));

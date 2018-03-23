@@ -11,14 +11,21 @@
 				padding-left: 15px;
 				padding-right: 15px;
 			}
+			.form-required-point{
+			    color: red;
+			    font-size: 16px;
+			    position: absolute;
+			    top: 11px;
+			    right: 6px;
+			}
 		</style>
 	</head>
-
 	<body>
+		<div class="admin-main">
 		<blockquote class="layui-elem-quote">
 			<div class="layui-form">
 				<div class="layui-form-item">
-					<label class="layui-form-label">选择酒店</label>
+					<label class="layui-form-label">选择酒店<i class="form-required-point">*</i></label>
 					<div class="layui-input-inline" style="width: 600px;">
 						<select name="hotelID" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
 							<option value=""></option>
@@ -64,10 +71,11 @@
 				</form>
 			</div>
 		</fieldset>
+		</div>
 		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../common/js/ZYAjax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/addRoom.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 

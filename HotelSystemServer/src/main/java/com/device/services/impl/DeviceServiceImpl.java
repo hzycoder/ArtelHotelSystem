@@ -32,6 +32,7 @@ public class DeviceServiceImpl implements DeviceService {
 	public Map<String, Object> getSoltByAgentId(String agentId) {
 		Map<String, Object> map = new HashMap<String,Object>();
 		List<DeviceDto> list = deviceDao.getSoltByAgentId(agentId);
+		map.put("count", list.size());
 		map.put("data", list);
 		return map;
 	}

@@ -13,14 +13,16 @@
 			body {
 				overflow-x: hidden;
 			}
-			
+			.admin-main{
+				margin: 0px;
+			}
 			#badgeList {
 				display: inline;
 				margin-left: 30px;
 			}
 			
 			.layui-elem-field {
-				padding: 10px 20px;
+				/*padding: 10px 20px;*/
 			}
 			/*element*/
 			
@@ -213,7 +215,7 @@
 	<body>
 		<div class="admin-main">
 			<blockquote class="layui-elem-quote">
-				<div class="layui-form">
+				<div class="layui-form" lay-filter="monitorFormFilter">
 					<div class="layui-form-item" style="margin-bottom: 0px;">
 						<label class="layui-form-label">选择酒店</label>
 						<div class="layui-input-inline" style="width: 600px;">
@@ -310,9 +312,9 @@
 			{{# }); }}
 		</script>
 		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../plugins/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../common/js/ZYAjax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/monitor.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户信息</title>
+		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<style type="text/css">
+			.layui-elem-field {
+				margin: 10px 300px 0px 20px;
+			}
+			#userDataForm input{
+				/*cursor: not-allowed!important;*/
+			}
+		</style>
+	</head>
+
+	<body>
+		<blockquote class="layui-elem-quote">
+			<div class="layui-form">
+				<button type="button" class="layui-btn" id="modifyBtn">开启修改</button>
+			</div>
+		</blockquote>
+		<fieldset class="layui-elem-field">
+			<legend>用户信息</legend>
+			<div class="layui-field-box">
+				<form class="layui-form"  id="userDataForm">
+					<div class="layui-form-item">
+						<label class="layui-form-label">账号</label>
+						<div class="layui-input-inline">
+							<input id="account" type="text" name="account" required lay-verify="required" class="layui-input " disabled="disabled">
+						</div>
+						<div class="layui-form-mid layui-word-aux">该账号用于登录</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">昵称</label>
+						<div class="layui-input-block">
+							<input id="userName" type="text" name="userName" required lay-verify="required" class="layui-input zyDIsable" disabled="disabled">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">联系方式</label>
+						<div class="layui-input-block">
+							<input id="userPhone" type="text" name="userPhone" required lay-verify="required" class="layui-input zyDIsable" disabled="disabled">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">管理酒店数</label>
+						<div class="layui-input-block">
+							<input id="hotelCount" type="number" name="hotelCount" required lay-verify="required" class="layui-input " disabled="disabled">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">地区</label>
+						<div class="layui-input-block">
+							<input id="position" type="text" name="position" required lay-verify="required" class="layui-input zyDIsable" disabled="disabled">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">申请时间</label>
+						<div class="layui-input-inline">
+							<input id="createTime" type="text" name="createTime" required lay-verify="required" class="layui-input " disabled="disabled">
+						</div>
+						<label class="layui-form-label">权限</label>
+						<div class="layui-input-inline">
+							<input id="permission" type="text" name="hotelID" required lay-verify="required" class="layui-input " disabled="disabled">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button id="saveBtn" type="button" class="layui-btn">保存修改</button>
+							<button id="resetBtn" class="layui-btn layui-btn-primary">还原</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/Data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/userInfo.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

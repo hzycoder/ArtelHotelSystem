@@ -32,8 +32,8 @@
 		init: function() {},
 		//添加酒店
 		addHotel: function(hotelData) {
-			ZYAjax.ajax({
-				"url": "HotelSystemServer/addHotel",
+			ZY.ajax({
+				"url": "hotel/addHotel",
 				"type": "POST",
 				"data": JSON.stringify(hotelData),
 				"contentType": "application/json;charset=UTF-8",
@@ -60,8 +60,8 @@
 			form.render('select')
 		},
 		getAllUser: function() {
-			ZYAjax.ajax({
-				"url": "HotelSystemServer/getAllUser",
+			ZY.ajax({
+				"url": "user/getAllUser",
 				"type": "GET",
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {

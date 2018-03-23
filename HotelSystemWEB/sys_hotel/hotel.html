@@ -8,16 +8,12 @@
 		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="../css/table.css" />
 		<style type="text/css">
+			.layui-elem-field {
+				margin: 20px;
+			}
 			.layui-form-label {
 				text-align: center;
 			}
-			
-			.layui-elem-field {
-				margin: 20px;
-				padding-left: 15px;
-				padding-right: 15px;
-			}
-			
 			.layui-laypage-skip .layui-input {
 				display: inline;
 				/*防止分页layui-laypage-skip 跳行*/
@@ -45,9 +41,12 @@
 				<button class="layui-btn" id="research">
 					<i class="layui-icon">&#xe615;</i>搜索
 				</button>
+				<button class="layui-btn" id="refresh">
+					<i class="layui-icon">&#xe615;</i>刷新
+				</button>
 			</blockquote>
 			<fieldset class="layui-elem-field">
-				<legend>数据列表</legend>
+				<legend>酒店列表</legend>
 				<table id="hotelTable" lay-filter="hotelTableFilter"></table>
 				<div class="admin-table-page">
 					<div id="paged" class="page">
@@ -83,7 +82,7 @@
 		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../common/js/ZYAjax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/hotel.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 

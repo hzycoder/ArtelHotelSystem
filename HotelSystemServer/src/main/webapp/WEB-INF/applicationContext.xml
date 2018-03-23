@@ -17,6 +17,8 @@
 		<property name="configLocation" value="/WEB-INF/hibernate.cfg.xml">
 		</property>
 	</bean>
+	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+	<bean id="loadManager" class="com.common.load.LoadManager"/>
 	<!-- spring可以自动去扫描base-pack下面或者子包下面的java文件，如果扫描到有@Component @Controller@Service等这些注解的类，则把这些类注册为bean -->
 	<!-- 扫描Dao Service层 domain层 -->
 	<context:component-scan base-package="com.**.dao.impl"></context:component-scan>
