@@ -1,6 +1,7 @@
 package com.hotel.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,11 @@ import com.common.base.BaseController;
 import com.hotel.dto.HotelDto;
 import com.hotel.dto.RoomDto;
 import com.hotel.services.HotelService;
+import com.tcp.ChannelSession;
 import com.user.dto.UserDto;
+import com.webSocket.WebSocketHandlerSession;
+
+import io.netty.channel.Channel;
 
 @Controller
 @RequestMapping("/hotel")
@@ -30,7 +35,16 @@ public class HotelController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "getHotels", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public Map<String, Object> getHotels(String userID,String permission) throws Exception {
-		logger.info("测试logger");
+		Map<String, Channel> channelMap = ChannelSession.getChannels();
+		Iterator<String> it = channelMap.keySet().iterator();
+		while (it.hasNext()) {
+			String key = it.next();
+			Channel channel = channelMap.get(key);
+			logger.info("Channel id is "+key);
+			logger.info("channel:"+channel.isActive());
+			channel.writeAndFlush("酒店发送消息");
+		}
+//		WebSocketMapUtil.get(userId)
 		Map<String, Object> map = null;
 		try {
 			map = hotelService.getHotels(userID,permission);

@@ -107,4 +107,24 @@ public class UserController extends BaseController {
 		}
 		return map;
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "verifyPass", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> verifyPass(String userId, String password) throws Exception {
+		System.out.println("userid:"+userId+"      password:"+password);
+		Map<String, Object> map = null;
+		try {
+			map = userService.verifyPass(userId, password);
+			success = true;
+			msg = "验证完成";
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "系统内部错误";
+			success = false;
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
 }

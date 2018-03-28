@@ -6,27 +6,32 @@
 	var btnArray = new Array();
 	btnArray.push('<span style="color: #ffffff;transition:color 1s linear;">确定</span>');
 	btnArray.push('<span>取消<span>');
-	layui.use(["form", ], function() {
+	layui.use(["form", "table"], function() {
 		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 		layer = layui.layer; //获取当前窗口的layer对象
 		form = layui.form;
+		table = layui.table;
 		layer.ready(function() {
 			iEvent.init();
 			iView.init();
-		})
+		});
 	});
 	//view方法：
 	var iView = {
 		init: function() {
 			iEvent.getAllHotel();
+			$("#refresh").on("click",function(){
+				iEvent.refreshRoom();
+			});
 			//监听酒店选择下拉框
 			form.on('select(hotelSelect)', function(data) {
 				$("#layui-elem-field").empty();
 				if (data.value == "") {
-//					$(".pleaseSelect").show();
+					table.reload("roomTable",{
+						data:null,
+					})
 					return;
 				}
-//				$(".pleaseSelect").hide();
 				iEvent.getRoom(data.value);
 			});
 		},
@@ -59,17 +64,16 @@
 		 * @param roomData 房间列表JSON
 		 */
 		roomPaging: function(roomData) {
-			layui.use('table', function() {
-				var table = layui.table;
+//			layui.use('table', function() {
+//				var table = layui.table;
 				table.render({
 					id: "roomTable",
 					elem: '#roomTable',
-					height: 380,
+					height: 490,
 					data: roomData,
 					page: {
-						limit: 5,
+						limit: 8,
 						layout: ['count', 'prev', 'page', 'next', 'skip'],
-						theme: 'zypage',
 					},
 					cols: [
 						[ //表头
@@ -140,7 +144,7 @@
 						});
 					}
 				});
-			});
+//			});
 			
 		},
 		//删除房间
@@ -200,6 +204,12 @@
 					layer.closeAll();
 				}
 			});
+		},
+		refreshRoom:function(){
+			if ($("#hotelSelect").val()=="") {
+				return;
+			} 
+			iEvent.getRoom($("#hotelSelect").val());
 		},
 	};
 

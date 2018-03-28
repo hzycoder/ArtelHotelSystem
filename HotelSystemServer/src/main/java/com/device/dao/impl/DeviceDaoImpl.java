@@ -16,15 +16,19 @@ import com.device.dto.DeviceDto;
 
 import javassist.convert.Transformer;
 
+/**
+ * @author huangzhenyang
+ *
+ */
 @Repository
 public class DeviceDaoImpl implements DeviceDao {
 	@Autowired
 	SessionFactory sessionFactory;
 
-	/*
+	/**
 	 * 根据agentId找出对应卡槽的对应房间
-	 * (non-Javadoc)
-	 * @see com.device.dao.DeviceDao#getRoomListByAgentId(java.lang.String)
+	 * @param agentId
+	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -85,6 +89,54 @@ public class DeviceDaoImpl implements DeviceDao {
 				+ "HotelList_idHotelList = '"+hotelId+"')");
 		List<AgentList> agentList =  sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).addEntity(AgentList.class).list();
 		return agentList;
+	}
+
+	/**
+	 * 获取中继数量
+	 * @param hotelId
+	 * @return
+	 */
+	@Override
+	public Integer getAgentCount(String hotelId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT "
+				+ "COUNT(*) "
+				+ "FROM "
+				+ "HotelAgentList HA "
+				+ "WHERE "
+				+ "HA.HotelList_idHotelList = "
+				+ "'"
+				+ hotelId
+				+ "'");
+		return (Integer) sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).uniqueResult();
+	}
+
+	/**
+	 * 获取设备数量包括中继
+	 * @param hotelId
+	 * @return
+	 */
+	@Override
+	public Integer getDeviceCount(String hotelId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT "
+				+ "COUNT(*) "
+				+ "FROM "
+				+ "SoltList S "
+				+ "WHERE "
+				+ "S.AgentList_idAgentList "
+				+ "IN "
+				+ "("
+				+ "SELECT "
+				+ "HA.AgentList_idAgentList "
+				+ "FROM "
+				+ "HotelAgentList HA "
+				+ "WHERE "
+				+ "HA.HotelList_idHotelList="
+				+ "'"
+				+ hotelId
+				+ "')");
+		return (Integer) sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).uniqueResult();
 	}
 	
 	

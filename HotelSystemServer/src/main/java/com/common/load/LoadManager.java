@@ -1,18 +1,20 @@
 package com.common.load;
 
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
+import javax.annotation.PostConstruct;
 
+import com.tcp.netty.ClientBootstrap;
 
-
-
-@Component
-public class LoadManager implements ApplicationListener<ApplicationEvent>{
-
-	@Override
-	public void onApplicationEvent(ApplicationEvent arg0) {
-		System.out.println("启动netty客户端");
+public class LoadManager {
+	
+	@PostConstruct
+	public void loadInit() {
+//		System.out.println("PostConstruct");
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				ClientBootstrap.connectServer("192.168.0.110", 9909);
+//			}
+//		}).start();
 	}
 
 }

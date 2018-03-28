@@ -17,7 +17,7 @@ var navs = [{
 	{
 		"title": "房间管理",
 		"icon": "&#xe68e;",
-		"spread": false,
+		"spread": true,
 		"children": [{
 				"title": "房间查询",
 				"icon": "&#xe615;",
@@ -57,14 +57,14 @@ var navs = [{
 			{
 				"title": "在线升级",
 				"icon": "&#xe681;",
-				"href": "common/img/ArtelLogo.jpg"
+				"href": "sys_device/upgradeDevice.html"
 			}
 		]
 	},
 	{
 		"title": "用户管理",
 		"icon": "&#xe61e;",
-		"spread": true,
+		"spread": false,
 		"children": [{
 			"title": "管理用户",
 			"icon": "&#xe613;",

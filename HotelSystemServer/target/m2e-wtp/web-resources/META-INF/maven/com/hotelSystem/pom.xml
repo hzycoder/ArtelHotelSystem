@@ -159,6 +159,12 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.1.14.Final</version>
 		</dependency>
+		<!-- websocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>4.3.1.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<!-- tomcat插件 -->

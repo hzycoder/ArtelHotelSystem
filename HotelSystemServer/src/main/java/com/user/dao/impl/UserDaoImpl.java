@@ -50,17 +50,6 @@ public class UserDaoImpl implements UserDao {
 				.setParameter(0, id).uniqueResult();
 	}
 
-	@Override
-	public List<LoginUserList> getUserList(int maxResult, int firstResult, int permission) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getUserCount(int permission) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Integer modifyUser(String userName, String userPhone, String position, String userID) {
@@ -87,5 +76,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public LoginUserList getUserByUserID(String userID) {
 		return (LoginUserList) sessionFactory.getCurrentSession().createQuery("FROM LoginUserList WHERE idUserList = ?").setParameter(0, Integer.valueOf(userID)).uniqueResult();
+	}
+
+	@Override
+	public String getPassByUserId(String userID) {
+		return (String) sessionFactory.getCurrentSession().createQuery("SELECT password FROM LoginUserList WHERE idUserList = ?").setParameter(0, Integer.valueOf(userID)).uniqueResult();
 	}
 }

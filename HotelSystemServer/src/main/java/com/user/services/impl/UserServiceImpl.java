@@ -63,9 +63,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String,Object> modifyUser(String userName, String userPhone, String position, String userID) {
+	public Map<String,Object> modifyUser(String userName, String userPhone, String position, String userId) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		int result = userDao.modifyUser(userName, userPhone, position, userID);
+		int result = userDao.modifyUser(userName, userPhone, position, userId);
 		if (result!=0) {
 			map.put("msg", "修改数据成功！");
 			map.put("success", true);
@@ -83,6 +83,18 @@ public class UserServiceImpl implements UserService {
 		user.setPassword("");
 		user.setPasswordSalt("");
 		map.put("data", user);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> verifyPass(String userId, String password) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		boolean result = false;
+		String pass = userDao.getPassByUserId(userId);
+		if (pass.equals(password)) {
+			result = true;
+		}
+		map.put("data", result);
 		return map;
 	}
 }

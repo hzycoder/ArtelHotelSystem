@@ -11,4 +11,6 @@ import com.device.dto.DeviceDto;
 public interface DeviceDao {
 	public List<AgentList> getAgentListByHotelId(String hotelId);
 	public List<DeviceDto> getSoltByAgentId(String agentId);
+	public Integer getAgentCount(String hotelId);
+	public Integer getDeviceCount(String hotelId);
 }

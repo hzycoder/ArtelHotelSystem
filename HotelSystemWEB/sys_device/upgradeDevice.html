@@ -3,22 +3,18 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>添加房间</title>
+		<title>设备升级</title>
 		<link rel="stylesheet" type="text/css" href="../plugins/layui/css/layui.css" media="all" />
 		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="../css/table.css" />
 		<style type="text/css">
 			.layui-elem-field {
+				width: 60%;
 				margin: 20px;
-				height: 578px;
 			}
 			
 			.layui-form-label {
 				text-align: center;
-			}
-			
-			.layui-field-box {
-				width: 60%;
 			}
 			
 			.layui-laypage-skip .layui-input {
@@ -32,11 +28,6 @@
 				color: #999;
 			}
 			
-			.layui-table-page {
-				position: absolute;
-				bottom: 0px;
-			}
-			
 			.pleaseSelect {
 				color: #999;
 				padding-left: 47%;
@@ -48,7 +39,7 @@
 	<body>
 		<blockquote class="layui-elem-quote">
 			<div class="layui-form">
-				<div class="layui-form-item layui-inline" style="margin-bottom: 0px;">
+				<div class="layui-form-item" style="margin-bottom: 0px;">
 					<label class="layui-form-label">选择酒店</label>
 					<div class="layui-input-inline" style="width: 600px;">
 						<select name="hotelManager" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
@@ -56,18 +47,50 @@
 						</select>
 					</div>
 				</div>
-				<button class="layui-btn" id="refresh">
-					<i class="layui-icon">&#xe615;</i>刷新
-				</button>
 			</div>
 		</blockquote>
 		<fieldset class="layui-elem-field">
-			<legend>房间列表</legend>
-			<!--<div class="pleaseSelect">请先选择酒店</div>-->
-			<table id="roomTable" lay-filter="roomTableFilter"></table>
-			<div class="admin-table-page">
-				<div id="paged" class="page">
-				</div>
+			<legend>请核对一下信息</legend>
+			<div class="layui-field-box">
+				<form class="layui-form">
+					<div class="layui-form-item">
+						<label class="layui-form-label">酒店名称</label>
+						<div class="layui-input-block">
+							<input type="text" id="hotelName" name="hotelName" class="layui-input" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">酒店编号</label>
+						<div class="layui-input-block">
+							<input type="text" id="hotelId" name="hotelId" class="layui-input" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">酒店地址</label>
+						<div class="layui-input-block">
+							<input type="text" id="address" name="address" class="layui-input" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">中继数量</label>
+						<div class="layui-input-block">
+							<input type="text" id="agentCount" name="agentCount" class="layui-input" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">设备数量</label>
+						<div class="layui-input-inline">
+							<input type="text" id="deviceCount" name="deviceCount" class="layui-input" />
+						</div>
+						<div class="layui-form-mid layui-word-aux">该数量包含中继</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button type="submit" class="layui-btn" lay-submit lay-filter="upgrade">发送升级指令</button>
+							<button type="reset" id="resetFrom" style="display: none;"></button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</fieldset>
 		<!--  表头工具   -->
@@ -80,7 +103,7 @@
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/room.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/upgradeDevice.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 
 </html>

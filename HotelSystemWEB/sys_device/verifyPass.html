@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>确认密码</title>
+		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<style type="text/css">
+			.layui-form {
+				margin-top: 10px;
+			}
+			
+			.layui-form-item {
+				padding-right: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form class="layui-form">
+			<div class="layui-form-item">
+				<label class="layui-form-label">请输入密码</label>
+				<div class="layui-input-block">
+					<input id="password" type="password" name="password" required lay-verify="required" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item" style="display: none;">
+				<div class="layui-input-block">
+					<button type="button" id="commit" class="layui-btn" lay-submit lay-filter="commit">立即提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary" id="cancelBtn">取消</button>
+				</div>
+			</div>
+		</form>
+		<script>
+			window.onload = function() {
+				$("body").keypress(function(e) {
+					if(e.which == 13) {
+						return false;
+					}
+				});
+				layui.use(['layer', 'form'], function() {
+					var layer = layui.layer;
+					var form = layui.form;
+					var index = parent.layer.getFrameIndex(window.name);
+					form.on('submit(commit)', function(data) {
+						var userData = JSON.parse(sessionStorage.getItem("user"));
+						console.log(userData.idUserList + $("#password").val());
+						ZY.ajax({
+							"url": "user/verifyPass",
+							"type": "GET",
+							"data": {
+								"userId": userData.idUserList,
+								"password": $("#password").val()
+							},
+							"contentType": "application/json;charset=UTF-8",
+							"success": function(data) {
+								console.log(JSON.stringify(data));
+								if(data && data.success) { //如果登录成功
+									if(data.data) {
+										layer.msg("验证成功！", { //显示失败信息
+											icon: 1,
+										});
+										setTimeout(function() {
+											parent.layer.close(index);
+										}, 600);
+										//验证成功后做的下发指令动作
+									} else {
+										layer.msg("验证失败！", { //显示失败信息
+											icon: 2,
+										});
+									}
+								} else {
+									layer.msg("系统内部错误！", { //显示失败信息
+										icon: 2,
+									});
+								}
+							}
+						});
+
+					});
+				});
+			}
+		</script>
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

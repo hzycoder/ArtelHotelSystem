@@ -24,20 +24,17 @@
 			//监听酒店选择下拉框
 			form.on('select(hotelSelect)', function(data) {
 				$("#main").empty();
-				if (data.value == "") {//取消选择酒店就取消选择中继
+				if(data.value == "") { //取消选择酒店就取消选择中继
 					$("#agentSelect").val("");
-					form.render("select","monitorFormFilter");
+					form.render("select", "monitorFormFilter");
 					return;
 				}
 				iEvent.getAgent(data.value);
-				console.log(data.elem); //得到select原始DOM对象
-				console.log(data.value); //得到被选中的值
-				console.log(data.othis); //得到美化后的DOM对象
 			});
 			//监听中继选择下拉框
 			form.on('select(agentSelect)', function(data) {
 				$("#main").empty();
-				if (data.value == "") {
+				if(data.value == "") {
 					return;
 				}
 				var html = '<div id="repeaters">' +
@@ -54,14 +51,9 @@
 				var $html = $(html);
 				$("#main").append($html);
 				iEvent.getSolt(data.value);
-				console.log(data.elem); //得到select原始DOM对象
-				console.log(data.value); //得到被选中的值
-				console.log(data.othis); //得到美化后的DOM对象
+				iEvent.startWebSocket(data.value);
 			});
 		},
-		initLine: function() {
-
-		}
 	};
 	//event方法：
 	var iEvent = {
@@ -82,7 +74,6 @@
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					console.log("获取的酒店" + JSON.stringify(data));
 					iEvent.initHotelSelect(data.data);
 					layer.closeAll();
 				}
@@ -100,7 +91,6 @@
 			$("#agentSelect").empty();
 			$("#agentSelect").append('<option value=""></option>');
 			if(deviceData.length == 0) {
-				console.log("=====0")
 				$("#agentSelect").append('<option disabled>该酒店暂无设备，请先添加设备</option>');
 				form.render('select');
 				return;
@@ -125,7 +115,7 @@
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
 					layer.close(index);
-					if (data.data.length == 0) {
+					if(data.data.length == 0) {
 						var zero = '<span id="zero">当前中继下无设备</span>'
 						var $zero = $(zero);
 						$("#soltList").append($zero);
@@ -180,10 +170,37 @@
 				"success": function(data) {
 					layer.close(index);
 					iEvent.initAgentSelect(data.data);
-					console.log("获取的中继" + JSON.stringify(data));
 				}
 			});
 			layer.close(index);
+		},
+		//websocket连接服务端
+		startWebSocket: function(agentId) {
+			var url = "ws://" + CONFIG.WS_URL
+			var ws;
+			if('WebSocket' in window) {
+				ws = new ReconnectingWebSocket(url, null, {
+					debug: true,
+					maxReconnectAttempts: 10,
+				});
+			} else if('MozWebSocket' in window) { //兼容火狐
+				ws = new MozWebSocket(url);
+			} else { //兼容其他
+				ws = new SockJS(url);
+			}
+			ws.onopen = function(evnt) {
+				console.log("websocket连接上");
+				ws.send("agentId#@#"+agentId+"#@#")
+			};
+			ws.onmessage = function(evnt) {
+				console.log("[接收来自服务端的数据]:" + event.data)
+			};
+			ws.onerror = function(evnt) {
+				console.log("websocket错误");
+			};
+			ws.onclose = function(evnt) {
+				console.log("websocket关闭");
+			}
 		},
 	};
 }());

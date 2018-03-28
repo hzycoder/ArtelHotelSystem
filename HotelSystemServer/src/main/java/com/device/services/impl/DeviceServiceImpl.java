@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.common.pojo.AgentList;
 import com.device.dao.DeviceDao;
+import com.device.dto.DeviceCountDto;
 import com.device.dto.DeviceDto;
 import com.device.services.DeviceService;
 
@@ -34,6 +35,16 @@ public class DeviceServiceImpl implements DeviceService {
 		List<DeviceDto> list = deviceDao.getSoltByAgentId(agentId);
 		map.put("count", list.size());
 		map.put("data", list);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getDeviceCountByHotelId(String hotelId) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		
+		int agentCount = deviceDao.getAgentCount(hotelId);
+		int deviceCount =deviceDao.getDeviceCount(hotelId);
+		map.put("data", new DeviceCountDto(hotelId,deviceCount,agentCount));
 		return map;
 	}
 

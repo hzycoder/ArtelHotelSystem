@@ -13,45 +13,64 @@ import com.device.services.DeviceService;
 
 @Controller
 @RequestMapping("/device")
-public class DeviceController extends BaseController{
+public class DeviceController extends BaseController {
 	@Autowired
 	DeviceService deviceService;
 
 	@ResponseBody
 	@RequestMapping(value = "getAgentByHotelId", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public Map<String, Object> getAgentByHotelId(String hotelId) throws Exception {
-		Map<String,Object> map = null;
+		Map<String, Object> map = null;
 		try {
 			map = deviceService.getAgentByHotelId(hotelId);
 			success = true;
-			msg="获取数据成功！";
+			msg = "获取数据成功！";
 		} catch (Exception e) {
 			e.printStackTrace();
 			success = false;
-			msg=e.getMessage();
-		}finally {
+			msg = e.getMessage();
+		} finally {
 			map.put("msg", msg);
-			map.put("success",success);
+			map.put("success", success);
 		}
 		return map;
 	}
+
 	@ResponseBody
 	@RequestMapping(value = "getSoltByAgentId", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public Map<String, Object> getSoltByAgentId(String agentId) throws Exception {
-		Map<String,Object> map = null;
+		Map<String, Object> map = null;
 		try {
 			map = deviceService.getSoltByAgentId(agentId);
 			success = true;
-			msg="获取数据成功！";
+			msg = "获取数据成功！";
 		} catch (Exception e) {
 			e.printStackTrace();
 			success = false;
-			msg=e.getMessage();
-		}finally {
+			msg = e.getMessage();
+		} finally {
 			map.put("msg", msg);
-			map.put("success",success);
+			map.put("success", success);
 		}
 		return map;
 	}
-	
+
+	@ResponseBody
+	@RequestMapping(value = "getDeviceCountByHotelId", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> getDeviceCountByHotelId(String hotelId) throws Exception {
+		Map<String, Object> map = null;
+		try {
+			map = deviceService.getDeviceCountByHotelId(hotelId);
+			success = true;
+			msg = "获取数据成功！";
+		} catch (Exception e) {
+			e.printStackTrace();
+			success = false;
+			msg = e.getMessage();
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
 }
