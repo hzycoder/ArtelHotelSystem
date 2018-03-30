@@ -13,9 +13,11 @@
 			body {
 				overflow-x: hidden;
 			}
-			.admin-main{
+			
+			.admin-main {
 				margin: 0px;
 			}
+			
 			#badgeList {
 				display: inline;
 				margin-left: 30px;
@@ -45,11 +47,13 @@
 				height: 600px;
 				/*border: 1px solid black;*/
 			}
+			
 			#repeaters {
 				width: 100%;
 				height: 80px;
 				/*border: 1px solid black;*/
 			}
+			
 			.repeater {
 				width: 119px;
 				height: 78%;
@@ -58,7 +62,8 @@
 				border: 1px solid black;
 				background-color: #007cc2;
 			}
-			.agentNum{
+			
+			.agentNum {
 				color: white;
 				font-size: 22px;
 				padding-top: 15px;
@@ -67,13 +72,15 @@
 				margin: 0 auto;
 				height: 100%;
 			}
+			
 			.connect {
 				width: 100%;
 				height: 40px;
 				/*border: 1px solid black;*/
 				position: relative;
 			}
-			#toRepeaterLine{
+			
+			#toRepeaterLine {
 				padding-top: 1px;
 				height: 96%;
 				width: 0px;
@@ -81,14 +88,16 @@
 				border-left: none;
 				margin: 0 auto;
 			}
+			
 			#mainLine {
 				width: 100%;
 				height: 0px;
-				border: 1px dashed  black;
+				border: 1px dashed black;
 				border-bottom: none;
 				position: absolute;
 				bottom: 0px;
 			}
+			
 			#soltList {
 				text-align: center;
 				float: left;
@@ -117,6 +126,7 @@
 				margin: 0 auto;
 			}
 			/*房间号*/
+			
 			.soltHead {
 				margin: 0 auto;
 				border-radius: 50%;
@@ -124,15 +134,20 @@
 				border: 1px solid black;
 				background-color: #007cc2;
 			}
-			.roomNum{
+			
+			.roomNum {
 				color: white;
-				font-size: 30px;
+				font-size: 170%;
 				padding-top: 11px;
 				text-align: center;
 				display: block;
 				margin: 0 auto;
 				height: 100%;
+				position: relative;
+				top: 5px;
+				left: 1px;
 			}
+			
 			.tridentLine {
 				height: 30%;
 			}
@@ -167,11 +182,13 @@
 				/*border: 1px solid black;*/
 			}
 			/*按钮css*/
-			.soltOperations div{
+			
+			.soltOperations div {
 				cursor: pointer;
 				background-color: #007cc2;
 			}
-			.soltOperations span{
+			
+			.soltOperations span {
 				color: white;
 				font-size: 15px;
 				padding-top: 8px;
@@ -180,6 +197,7 @@
 				margin: 0 auto;
 				height: 100%;
 			}
+			
 			.lockerBtn {
 				width: 31%;
 				height: 100%;
@@ -203,12 +221,16 @@
 				border: 1px solid black;
 				display: inline-block;
 			}
-			#zero{
+			
+			#zero {
 				font-size: 24px;
-			    color: #D2D2D2;
-			    display: inline-block;
-			    margin-top: 19px;
+				color: #D2D2D2;
+				display: inline-block;
+				margin-top: 19px;
 			}
+			/*#soltId1{
+				background-color: red;
+			}*/
 		</style>
 	</head>
 
@@ -224,7 +246,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="layui-form-item"  style="margin-bottom: 0px; margin-top: 6px;">
+					<div class="layui-form-item" style="margin-bottom: 0px; margin-top: 6px;">
 						<label class="layui-form-label">选择中继</label>
 						<div class="layui-input-inline" style="width: 600px;">
 							<select name="agents" lay-verify="required" id="agentSelect" lay-filter="agentSelect">
@@ -251,7 +273,7 @@
 			<!--  实时监控div    -->
 			<div id="main">
 				<!--<div id="repeaters">-->
-					<!--<div class="repeater">
+				<!--<div class="repeater">
 						<span class="agentNum">
 							GSM1
 						</span>
@@ -263,7 +285,7 @@
 				</div>-->
 				<!-- 卡槽列表  -->
 				<!--<div id="soltList">-->
-					<!--<div class="solt" id="">
+				<!--<div class="solt" id="">
 						<div class="upLine"></div>
 						<div class="soltHead">
 							<span class="roomNum">
@@ -289,33 +311,35 @@
 						</div>
 					</div>-->
 				<!--</div>-->
-			<!--</div>-->
-			<!--  实时监控div  end   -->
-		</div>
-		<!--模板-->
-		<script type="text/html" id="tpl">
-			{{# layui.each(d.list, function(index, item){ }}
-			<tr>
-				<td><input type="checkbox" lay-skin="primary"></td>
-				<td>{{ item.name }}</td>
-				<td>{{ item.age }}</td>
-				<td>{{ item.createtime }}</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>
-					<a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">操作1</a>
-					<a href="javascript:;" data-name="{{ item.name }}" data-opt="edit" class="layui-btn layui-btn-mini">操作2</a>
-					<a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">操作3</a>
-				</td>
-			</tr>
-			{{# }); }}
-		</script>
-		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/monitor.js" type="text/javascript" charset="utf-8"></script>
+				<!--</div>-->
+				<!--  实时监控div  end   -->
+			</div>
+			<!--模板-->
+			<script type="text/html" id="tpl">
+				{{# layui.each(d.list, function(index, item){ }}
+				<tr>
+					<td><input type="checkbox" lay-skin="primary"></td>
+					<td>{{ item.name }}</td>
+					<td>{{ item.age }}</td>
+					<td>{{ item.createtime }}</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+						<a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">操作1</a>
+						<a href="javascript:;" data-name="{{ item.name }}" data-opt="edit" class="layui-btn layui-btn-mini">操作2</a>
+						<a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">操作3</a>
+					</td>
+				</tr>
+				{{# }); }}
+			</script>
+			<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../common/js/websocket/reconnecting-websocket.js" type="text/javascript" charset="utf-8"></script>
+			<script src="js/deviceStatusData.js" type="text/javascript" charset="utf-8"></script>
+			<script src="js/monitor.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 
 </html>

@@ -48,4 +48,12 @@ public class DeviceServiceImpl implements DeviceService {
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> getAgentByInn(String hotelId) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		List<DeviceDto> agentList = deviceDao.getAgentByInn(hotelId);
+		map.put("data", agentList);
+		return map;
+	}
+
 }

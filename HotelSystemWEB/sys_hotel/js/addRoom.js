@@ -14,6 +14,10 @@
 	var iView = {
 		init: function() {
 			iEvent.getAllHotel();
+			$("#batchAdd").on("click", function() {
+				$this = $(this);
+				iEvent.swtichBatchAdd($this);
+			});
 			form.on('select(hotelSelect)', function(data) {
 				if(data.value == "") {
 					return;
@@ -34,19 +38,52 @@
 					});
 					return;
 				}
-				console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
 				iEvent.addRoom(data.field);
 				return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 			});
+
 		},
 	};
 	//event方法：
 	var iEvent = {
 		init: function() {},
-		//		添加酒店
+		//添加酒店
 		addRoom: function(roomData) {
+			//单项增加
+			if($("#batchAdd").text() == "开启批量增加") {
+				if($("#roomNumInput").val() == "") {
+					layer.msg("必填项不能为空", {
+						icon: 2,
+						time: 2000,
+						anim: 6
+					});
+					$("#roomNumInput").focus();
+					return;
+				}
+				roomData.roomNum = $("#roomNumInput").val();
+				roomData.roomNumList = null;
+				iEvent.addRoomAjax(roomData,"addRoom");
+			} else {
+				//批量增加
+				if($("#roomNumTextarea").val() == "") {
+					layer.msg("必填项不能为空", {
+						icon: 2,
+						time: 2000,
+						anim: 6
+					});
+					$("#roomNumTextarea").focus();
+					return;
+				}
+				roomData.roomNumList = iEvent.verifyRoomNumData($("#roomNumTextarea").val());
+				roomData.roomNum = null;
+				iEvent.addRoomAjax(roomData,"batchAddRoom");
+			}
+			
+		},
+		addRoomAjax:function(roomData,type){
+			console.log("ajax房间数据：" + JSON.stringify(roomData));
 			ZY.ajax({
-				"url": "hotel/addRoom",
+				"url": "hotel/"+type,
 				"type": "POST",
 				"data": JSON.stringify(roomData),
 				"contentType": "application/json;charset=UTF-8",
@@ -91,6 +128,30 @@
 					layer.closeAll();
 				}
 			});
+		},
+		//批量增加
+		swtichBatchAdd: function($this) {
+			if($this.text() == "开启批量增加") {
+				$this.css("background-color", "#FF5722")
+				$this.text("关闭批量增加");
+				$("#roomNumInput").hide();
+				$("#roomNumTextarea").show();
+				$("#roomNumPrompt").show();
+			} else {
+				$this.css("background-color", "#009688");
+				$this.text("开启批量增加");
+				$("#roomNumInput").show();
+				$("#roomNumTextarea").hide();
+				$("#roomNumPrompt").hide();
+			}
+		},
+		//处理批量增加的房间号数据
+		verifyRoomNumData:function(roomNumData){
+			var tempData = roomNumData.split(/[，,]/);//以逗号分割
+			if (tempData[tempData.length-1] =="") {
+				tempData.splice(tempData.length-1,1);
+			}
+			return tempData;
 		},
 	};
 }());

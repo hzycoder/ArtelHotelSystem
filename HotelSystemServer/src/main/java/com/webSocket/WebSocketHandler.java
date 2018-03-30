@@ -1,8 +1,6 @@
 package com.webSocket;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -13,13 +11,21 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class WebSocketHandler extends TextWebSocketHandler {
 	private static final Logger logger = Logger.getLogger(WebSocketHandler.class);
 	// 建立连接后的回调
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		String userId = session.getId();
-		logger.info("ID:[" +userId +"]客户端建立连接！");
-		if (userId != null) {
-			WebSocketHandlerSession.put(userId, this);
-			session.sendMessage(new TextMessage("成功建立连接"));
+		String sessionId = session.getId();
+		logger.info("ID:[" +sessionId +"]客户端建立连接！");
+		String agentId = (String) session.getAttributes().get("agentId");
+		logger.info("中继ID："+agentId);
+		if (StringUtils.isNotBlank(sessionId) && StringUtils.isNotBlank(agentId)) {
+			WebSocketHandlerSession.put(sessionId, session);
+			WebSocketHandlerAgentIdSession.put(agentId, session);
+			AssociatedSession.put(sessionId, agentId);
+			session.sendMessage(new TextMessage("Establish connection success"));
+		}else {
+			logger.info("WEBSOCKETID WRONG");
+			session.close();
 		}
 	}
 
@@ -27,17 +33,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		logger.info("[接收来自ID:"+session.getId()+"客户端的消息]:" + message.getPayload());
-		String receiveMsg = (String) message.getPayload();
-		StringBuffer id = null;
-		String userId = session.getId();
-		String agentId = null;
-		if (receiveMsg.indexOf("agentId#@#")!=-1) {
-			agentId = receiveMsg.split("#@#")[1];
-		}
-		id.append(userId).append(":").append(agentId);
-		if (WebSocketHandlerSession.containKey(id.toString())) {
-			
-		}
 		super.handleMessage(session, message);
 	}
 
@@ -45,7 +40,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		logger.info("ID["+session.getId()+"]客户端关闭连接");
-		WebSocketHandlerSession.remove(session.getId());
+		WebSocketHandlerSession.remove(session.getId());//从sessionid Handler中移除
+		WebSocketHandlerAgentIdSession.remove(AssociatedSession.get(session.getId()));//从agentId Handler中移除
+		AssociatedSession.remove(session.getId());
 		super.afterConnectionClosed(session, status);
 	}
 
@@ -56,7 +53,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		if (session.isOpen()) {
 			session.close();
 		}
-		WebSocketHandlerSession.remove(session.getId());
+		WebSocketHandlerSession.remove(session.getId());//从sessionid Handler中移除
+		WebSocketHandlerAgentIdSession.remove(AssociatedSession.get(session.getId()));//从agentId Handler中移除
+		AssociatedSession.remove(session.getId());
 		super.handleTransportError(session, exception);
 	}
 

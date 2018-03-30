@@ -1,14 +1,25 @@
 package com.hotel.dto;
 
+import java.util.List;
+
 public class RoomDto {
 	private String idRoomList;
 	private String roomId;
 	private String roomNum;
+	private List<String> roomNumList;
 	private String floor;
 	private Integer hotelId;
 	private String hotelNum;
 
 	public RoomDto() {
+	}
+
+	public List<String> getRoomNumList() {
+		return roomNumList;
+	}
+
+	public void setRoomNumList(List<String> roomNumList) {
+		this.roomNumList = roomNumList;
 	}
 
 	public String getIdRoomList() {

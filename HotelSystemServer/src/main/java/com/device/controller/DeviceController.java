@@ -18,11 +18,11 @@ public class DeviceController extends BaseController {
 	DeviceService deviceService;
 
 	@ResponseBody
-	@RequestMapping(value = "getAgentByHotelId", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public Map<String, Object> getAgentByHotelId(String hotelId) throws Exception {
+	@RequestMapping(value = "getAgentByInn", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> getAgentByInn(String hotelId) throws Exception {
 		Map<String, Object> map = null;
 		try {
-			map = deviceService.getAgentByHotelId(hotelId);
+			map = deviceService.getAgentByInn(hotelId);
 			success = true;
 			msg = "获取数据成功！";
 		} catch (Exception e) {
@@ -36,12 +36,44 @@ public class DeviceController extends BaseController {
 		return map;
 	}
 
+	
+	/**
+	 * 获取酒店视图中所需的soltList
+	 * @param agentId
+	 * @return
+	 * @throws Exception
+	 */
 	@ResponseBody
 	@RequestMapping(value = "getSoltByAgentId", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public Map<String, Object> getSoltByAgentId(String agentId) throws Exception {
 		Map<String, Object> map = null;
 		try {
 			map = deviceService.getSoltByAgentId(agentId);
+			success = true;
+			msg = "获取数据成功！";
+		} catch (Exception e) {
+			e.printStackTrace();
+			success = false;
+			msg = e.getMessage();
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
+	
+	/**
+	 * 获取客栈视图中所需的agentList
+	 * @param agentId
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "getAgentByHotelId", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> getAgentByHotelId(String hotelId) throws Exception {
+		Map<String, Object> map = null;
+		try {
+			map = deviceService.getAgentByHotelId(hotelId);
 			success = true;
 			msg = "获取数据成功！";
 		} catch (Exception e) {

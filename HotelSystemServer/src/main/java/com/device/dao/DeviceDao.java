@@ -13,4 +13,5 @@ public interface DeviceDao {
 	public List<DeviceDto> getSoltByAgentId(String agentId);
 	public Integer getAgentCount(String hotelId);
 	public Integer getDeviceCount(String hotelId);
+	public List<DeviceDto> getAgentByInn(String hotelId);
 }

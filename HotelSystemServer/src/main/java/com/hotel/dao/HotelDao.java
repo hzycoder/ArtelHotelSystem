@@ -21,4 +21,5 @@ public interface HotelDao {
 	public Integer getRoomCountByHotelID(int hotelID);
 	public List<HotelList> gethotelsByConditions(String hotelName,String hotelAddress,String userID);
 	public List<HotelList> gethotelsByConditions(String hotelName,String hotelAddress);
+	public List<String> getTypeOfHotel(String hotelId);
 }

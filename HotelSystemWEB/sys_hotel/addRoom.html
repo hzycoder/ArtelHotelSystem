@@ -18,6 +18,9 @@
 			    top: 11px;
 			    right: 6px;
 			}
+			.layui-field-box {
+				width: 60%;
+			}
 		</style>
 	</head>
 	<body>
@@ -31,6 +34,7 @@
 							<option value=""></option>
 						</select>
 					</div>
+					<div class="layui-btn" id="batchAdd" style="float: left;">开启批量增加</div>
 				</div>
 			</div>
 		</blockquote>
@@ -51,15 +55,17 @@
 						</div>
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label">房间编号</label>
-						<div class="layui-input-block">
-							<input type="text" name="roomNum" required lay-verify="required" class="layui-input" value="测试编号">
+						<label class="layui-form-label">房间编号<i class="form-required-point">*</i></label>
+						<div class="layui-input-block" >
+							<input id="roomNumInput" type="text" name="roomNum" class="layui-input" >
+							<textarea id="roomNumTextarea" type="text" name="roomNumList" class="layui-textarea" style="display:none;resize: none;" value="101,102,103,104，101,102,103,104，101,102,103,104，101,102,103,104，101,102,103,104，"></textarea>
+							<div id="roomNumPrompt" class="layui-form-mid layui-word-aux" style="display: none;">批量增加：使用逗号把房间编号隔开，如：101,102,103,104</br>注：批量增加的房间将添加到同一楼层</div>
 						</div>
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label">楼层</label>
+						<label class="layui-form-label">楼层<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input type="text" name="floor" required lay-verify="required" class="layui-input" value="测试楼层">
+							<input type="text" name="floor" required lay-verify="required" class="layui-input" >
 						</div>
 					</div>
 					<div class="layui-form-item">

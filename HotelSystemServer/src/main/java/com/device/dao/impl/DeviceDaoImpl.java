@@ -38,7 +38,6 @@ public class DeviceDaoImpl implements DeviceDao {
 				+ "R.idRoomList idRoomList,"
 				+ "R.RoomID roomId,"
 				+ "R.roomNum roomNum,"
-				+ "R.soltNum soltNum,"
 				+ "R.floor floor,"
 				+ "R.HotelList_idHotelList hotelId,"
 				+ "S.idsoltList idSoltList,"
@@ -62,7 +61,6 @@ public class DeviceDaoImpl implements DeviceDao {
 				.addScalar("idRoomList")
 				.addScalar("roomId")
 				.addScalar("roomNum")
-				.addScalar("soltNum")
 				.addScalar("floor")
 				.addScalar("hotelId")
 				.addScalar("idSoltList")
@@ -137,6 +135,48 @@ public class DeviceDaoImpl implements DeviceDao {
 				+ hotelId
 				+ "')");
 		return (Integer) sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DeviceDto> getAgentByInn(String hotelId) {
+		StringBuffer sql = new StringBuffer();
+				sql.append("SELECT R.idRoomList idRoomList,"
+						+ "R.RoomID roomId,"
+						+ "R.roomNum roomNum,"
+						+ "R.floor floor,"
+						+ "R.HotelList_idHotelList hotelId,"
+						+ "S.idsoltList idSoltList,"
+						+ "S.subNetNum subNetNum,"
+						+ "S.AgentList_idAgentList agentId "
+						+ "FROM "
+						+ "SoltList S,"
+						+ "RoomSoltList RS,"
+						+ "RoomList R "
+						+ "WHERE "
+						+ "RS.RoomList_idRoomList=R.idRoomList "
+						+ "AND "
+						+ "RS.soltList_idsoltList = S.idsoltList "
+						+ "AND "
+						+ "S.AgentList_idAgentList "
+						+ "IN("
+						+ "SELECT "
+						+ "HA.AgentList_idAgentList "
+						+ "FROM "
+						+ "HotelAgentList HA "
+						+ "WHERE "
+						+ "HA.HotelList_idHotelList="
+						+ "'"
+						+ Integer.valueOf(hotelId)
+						+ "')");
+		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).addScalar("idRoomList")
+				.addScalar("roomId")
+				.addScalar("roomNum")
+				.addScalar("floor")
+				.addScalar("hotelId")
+				.addScalar("idSoltList")
+				.addScalar("subNetNum")
+				.addScalar("agentId").setResultTransformer(Transformers.aliasToBean(DeviceDto.class)).list();
 	}
 	
 	

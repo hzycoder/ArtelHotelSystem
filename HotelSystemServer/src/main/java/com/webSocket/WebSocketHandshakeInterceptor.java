@@ -2,6 +2,7 @@ package com.webSocket;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -22,10 +23,18 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
 	}
 
 	@Override
-	public boolean beforeHandshake(ServerHttpRequest arg0, ServerHttpResponse arg1, WebSocketHandler arg2,
-			Map<String, Object> arg3) throws Exception {
-		logger.info("拦截器！");
-		return true;
+	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler arg2,
+			Map<String, Object> attributes) throws Exception {
+		logger.info("beforeHandshke");
+		String agentId = ((ServletServerHttpRequest)request).getServletRequest().getParameter("agentId");
+		logger.info("get agentId from client:"+agentId);
+		if (StringUtils.isNotBlank(agentId)) {
+			attributes.put("agentId", agentId);
+			return true;
+		}else {
+			logger.info("websocket's parameter is wrong");
+			return false;
+		}
 	}
 
 }

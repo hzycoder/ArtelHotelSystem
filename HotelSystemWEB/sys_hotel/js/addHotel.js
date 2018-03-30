@@ -65,8 +65,10 @@
 				"type": "GET",
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					iEvent.initUserSelect(data.result);
+					console.log("user info :"+JSON.stringify(data))
+					iEvent.initUserSelect(data.data);
 					if(data && data.success) { //如果登录成功
+						
 					} else {
 						layer.msg("系统内部错误！", { //显示失败信息
 							icon: 2,

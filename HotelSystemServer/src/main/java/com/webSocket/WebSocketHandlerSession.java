@@ -4,34 +4,35 @@ import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.apache.log4j.Logger;
+import org.springframework.web.socket.WebSocketSession;
 
-
+/**
+ * @author huangzhenyang 根据sessionId标识的websocketHanlder
+ */
 public class WebSocketHandlerSession {
-	private static final Logger logger = Logger.getLogger(WebSocketHandlerSession.class);
-	public static ConcurrentMap<String, WebSocketHandler> WebSocketHandlerSessionMap = new ConcurrentHashMap<>();
+	public static ConcurrentMap<String, WebSocketSession> WebSocketHandlerSessionMap = new ConcurrentHashMap<>();
 
-	public static void put(String id, WebSocketHandler webSocketHandler) {
-		WebSocketHandlerSessionMap.put(id, webSocketHandler);
+	public static void put(String sessionId, WebSocketSession session) {
+		WebSocketHandlerSessionMap.put(sessionId, session);
 	}
 
-	public static WebSocketHandler get(String id) {
-		return WebSocketHandlerSessionMap.get(id);
+	public static WebSocketSession get(String sessionId) {
+		return WebSocketHandlerSessionMap.get(sessionId);
 	}
 
-	public static void remove(String id) {
-		WebSocketHandlerSessionMap.remove(id);
+	public static void remove(String sessionId) {
+		WebSocketHandlerSessionMap.remove(sessionId);
 	}
 
-	public static Collection<WebSocketHandler> getValues() {
+	public static Collection<WebSocketSession> getValues() {
 		return WebSocketHandlerSessionMap.values();
 	}
-	
-	public static void print(){
-//		logger.info(WebSocketHandlerSessionMap.toString());
+
+	public static void print() {
 		System.out.println(WebSocketHandlerSessionMap.toString());
 	}
-	public static boolean containKey(String key){
-		return WebSocketHandlerSessionMap.containsKey(key);
+
+	public static boolean containKey(String sessionId) {
+		return WebSocketHandlerSessionMap.containsKey(sessionId);
 	}
 }

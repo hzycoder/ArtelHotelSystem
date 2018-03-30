@@ -17,7 +17,7 @@ var navs = [{
 	{
 		"title": "房间管理",
 		"icon": "&#xe68e;",
-		"spread": true,
+		"spread": false,
 		"children": [{
 				"title": "房间查询",
 				"icon": "&#xe615;",
@@ -33,7 +33,7 @@ var navs = [{
 	{
 		"title": "设备管理",
 		"icon": "&#xe631;",
-		"spread": false,
+		"spread": true,
 		"children": [{
 				"title": "在线监测",
 				"icon": "&#xe62c;",
@@ -85,6 +85,10 @@ var navs = [{
 		"spread": false,
 		"children": [{
 			"title": "故障检索",
+			"icon": "&#xe615;",
+			"href": "common/img/ArtelLogo.jpg"
+		},{
+			"title": "数据导出",
 			"icon": "&#xe615;",
 			"href": "common/img/ArtelLogo.jpg"
 		}, ]

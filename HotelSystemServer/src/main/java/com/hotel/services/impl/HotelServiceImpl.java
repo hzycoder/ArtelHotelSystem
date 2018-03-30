@@ -134,19 +134,23 @@ public class HotelServiceImpl implements HotelService {
 		int roomCount = hotelDao.getRoomCountByHotelID(roomDto.getHotelId());
 		roomList.setRoomId(roomDto.getHotelNum() + "_" + String.valueOf(roomCount));
 		roomList.setHotelId(roomDto.getHotelId());
-		if (StringUtils.isNotBlank(roomDto.getIdRoomList())) {
-			roomList.setIdRoomList(Integer.valueOf(roomDto.getIdRoomList()));
-		}
-		if (StringUtils.isNotBlank(roomDto.getFloor())) {
-			roomList.setFloor(roomDto.getFloor());
-		}
-		if (StringUtils.isNotBlank(roomDto.getRoomId())) {
-			roomList.setRoomId(roomDto.getRoomId());
-		}
-		if (StringUtils.isNotBlank(roomDto.getRoomNum())) {
-			roomList.setRoomNum(roomDto.getRoomNum());
-		}
+		roomList.setFloor(roomDto.getFloor());
+		roomList.setRoomNum(roomDto.getRoomNum());
 		hotelDao.addRoom(roomList);
+	}
+
+	@Override
+	public void batchAddRoom(RoomDto roomDto) {
+		int roomNumSize = roomDto.getRoomNumList().size();
+		for (int i = 0; i < roomNumSize; i++) {
+			RoomList roomList = new RoomList();
+			int roomCount = hotelDao.getRoomCountByHotelID(roomDto.getHotelId());
+			roomList.setRoomId(roomDto.getHotelNum() + "_" + String.valueOf(roomCount));
+			roomList.setHotelId(roomDto.getHotelId());
+			roomList.setFloor(roomDto.getFloor());
+			roomList.setRoomNum(roomDto.getRoomNumList().get(i));
+			hotelDao.addRoom(roomList);
+		}
 	}
 
 	@Override
@@ -170,6 +174,15 @@ public class HotelServiceImpl implements HotelService {
 			map.put("msg", "删除成功！");
 			map.put("success", true);
 		}
+		return map;
+	}
+
+	
+	@Override
+	public Map<String, Object> getTypeOfHotel(String hotelId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> deviceCountList = hotelDao.getTypeOfHotel(hotelId);
+		map.put("data", deviceCountList);
 		return map;
 	}
 

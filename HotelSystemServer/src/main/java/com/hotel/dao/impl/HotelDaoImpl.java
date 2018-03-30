@@ -100,4 +100,29 @@ public class HotelDaoImpl implements HotelDao {
 		return temp;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getTypeOfHotel(String hotelId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT "
+				+ "A.deviceCount "
+				+ "FROM "
+				+ "AgentList A "
+				+ "WHERE "
+				+ "A.idAgentList "
+				+ "IN "
+				+ "(SELECT "
+				+ "HA.AgentList_idAgentList "
+				+ "FROM "
+				+ "HotelAgentList HA "
+				+ "WHERE "
+				+ "HA.HotelList_idHotelList "
+				+ "="
+				+ "'"
+				+ hotelId
+				+ "')");
+		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).list();
+		
+	}
+
 }
