@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.common.pojo.AgentList;
+import com.common.pojo.RoomSoltList;
 import com.device.dao.DeviceDao;
+import com.device.dto.AgentDto;
 import com.device.dto.DeviceCountDto;
 import com.device.dto.DeviceDto;
 import com.device.services.DeviceService;
@@ -53,6 +55,22 @@ public class DeviceServiceImpl implements DeviceService {
 		Map<String, Object> map = new HashMap<String,Object>();
 		List<DeviceDto> agentList = deviceDao.getAgentByInn(hotelId);
 		map.put("data", agentList);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getAgentAndRoomRelations(String agentId) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		List<AgentDto> list = deviceDao.getAgentAndRoomRelations(agentId);
+		map.put("data", list);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getslotIdByAgentId(String agentId) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		String slotId = deviceDao.getslotIdByAgentId(agentId).toString();
+		map.put("data", slotId);
 		return map;
 	}
 

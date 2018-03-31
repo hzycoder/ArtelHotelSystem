@@ -10,10 +10,13 @@ import org.springframework.stereotype.Repository;
 import com.common.pojo.AgentList;
 import com.common.pojo.HotelAgentList;
 import com.common.pojo.RoomList;
+import com.common.pojo.RoomSoltList;
 import com.common.pojo.SoltList;
 import com.device.dao.DeviceDao;
+import com.device.dto.AgentDto;
 import com.device.dto.DeviceDto;
 
+import freemarker.ext.dom.Transform;
 import javassist.convert.Transformer;
 
 /**
@@ -178,7 +181,66 @@ public class DeviceDaoImpl implements DeviceDao {
 				.addScalar("subNetNum")
 				.addScalar("agentId").setResultTransformer(Transformers.aliasToBean(DeviceDto.class)).list();
 	}
-	
-	
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AgentDto> getAgentAndRoomRelations(String agentId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT A.idAgentList idAgentList,"
+				+ "A.macAddress macAddress,"
+				+ "A.createTime createTime,"
+				+ "A.deviceCount deviceCount,"
+				+ "RS.idRoomSlotList idRoomSlotList,"
+				+ "RS.soltList_idsoltList idsoltList,"
+				+ "RS.RoomList_idRoomList idRoomList,"
+				+ "R.RoomID roomId,"
+				+ "R.roomNum roomNum,"
+				+ "R.floor floor,"
+				+ "R.HotelList_idHotelList hotelId "
+				+ "FROM "
+				+ "RoomSoltList RS,"
+				+ "AgentList A,"
+				+ "RoomList R "
+				+ "WHERE "
+				+ "RS.soltList_idsoltList = ("
+				+ "SELECT "
+				+ "S.idsoltList "
+				+ "FROM "
+				+ "SoltList S "
+				+ "WHERE "
+				+ "S.AgentList_idAgentList"
+				+ "="
+				+ "'"
+				+ agentId
+				+ "'"
+				+ " AND "
+				+ "A.idAgentList"
+				+ "="
+				+ "'"
+				+ agentId
+				+ "'"
+				+ " AND "
+				+ "S.subNetNum='0'"
+				+ "AND "
+				+ "R.idRoomList "
+				+ "="
+				+ " RS.RoomList_idRoomList)");
+		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString())
+				.addScalar("idAgentList")
+				.addScalar("macAddress")
+				.addScalar("createTime")
+				.addScalar("deviceCount")
+				.addScalar("idRoomSlotList")
+				.addScalar("idRoomList")
+				.addScalar("idsoltList")
+				.addScalar("roomId")
+				.addScalar("roomNum")
+				.addScalar("floor")
+				.addScalar("hotelId").setResultTransformer(Transformers.aliasToBean(AgentDto.class)).list();
+	}
+
+	@Override
+	public Integer getslotIdByAgentId(String agentId) {
+		return  (Integer) sessionFactory.getCurrentSession().createQuery("SELECT idsoltList FROM SoltList WHERE agentId = ? AND subNetNum =0").setParameter(0, Integer.valueOf(agentId)).uniqueResult();
+	}
 }

@@ -39,9 +39,6 @@
 					return;
 				}
 				var html = '<div id="repeaters">' +
-					'<div class="repeater">' +
-					'<span class="agentNum">' + "当前中继" + '</span>' +
-					'</div>' +
 					'</div>' +
 					'<div class="connect">' +
 					'<div id="toRepeaterLine"></div>' +
@@ -51,14 +48,13 @@
 					'</div>';
 				var $html = $(html);
 				$("#main").append($html);
-				iEvent.getSolt(data.value);
+				iEvent.getAgentAndRoomRelations(data.value);
 			});
 		},
 	};
 	//event方法：
 	var iEvent = {
-		init: function() {
-		},
+		init: function() {},
 		//获取用户列表(酒店列表)
 		getAllHotel: function() {
 			var userData = JSON.parse(sessionStorage.getItem("user"));
@@ -87,7 +83,7 @@
 			});
 			form.render('select');
 		},
-		//获取deviceCountList
+		//获取deviceCountList,判断是中继还是客栈
 		getTypeOfHotel: function(hotelId) {
 			var hotelType;
 			var index = layer.msg('加载数据中,请稍等...', {
@@ -109,9 +105,12 @@
 							type = "hotel";
 						}
 					});
-					console.log("组网类型"+type);
-					if(hotelType == "Inn") {
+					if(type == "Inn") {
+						$("#agentSelectItem").hide();
+						console.log("组网类型："+type +"====="+hotelId)
 						iEvent.generateInnView(hotelId)
+					}else{
+						$("#agentSelectItem").show();
 					}
 				}
 			});
@@ -129,6 +128,59 @@
 				$("#agentSelect").append('<option value="' + deviceData[i].idAgentList + '">设备地址：' + deviceData[i].macAddress + '</option>')
 			});
 			form.render('select');
+		},
+		//判断中继是否和房间绑定
+		getAgentAndRoomRelations: function(agentId) {
+			var index = layer.msg('加载数据中,请稍等...', {
+				icon: 16,
+				shade: 0.01
+			});
+			ZY.ajax({
+				"url": "device/getAgentAndRoomRelations",
+				"type": "GET",
+				"data": {
+					"agentId": agentId
+				},
+				"contentType": "application/json;charset=UTF-8",
+				"success": function(data) {
+					layer.close(index);
+					console.log("判断绑定数据：" + JSON.stringify(data));
+					if(data.data.length == 0) {
+						iEvent.generateAgentView(0, agentId);
+					} else {
+						iEvent.generateAgentView(1, data.data);
+					}
+				}
+			});
+		},
+		//生成中继视图
+		generateAgentView: function(type, agentData) {
+			if(type == 0) {
+				var slotId = iEvent.getslotIdByAgentId(agentData);
+				//没有绑定房间的中继视图
+				var html = '<div class="solt"  id="soltId' + slotId + '">' +
+					'<div class="soltHead">' +
+					'<span class="roomNum">' +
+					"当前中继" +
+					'</span>' +
+					'</div>' +
+					'</div>';
+				var $html = $(html);
+				$("#repeaters").append($html);
+				iEvent.getSolt(agentData);
+			} else {
+				var html = '<div class="solt"  id="soltId' + agentData[0].idsoltList + '">' +
+					'<div class="soltHead">' +
+					'<span class="roomNum">' +
+					agentData[0].roomNum +
+					'</span>' +
+					'</div>' +
+					'</div>';
+				var $html = $(html);
+				$("#repeaters").append($html);
+				//已经绑定房间的中继视图
+				iEvent.getSolt(agentData[0].idAgentList);
+			}
 		},
 		//获取中继下的卡槽设备
 		getSolt: function(agentId) {
@@ -151,7 +203,6 @@
 						$("#soltList").append($zero);
 						return;
 					}
-					console.log("取电开关" + JSON.stringify(data.data))
 					$.each(data.data, function(index, item) {
 						var soltHtml = '<div class="solt" id=soltId' + item.idSoltList + '>' +
 							'<div class="upLine"></div>' +
@@ -183,7 +234,7 @@
 					});
 					iEvent.startWebSocket(data.value);
 					//从数据库获取当前设备的状态
-					//并把下一句放在succes里面
+					//并把下面这句放在succes里面
 					iEvent.renderDeviceStatus();
 				}
 			});
@@ -203,7 +254,6 @@
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					console.log("中继数据：：：" + JSON.stringify(data))
 					layer.close(index);
 					iEvent.initAgentSelect(data.data);
 				}
@@ -212,7 +262,6 @@
 		},
 		//生成公寓视图
 		generateInnView: function(hotelId) {
-			console.log("hotelid:" + hotelId)
 			var index = layer.msg('加载客栈视图中,请稍等...', {
 				icon: 16,
 				shade: 0.01
@@ -225,7 +274,7 @@
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					console.log("客栈中继" + JSON.stringify(data.data))
+					console.log("客栈数据："+JSON.stringify(data))
 					var html = '<div id="repeaters">' +
 						'<div class="repeater">' +
 						'<span class="agentNum">' + "客栈" + '</span>' +
@@ -239,7 +288,6 @@
 						'</div>';
 					var $html = $(html);
 					$("#main").append($html);
-
 					$.each(data.data, function(index, item) {
 						var soltHtml = '<div class="solt" id=soltId' + item.idSoltList + '>' +
 							'<div class="upLine"></div>' +
@@ -269,6 +317,7 @@
 						var $soltHtml = $(soltHtml);
 						$("#soltList").append($soltHtml);
 					});
+					iEvent.renderDeviceStatus();
 				}
 			});
 			layer.close(index);
@@ -301,7 +350,7 @@
 				console.log("websocket关闭");
 			}
 		},
-		//渲染设备状态
+		//渲染取电开关（不包括中继）状态
 		renderDeviceStatus: function() {
 			$.each(deviceStatus, function(index, item) {
 				//添加mouseover和mouseout效果
@@ -316,6 +365,29 @@
 					layer.closeAll('tips');
 				});
 			});
+		},
+		//根据agentId获取slotId
+		getslotIdByAgentId: function(agentId) {
+			var index  = layer.msg("加载数据中，请稍等...",{
+				icon:16,
+				shade:0.01
+			});
+			var slotId;
+			ZY.ajax({
+				"url": "device/getslotIdByAgentId",
+				"type": "GET",
+				"async": false,
+				"data": {
+					"agentId": agentId
+				},
+				"contentType": "application/json;charset=UTF-8",
+				"success": function(data) {
+					layer.close(index);
+					console.log(JSON.stringify(data));
+					slotId = data.data;
+				}
+			});
+			return slotId;
 		},
 	};
 }());

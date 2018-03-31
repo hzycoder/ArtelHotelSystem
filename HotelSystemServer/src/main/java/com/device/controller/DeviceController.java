@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,9 +37,9 @@ public class DeviceController extends BaseController {
 		return map;
 	}
 
-	
 	/**
 	 * 获取酒店视图中所需的soltList
+	 * 
 	 * @param agentId
 	 * @return
 	 * @throws Exception
@@ -61,9 +62,10 @@ public class DeviceController extends BaseController {
 		}
 		return map;
 	}
-	
+
 	/**
 	 * 获取客栈视图中所需的agentList
+	 * 
 	 * @param agentId
 	 * @return
 	 * @throws Exception
@@ -93,6 +95,51 @@ public class DeviceController extends BaseController {
 		Map<String, Object> map = null;
 		try {
 			map = deviceService.getDeviceCountByHotelId(hotelId);
+			success = true;
+			msg = "获取数据成功！";
+		} catch (Exception e) {
+			e.printStackTrace();
+			success = false;
+			msg = e.getMessage();
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
+
+	/**
+	 * 判断中继是否绑定房间
+	 * 
+	 * @param agentId
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "getAgentAndRoomRelations", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> getAgentAndRoomRelations(String agentId) throws Exception {
+		Map<String, Object> map = null;
+		try {
+			map = deviceService.getAgentAndRoomRelations(agentId);
+			success = true;
+			msg = "获取数据成功！";
+		} catch (Exception e) {
+			e.printStackTrace();
+			success = false;
+			msg = e.getMessage();
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "getslotIdByAgentId", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> getslotIdByAgentId(String agentId) throws Exception {
+		Map<String, Object> map = null;
+		try {
+			map = deviceService.getslotIdByAgentId(agentId);
 			success = true;
 			msg = "获取数据成功！";
 		} catch (Exception e) {
