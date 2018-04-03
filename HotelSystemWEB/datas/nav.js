@@ -1,7 +1,7 @@
 var navs = [{
 		"title": "酒店管理",
 		"icon": "&#xe68e;",
-		"spread": false,
+		"spread": true,
 		"children": [{
 				"title": "酒店查询",
 				"icon": "&#xe615;",
@@ -33,7 +33,7 @@ var navs = [{
 	{
 		"title": "设备管理",
 		"icon": "&#xe631;",
-		"spread": true,
+		"spread": false,
 		"children": [{
 				"title": "在线监测",
 				"icon": "&#xe62c;",

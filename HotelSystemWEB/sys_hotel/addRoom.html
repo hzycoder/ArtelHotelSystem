@@ -7,76 +7,115 @@
 		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
 		<style type="text/css">
 			.layui-elem-field {
-				margin: 20px;
-				padding-left: 15px;
-				padding-right: 15px;
+				margin: 8px 16px 0 16px;
 			}
-			.form-required-point{
-			    color: red;
-			    font-size: 16px;
-			    position: absolute;
-			    top: 11px;
-			    right: 6px;
+			
+			form .layui-form-item {
+				margin: 0 auto;
+				margin-bottom: 18px;
+				width: 650px;
 			}
-			.layui-field-box {
-				width: 60%;
+			
+			.form-required-point {
+				color: red;
+				font-size: 16px;
+				position: absolute;
+				top: 11px;
+				right: 6px;
+			}
+			
+			.layui-layer-open {
+				background-color: grey;
+			}
+			
+			.floorElement {
+				width: 100%;
+				font-size: 18px;
+				background-color: #F0F0F0;
+				text-align: center;
+				margin-bottom: 5px;
+			}
+			
+			.roomElement {
+				background-color: #009688;
+				width: auto;
+				min-width: 60px;
+				height: 30px;
+				display: inline-block;
+				border-radius: 10px;
+				margin-bottom: 4px;
+				margin-left: 4px;
+			}
+			
+			.roomElementIcon {
+				font-size: 24px;
+				cursor: pointer;
+				color: white;
+			}
+			
+			.roomElementNum {
+				margin-left: 4px;
+				margin-right: 6px;
+				width: auto;
+				font-size: 25px;
 			}
 		</style>
 	</head>
+
 	<body>
 		<div class="admin-main">
-		<blockquote class="layui-elem-quote">
-			<div class="layui-form">
-				<div class="layui-form-item">
-					<label class="layui-form-label">选择酒店<i class="form-required-point">*</i></label>
-					<div class="layui-input-inline" style="width: 600px;">
-						<select name="hotelID" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
-							<option value=""></option>
-						</select>
+			<blockquote class="layui-elem-quote">
+				<div class="layui-form">
+					<div class="layui-form-item">
+						<label class="layui-form-label">选择酒店<i class="form-required-point">*</i></label>
+						<div class="layui-input-inline" style="width: 600px;">
+							<select name="hotelID" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
+								<option value=""></option>
+							</select>
+						</div>
+						<div class="layui-btn" id="batchAdd" style="float: left;">开启批量增加</div>
 					</div>
-					<div class="layui-btn" id="batchAdd" style="float: left;">开启批量增加</div>
 				</div>
-			</div>
-		</blockquote>
-		<fieldset class="layui-elem-field">
-			<legend>添加房间</legend>
-			<div class="layui-field-box">
-				<form class="layui-form">
-					<div class="layui-form-item" style="display: none;">
-						<label class="layui-form-label"></label>
-						<div class="layui-input-block">
-							<input id="hotelID" type="text" name="hotelID" required lay-verify="required" class="layui-input">
+			</blockquote>
+			<fieldset class="layui-elem-field">
+				<legend align="center">添加房间</legend>
+				<div class="layui-field-box">
+					<form class="layui-form">
+						<div class="layui-form-item" style="display: none;">
+							<label class="layui-form-label"></label>
+							<div class="layui-input-block">
+								<input id="hotelID" type="text" name="hotelID" required lay-verify="required" class="layui-input">
+							</div>
 						</div>
-					</div>
-					<div class="layui-form-item" style="display: none;">
-						<label class="layui-form-label"></label>
-						<div class="layui-input-block">
-							<input id="hotelNum" type="text" name="hotelNum" required lay-verify="required" class="layui-input">
+						<div class="layui-form-item" style="display: none;">
+							<label class="layui-form-label"></label>
+							<div class="layui-input-block">
+								<input id="hotelNum" type="text" name="hotelNum" required lay-verify="required" class="layui-input">
+							</div>
 						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">房间编号<i class="form-required-point">*</i></label>
-						<div class="layui-input-block" >
-							<input id="roomNumInput" type="text" name="roomNum" class="layui-input" >
-							<textarea id="roomNumTextarea" type="text" name="roomNumList" class="layui-textarea" style="display:none;resize: none;" value="101,102,103,104，101,102,103,104，101,102,103,104，101,102,103,104，101,102,103,104，"></textarea>
-							<div id="roomNumPrompt" class="layui-form-mid layui-word-aux" style="display: none;">批量增加：使用逗号把房间编号隔开，如：101,102,103,104</br>注：批量增加的房间将添加到同一楼层</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">房间编号<i class="form-required-point">*</i></label>
+							<div class="layui-input-block">
+								<input id="roomNumInput" type="text" name="roomNum" class="layui-input">
+								<textarea id="roomNumTextarea" type="text" name="roomNumList" class="layui-textarea" style="display:none;resize: none;"></textarea>
+								<div id="roomNumPrompt" class="layui-form-mid layui-word-aux" style="display: none;">批量增加：使用逗号把房间编号隔开，如：101,102,103,104</br>注：批量增加的房间将添加到同一楼层</div>
+							</div>
 						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">楼层<i class="form-required-point">*</i></label>
-						<div class="layui-input-block">
-							<input type="text" name="floor" required lay-verify="required" class="layui-input" >
+						<div class="layui-form-item">
+							<label class="layui-form-label">楼层<i class="form-required-point">*</i></label>
+							<div class="layui-input-block">
+								<input type="text" name="floor" required lay-verify="required" class="layui-input" autocomplete="off" />
+							</div>
 						</div>
-					</div>
-					<div class="layui-form-item">
-						<div class="layui-input-block">
-							<button type="button" class="layui-btn" lay-submit lay-filter="addRoom">立即提交</button>
-							<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button type="button" class="layui-btn" lay-submit lay-filter="addRoom">立即提交</button>
+								<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
+							</div>
 						</div>
-					</div>
-				</form>
-			</div>
-		</fieldset>
+					</form>
+				</div>
+			</fieldset>
 		</div>
 		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>

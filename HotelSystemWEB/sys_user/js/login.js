@@ -103,7 +103,7 @@
 						//跳转页面
 						sessionStorage.setItem("user", JSON.stringify(data.result));
 						setTimeout(function() {
-							window.location.href = "../index.html";
+							window.location.href = "index.html";
 						}, 300);
 					} else {
 						layer.msg(data.error, { //显示失败信息

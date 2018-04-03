@@ -16,7 +16,13 @@
 				padding-left: 15px;
 				padding-right: 15px;
 			}
-			
+			.form-required-point {
+				color: red;
+				font-size: 16px;
+				position: absolute;
+				top: 11px;
+				right: 6px;
+			}
 			.layui-field-box {
 				width: 60%;
 			}
@@ -39,7 +45,7 @@
 		<blockquote class="layui-elem-quote">
 			<div class="layui-form"  lay-filter="deviceFormFilter">
 				<div class="layui-form-item" style="margin-bottom: 0px; display: block;">
-					<label class="layui-form-label">选择酒店</label>
+					<label class="layui-form-label">选择酒店<i class="form-required-point">*</i></label>
 					<div class="layui-input-inline" style="width: 600px;">
 						<select name="hotelManager" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
 							<option value=""></option>
@@ -47,7 +53,7 @@
 					</div>
 				</div>
 				<div class="layui-form-item" style="margin-bottom: 0px; margin-top: 6px;display: block;">
-					<label class="layui-form-label">选择中继</label>
+					<label class="layui-form-label">选择中继<i class="form-required-point">*</i></label>
 					<div class="layui-input-inline" style="width: 600px;">
 						<select name="agents"  lay-verify="required" id="agentSelect" lay-filter="agentSelect">
 							<option value=""></option>

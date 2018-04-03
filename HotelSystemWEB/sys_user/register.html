@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
 		<style type="text/css">
 			.layui-elem-field {
-				margin: 10px 300px 0px 20px;
+				margin: 8px 16px 0 16px;
 			}
 			
 			.form-required-point {
@@ -17,49 +17,50 @@
 				top: 11px;
 				right: 6px;
 			}
+			
+			.layui-form-item {
+				margin: 0 auto;
+				margin-bottom: 18px;
+				width: 650px;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				width: 280px;
+			}
+			
+			.error {
+				color: red;
+			}
 		</style>
 	</head>
 
 	<body>
 		<fieldset class="layui-elem-field">
-			<legend>填写以下信息</legend>
+			<legend align="center">填写以下信息</legend>
 			<div class="layui-field-box">
 				<form class="layui-form" id="registerForm">
 					<div class="layui-form-item">
 						<label class="layui-form-label">账号<i class="form-required-point">*</i></label>
-						<div class="layui-input-inline">
-							<input id="accountInput" type="text" name="account" class="layui-input ">
+						<div class="layui-input-block">
+							<input id="accountInput" type="text" name="account" class="layui-input" maxlength="32" placeholder="该账号用于登录" autocomplete="off" value="123456" />
 						</div>
-						<div class="layui-form-mid layui-word-aux">该账号用于登录</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">昵称<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input id="userNameInput" type="text" name="userName"  class="layui-input ">
+							<input id="userNameInput" type="text" name="userName" class="layui-input" maxlength="32" placeholder="昵称：（例：广州××酒店经理" autocomplete="off" value="mike_jack" />
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">密码<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input id="passwordInput" class="layui-input" type="password" name="password"/>
+							<input id="passwordInput" class="layui-input" type="password" name="password" maxlength="16" placeholder="密码（6-16字符组成，区分大小写" autocomplete="off" value="888888" />
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">重复密码<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input id="rePasswordInput" class="layui-input" type="password" name="rePassword" />
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">联系方式</label>
-						<div class="layui-input-block">
-							<input id="userPhoneInput" type="text" name="userPhone" class="layui-input ">
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">所在地区</label>
-						<div class="layui-input-block">
-							<input id="positionInput" type="text" name="position" class="layui-input ">
+							<input id="rePasswordInput" class="layui-input" type="password" name="rePassword" maxlength="16" placeholder="请重复输入密码" autocomplete="off" value="888888" />
 						</div>
 					</div>
 					<div class="layui-form-item">

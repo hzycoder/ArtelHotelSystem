@@ -1,7 +1,6 @@
 package com.user.dao.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -41,7 +40,6 @@ public class UserDaoImpl implements UserDao {
 	public Integer existUser(LoginDto loginDto) {
 		return (Integer) sessionFactory.getCurrentSession().createQuery("SELECT id FROM LoginUserList WHERE account = ?")
 		.setParameter(0, loginDto.getAccount()).uniqueResult();
-		
 	}
 
 	@Override

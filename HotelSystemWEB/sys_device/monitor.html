@@ -18,6 +18,13 @@
 				margin: 0px;
 			}
 			
+			.form-required-point {
+				color: red;
+				font-size: 16px;
+				position: absolute;
+				top: 11px;
+				right: 6px;
+			}
 			#badgeList {
 				display: inline;
 				margin-left: 30px;
@@ -239,7 +246,7 @@
 			<blockquote class="layui-elem-quote">
 				<div class="layui-form" lay-filter="monitorFormFilter">
 					<div class="layui-form-item" style="margin-bottom: 0px;">
-						<label class="layui-form-label">选择酒店</label>
+						<label class="layui-form-label">选择酒店<i class="form-required-point">*</i></label>
 						<div class="layui-input-inline" style="width: 600px;">
 							<select name="hotelManager" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
 								<option value=""></option>
@@ -247,7 +254,7 @@
 						</div>
 					</div>
 					<div id="agentSelectItem" class="layui-form-item" style="margin-bottom: 0px; margin-top: 6px;">
-						<label class="layui-form-label">选择中继</label>
+						<label class="layui-form-label">选择中继<i class="form-required-point">*</i></label>
 						<div class="layui-input-inline" style="width: 600px;">
 							<select name="agents" lay-verify="required" id="agentSelect" lay-filter="agentSelect">
 								<option value=""></option>

@@ -7,51 +7,50 @@
 		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
 		<style type="text/css">
 			.layui-elem-field {
-				margin: 20px;
-				padding-left: 15px;
-				padding-right: 15px;
+				margin: 8px 16px 0 16px;
 			}
-			.layui-field-box {
-				width: 60%;
+			
+			.layui-form-item {
+				margin: 0 auto;
+				margin-bottom: 18px;
+				width: 650px;
+			}
+			
+			.form-required-point {
+				color: red;
+				font-size: 16px;
+				position: absolute;
+				top: 11px;
+				right: 6px;
 			}
 		</style>
 	</head>
 
 	<body>
 		<fieldset class="layui-elem-field">
-			<legend>添加酒店</legend>
+			<legend align="center">添加酒店</legend>
 			<div class="layui-field-box">
 				<form class="layui-form">
 					<div class="layui-form-item">
-						<label class="layui-form-label">酒店名称</label>
+						<label class="layui-form-label">酒店名称<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input type="text" name="hotelName" required lay-verify="required" class="layui-input" value="测试酒店">
+							<input type="text" name="hotelName" required lay-verify="required" class="layui-input" autocomplete="off" />
 						</div>
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label">编号</label>
+						<label class="layui-form-label">编号<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input id="hotelID" type="text" name="hotelId" required lay-verify="required" class="layui-input">
+							<input id="hotelID" type="text" name="hotelId" required lay-verify="required" class="layui-input" autocomplete="off" />
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">地址</label>
 						<div class="layui-input-block">
-							<textarea type="" name="address" required lay-verify="required" class="layui-textarea" style="resize: none;">东莞虎门万科</textarea>
+							<textarea type="" name="address" class="layui-textarea" style="resize: none;"></textarea>
 						</div>
 					</div>
-					<!--<div class="layui-form-item">
-						<label class="layui-form-label">中继数量</label>
-						<div class="layui-input-inline">
-							<input type="number" name="repeaterCount" required lay-verify="required" class="layui-input" value="100">
-						</div>
-						<label class="layui-form-label">设备数量</label>
-						<div class="layui-input-inline">
-							<input type="number" name="deviceCount" required lay-verify="required" class="layui-input" value="100">
-						</div>
-					</div>-->
 					<div class="layui-form-item">
-						<label class="layui-form-label">状态</label>
+						<label class="layui-form-label">状态<i class="form-required-point">*</i></label>
 						<div class="layui-input-inline">
 							<select name="status" lay-verify="required">
 								<option value=""></option>
@@ -62,15 +61,14 @@
 						</div>
 						<label class="layui-form-label" style="font-size: 13px;">酒店联系电话</label>
 						<div class="layui-input-inline">
-							<input  name="hotelPhone" required lay-verify="required" class="layui-input" value="8888888" />
+							<input name="hotelPhone" class="layui-input" autocomplete="off" />
 						</div>
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label" style="font-size: 13px;">酒店所属账户</label>
+						<label class="layui-form-label" style="font-size: 13px;">酒店所属账户<i class="form-required-point">*</i></label>
 						<div class="layui-input-inline">
 							<select name="hotelManager" lay-verify="required" id="accountSelect">
 								<option value=""></option>
-								<!--<option value="1" selected>admin001</option>-->
 							</select>
 						</div>
 					</div>

@@ -35,12 +35,8 @@ public class ClientBootstrap {
 			protected void initChannel(SocketChannel socketChannel) throws Exception {
 				// 添加消息编解码
 				ChannelPipeline pipeline = socketChannel.pipeline();
-				// pipeline.addLast(new LineBasedFrameDecoder(1024));
-				// pipeline.addLast(new StringDecoder());
-				// 编码
-				pipeline.addLast(new LengthFieldPrepender(10, false));
-				// 解码
-				pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 10, 0, 10));
+				pipeline.addLast(new SyncFrameCoder());
+				pipeline.addLast(new SyncFrameDecoder());
 				// 添加handler
 				pipeline.addLast(new ClientHandler());
 			}
@@ -49,28 +45,27 @@ public class ClientBootstrap {
 
 		// 让客户端和服务端连接
 		ChannelFuture channelFuture = bootstrap.connect(ip, port);
-		try {
-			if (channelFuture.isSuccess()) {
-				System.out.println("成功");
-			} else {
-				System.out.println("失败");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("失败？");
-		}
-		// channelFuture.addListener(new ChannelFutureListener() {
-		// @Override
-		// public void operationComplete(ChannelFuture future) throws Exception
-		// {
-		// if (future.isSuccess()) {
-		// System.out.println("※※※※※※※※※※※Connect susccess");
+		// try {
+		// if (channelFuture.isSuccess()) {
+		// System.out.println("成功");
 		// } else {
-		// System.out.println("※※※※※※※※※※※Connect failure");
+		// System.out.println("失败");
 		// }
-		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// System.out.println("失败？");
 		// }
-		// });
+		channelFuture.addListener(new ChannelFutureListener() {
+			@Override
+			public void operationComplete(ChannelFuture future) throws Exception {
+				if (future.isSuccess()) {
+					System.out.println("※※※※※※※※※※※Connect susccess");
+				} else {
+					System.out.println("※※※※※※※※※※※Connect failure");
+				}
+
+			}
+		});
 
 	}
 

@@ -35,15 +35,27 @@ public class HotelServiceImpl implements HotelService {
 	public Map<String, Object> getHotels(String userID, String permission) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<HotelList> hotelList = null;
-		String sql = "";
+		StringBuffer sql = new StringBuffer();
 		if (Integer.valueOf(permission) == 0) {
 			hotelList = hotelDao.gethotels();
-			sql = "SELECT COUNT(*) FROM HotelList";
+			sql.append("SELECT "
+					+ "COUNT(*) "
+					+ "FROM "
+					+ "HotelList");
 		} else {
 			hotelList = hotelDao.gethotels(userID);
-			sql = "SELECT COUNT(*) FROM HotelList WHERE hotelManager = '" + userID + "'";
+			sql.append("SELECT"
+					+ " COUNT(*)"
+					+ " FROM"
+					+ " HotelList"
+					+ " WHERE"
+					+ " hotelManager"
+					+ " = "
+					+ "'" 
+					+ userID 
+					+ "'");
 		}
-		int count = commonDao.getCount(sql);
+		int count = commonDao.getCount(sql.toString());
 		map.put("data", hotelList);
 		map.put("count", count);
 		return map;
@@ -55,17 +67,51 @@ public class HotelServiceImpl implements HotelService {
 			String permission) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<HotelList> hotelList;
-		String sql = "";
+		StringBuffer sql = new StringBuffer();
 		if (Integer.valueOf(permission) == 0) {
 			hotelList = hotelDao.gethotelsByConditions(hotelName, address);
-			sql = "SELECT COUNT(*) FROM HotelList WHERE hotelName like '%" + hotelName + "%' and address like '%"
-					+ address + "%'";
+			sql.append("SELECT"
+					+ " COUNT(*)"
+					+ " FROM"
+					+ " HotelList"
+					+ " WHERE"
+					+ " hotelName"
+					+ " like"
+					+ " '%" 
+					+ hotelName 
+					+ "%'"
+					+ " and"
+					+ " address"
+					+ " like "
+					+ "'%"
+					+ address 
+					+ "%'");
 		} else {
 			hotelList = hotelDao.gethotelsByConditions(hotelName, address, userID);
-			sql = "SELECT COUNT(*) FROM HotelList WHERE hotelName like '%" + hotelName + "%' and address like '%"
-					+ address + "%' and hotelManager = '" + userID + "'";
+			sql.append("SELECT"
+					+ " COUNT(*)"
+					+ " FROM"
+					+ " HotelList"
+					+ " WHERE"
+					+ " hotelName"
+					+ " like"
+					+ " '%" 
+					+ hotelName 
+					+ "%'"
+					+ " and"
+					+ " address"
+					+ " like"
+					+ " '%"
+					+ address 
+					+ "%'"
+					+ " and"
+					+ " hotelManager"
+					+ " = "
+					+ "'" 
+					+ userID 
+					+ "'");
 		}
-		int count = commonDao.getCount(sql);
+		int count = commonDao.getCount(sql.toString());
 		map.put("data", hotelList);
 		map.put("count", count);
 		return map;
@@ -120,9 +166,6 @@ public class HotelServiceImpl implements HotelService {
 		}
 		if (StringUtils.isNotBlank(hotelDto.getHotelId())) {
 			hotelList.setHotelId(hotelDto.getHotelId());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getIdHotelList())) {
-			hotelList.setIdHotelList(Integer.valueOf(hotelDto.getIdHotelList()));
 		}
 		hotelList.setCreateTime(new Timestamp(new Date().getTime()));
 		hotelDao.addHotel(hotelList);

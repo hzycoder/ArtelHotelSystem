@@ -1,6 +1,9 @@
 (function() {
 	//全局变量定义：
 	var form;
+	var btnArray = new Array();
+	btnArray.push('<span style="color: #ffffff;transition:color 1s linear;">确定无误</span>');
+	btnArray.push('<span>取消<span>');
 	layui.use(["form", ], function() {
 		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 		layer = layui.layer; //获取当前窗口的layer对象
@@ -76,7 +79,33 @@
 				}
 				roomData.roomNumList = iEvent.verifyRoomNumData($("#roomNumTextarea").val());
 				roomData.roomNum = null;
-				iEvent.addRoomAjax(roomData,"batchAddRoom");
+				var index = layer.open({
+					id:"roomDatalListShow",
+					type:1,
+					title:"请确认以下信息",
+					skin:"layui-layer-open",
+					shadeClose:true,
+					btn: btnArray,
+					content:"",
+					fixed:true,
+					area:["400px","300px"],
+					success:function(){
+						var html = '<div class="floorElement">即将在楼层'+roomData.floor+'添加以下房间</div>';
+						var $html = $(html);
+						$("#roomDatalListShow").append($html);
+						$.each(roomData.roomNumList, function(index,item) {
+							var html = '<div class="roomElement">'+
+									'<span class="roomElementNum">'+item+'</span>'+
+									'</div>';
+									var $html = $(html);
+									$("#roomDatalListShow").append($html);
+						});
+					},
+					yes:function(){
+						iEvent.addRoomAjax(roomData,"batchAddRoom");
+						layer.close(index);
+					},
+				});
 			}
 			
 		},

@@ -197,18 +197,22 @@ public class HotelController extends BaseController {
 		Map<String, Object> map = null;
 		try {
 			map = hotelService.delRoom(roomID);
+			success = false;
+			msg = "删除成功!";
 		} catch (Exception e) {
 			e.printStackTrace();
-			success = false;
+			success = true;
 			msg = "系统内部错误!";
+		} finally {
 			map.put("msg", msg);
+			map.put("success", success);
 		}
 		return map;
 	}
-	
-	
+
 	/**
 	 * 通过查询中继下的设备数量，判断是公寓或酒店
+	 * 
 	 * @param hotelId
 	 * @return
 	 * @throws Exception

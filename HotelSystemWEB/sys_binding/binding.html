@@ -6,6 +6,14 @@
 		<title>绑定设备</title>
 		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
 		<style type="text/css">
+			
+			.form-required-point {
+				color: red;
+				font-size: 16px;
+				position: absolute;
+				top: 11px;
+				right: 6px;
+			}
 		</style>
 	</head>
 
@@ -13,7 +21,7 @@
 		<blockquote class="layui-elem-quote">
 			<div class="layui-form">
 				<div class="layui-form-item" style="margin-bottom: 0px; display: block;">
-					<label class="layui-form-label">选择酒店</label>
+					<label class="layui-form-label">选择酒店<i class="form-required-point">*</i></label>
 					<div class="layui-input-inline" style="width: 600px;">
 						<select name="hotelManager" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
 							<option value=""></option>
@@ -21,7 +29,7 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label">卡号</label>
+					<label class="layui-form-label">卡号<i class="form-required-point">*</i></label>
 					<div class="layui-input-inline">
 						<input class="layui-input" type="text" name="cardNum"  />
 					</div>
