@@ -5,6 +5,9 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+		<META HTTP-EQUIV="expires" CONTENT="0">
 		<title>登录</title>
 		<link rel="stylesheet" type="text/css" href="plugins/layui/css/layui.css" media="all" />
 		<link rel="stylesheet" type="text/css" href="sys_user/css/login.css" />
@@ -12,10 +15,12 @@
 			#logoDiv {
 				text-align: center;
 			}
+			
 			#logo {
 				width: 198px;
 				height: 72px;
 			}
+			
 			.beg-login-box {
 				background-color: white;
 				height: auto;
@@ -31,7 +36,7 @@
 				margin-right: 5px;
 			}
 			
-			#verifyCode  {
+			#verifyCode {
 				position: absolute;
 				top: 1px;
 				display: inline-block;
@@ -60,7 +65,7 @@
 						<label class="beg-login-icon">
                         <i class="layui-icon">&#xe642;</i>
                     </label>
-						<input id="password" value="admin" type="password" name="password" autocomplete="off" placeholder="这里输入密码" class="layui-input">
+						<input id="password" type="password" name="password" autocomplete="off" placeholder="这里输入密码" class="layui-input">
 					</div>
 					<!--验证码-->
 					<div class="layui-form-item">

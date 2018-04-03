@@ -15,8 +15,8 @@
 	var iView = {
 		init: function() {
 			iView.generateVerifyCode();
-			$("input").keypress(function(e){
-				if (e.which == 13) {
+			$("input").keypress(function(e) {
+				if(e.which == 13) {
 					$(".login").focus()
 					iEvent.login()
 				}
@@ -73,14 +73,16 @@
 				});
 				return;
 			}
-			if(ZY.ZYtrim($("#userName").val()) == "" || ZY.ZYtrim($("#password").val()) == "") {
-				layer.msg("用户名和密码不能为空", {
-					icon: 2,
-					time: 2000,
-					anim: 6
-				});
-				return;
-			}
+
+			//测试暂时注释
+			//			if(ZY.ZYtrim($("#userName").val()) == "" || ZY.ZYtrim($("#password").val()) == "") {
+			//				layer.msg("用户名和密码不能为空", {
+			//					icon: 2,
+			//					time: 2000,
+			//					anim: 6
+			//				});
+			//				return;
+			//			}
 			var index = layer.msg('登录中...', {
 				icon: 16,
 				shade: 0.03,
