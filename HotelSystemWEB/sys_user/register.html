@@ -8,6 +8,7 @@
 		<META HTTP-EQUIV="expires" CONTENT="0">
 		<title>注册用户</title>
 		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css" />
 		<style type="text/css">
 			.layui-elem-field {
 				margin: 8px 16px 0 16px;
@@ -44,31 +45,37 @@
 				<form class="layui-form" id="registerForm">
 					<div class="layui-form-item">
 						<label class="layui-form-label">账号<i class="form-required-point">*</i></label>
-						<div class="layui-input-block">
-							<input id="accountInput" type="text" name="account" class="layui-input" maxlength="32" placeholder="该账号用于登录" autocomplete="off" />
+						<div class="layui-input-inline">
+							<input id="accountInput" type="text" name="account" class="layui-input" maxlength="32" placeholder="该账号用于登录" autocomplete="off" value="admin003" />
+						</div>
+						<div id="checkTips">
+							<button type="button" class="layui-btn" id="checkBtn">
+								<i id="checkIcon" class="fa fa-refresh"></i>
+								<span id="checkFont">检测账号</span>
+							</button>
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">昵称<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input id="userNameInput" type="text" name="userName" class="layui-input" maxlength="32" placeholder="昵称：（例：广州××酒店经理" autocomplete="off" />
+							<input id="userNameInput" type="text" name="userName" class="layui-input" maxlength="32" placeholder="昵称：（例：广州××酒店经理" autocomplete="off" value="测fafaf试注册" />
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">密码<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input id="passwordInput" class="layui-input" type="password" name="password" maxlength="16" placeholder="密码（6-16字符组成，区分大小写" autocomplete="off" />
+							<input id="passwordInput" class="layui-input" type="password" name="password" maxlength="16" placeholder="密码（6-16字符组成，区分大小写" autocomplete="off" value="123456" />
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">重复密码<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input id="rePasswordInput" class="layui-input" type="password" name="rePassword" maxlength="16" placeholder="请重复输入密码" autocomplete="off" />
+							<input id="rePasswordInput" class="layui-input" type="password" name="rePassword" maxlength="16" placeholder="请重复输入密码" autocomplete="off" value="123456" />
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<div class="layui-input-block">
-							<button type="submit" class="layui-btn" lay-submit lay-filter="addHotel">立即提交</button>
+							<button type="submit" class="layui-btn">立即提交</button>
 							<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
 						</div>
 					</div>
@@ -80,7 +87,8 @@
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/Data.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../common/js/validate/jquery.validate.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/validate/messages_zh.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/validate/additional-methods.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/register.js" type="text/javascript" charset="utf-8"></script>

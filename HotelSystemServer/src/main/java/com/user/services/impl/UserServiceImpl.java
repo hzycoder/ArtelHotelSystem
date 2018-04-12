@@ -1,10 +1,15 @@
 package com.user.services.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.crypto.Data;
+
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +18,7 @@ import com.common.pojo.LoginUserList;
 import com.user.dao.UserDao;
 import com.user.dto.LoginDto;
 import com.user.dto.UserDto;
+import com.user.dto.registerDto;
 import com.user.services.UserService;
 
 @Transactional
@@ -23,7 +29,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 
-	@SuppressWarnings("finally")
 	@Override
 	public Map<String, Object> getAllUser() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -43,8 +48,9 @@ public class UserServiceImpl implements UserService {
 			map.put("error", "用户不存在");
 			return map;
 		} else {
-			LoginUserList LoginUserList = userDao.getUser(id);
-			if (!LoginUserList.getPassword().equals(loginDto.getPassword())) {
+			LoginUserList loginUserList = userDao.getUser(id);
+			if (!judgePass(loginUserList, loginDto.getPassword())) {
+//			if (!LoginUserList.getPassword().equals(loginDto.getPassword())) {
 				map.put("error", "密码错误");
 				return map;
 			} else {
@@ -52,13 +58,23 @@ public class UserServiceImpl implements UserService {
 				try {
 					BeanUtils.copyProperties(user, userDao.getUser(id));
 				} catch (Exception e) {
-					map.put("error", e.getMessage());
+					map.put("error", "系统内部错误");
 					e.printStackTrace();
 				} finally {
 					map.put("result", user);
 					return map;
 				}
 			}
+		}
+	}
+	public static boolean judgePass(LoginUserList user,String toBeCheckedPass){
+		String salt = user.getPasswordSalt();
+		StringBuffer sb = new StringBuffer();
+		String pass = DigestUtils.md5Hex(sb.append(toBeCheckedPass).append(salt).toString());
+		if (pass.equals(user.getPassword())) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -96,5 +112,22 @@ public class UserServiceImpl implements UserService {
 		}
 		map.put("data", result);
 		return map;
+	}
+
+	@Override
+	public void register(registerDto registerDto) {
+		LoginUserList user = new LoginUserList();
+		//生成时间戳盐
+		long time = System.currentTimeMillis();
+		StringBuffer sb = new StringBuffer();
+		//生成密码
+		sb.append(registerDto.getPassword()).append(DigestUtils.md5Hex(String.valueOf(time)));
+		user.setPasswordSalt(DigestUtils.md5Hex(String.valueOf(time)));
+		user.setAccount(registerDto.getAccount());
+		user.setPassword(DigestUtils.md5Hex(sb.toString()));
+		user.setUserName(registerDto.getUserName());
+		user.setCreateTime(new Timestamp(new Date().getTime()));
+		user.setPermission(1);
+		userDao.register(user);
 	}
 }

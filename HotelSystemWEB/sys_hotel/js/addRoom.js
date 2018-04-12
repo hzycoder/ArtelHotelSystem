@@ -110,13 +110,20 @@
 			
 		},
 		addRoomAjax:function(roomData,type){
-			console.log("ajax房间数据：" + JSON.stringify(roomData));
+			var index = layer.msg('添加房间中...', {
+				icon: 16,
+				shade: 0.01
+			});
 			ZY.ajax({
 				"url": "hotel/"+type,
 				"type": "POST",
 				"data": JSON.stringify(roomData),
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
+					layer.close(index);
+					$("#roomNumInput").val("");
+					$("#floorInput").val("");
+					$("#roomNumTextarea").val("");
 					if(data && data.success) { //如果登录成功
 						layer.msg(data.msg, { //显示成功信息
 							icon: 1,

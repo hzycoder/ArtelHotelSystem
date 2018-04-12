@@ -15,7 +15,7 @@
 				data: option.data || {},
 				dataType: 'json' || option.dataType, //服务器返回数据格式数据
 				contentType: option.contentType || 'application/x-www-form-urlencoded',
-				timeout: option.timeout || 10000, //超时时间设置为60秒;
+				timeout: option.timeout || 10000, //超时时间设置;
 				async: option.async,
 				success: function(data, status, xmlHttpRequest) {
 					//服务器返回响应，根据响应结果，分析是否登录成功；
@@ -32,6 +32,7 @@
 				 * @param {Object} errorThrown
 				 */
 				error: function(xhr, type, errorThrown) {
+					console.log(JSON.stringify(xhr))
 					if(option.error) {
 						option.error(xhr, type, errorThrown);
 						return;

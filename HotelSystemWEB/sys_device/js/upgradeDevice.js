@@ -7,10 +7,11 @@
 	var hotelList = null;
 	btnArray.push('<span style="color: #ffffff;transition:color 1s linear;">确定</span>');
 	btnArray.push('<span>取消<span>');
-	layui.use(["form", ], function() {
+	layui.use(["form", "upload"], function() {
 		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 		layer = layui.layer; //获取当前窗口的layer对象
 		form = layui.form;
+		upload = layui.upload;
 		layer.ready(function() {
 			iEvent.init();
 			iView.init();
@@ -37,6 +38,28 @@
 			form.on('submit(upgrade)', function(data) {
 				iEvent.upgrade();
 				return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+			});
+			upload.render({
+				elem: "#uploadFile",
+				url: CONFIG.URL + "device/uploadFile",
+				accept: "file",
+				before: function() {
+					layer.load();
+				},
+				done: function() {
+					layer.closeAll("loading");
+					layer.msg("上传成功", {
+						icon: 1,
+						time: 2000,
+					});
+				},
+				error: function() {
+					layer.msg("上传失败", {
+						icon: 2,
+						time: 2000,
+						anim: 6
+					});
+				},
 			});
 		},
 	};
@@ -91,7 +114,7 @@
 		//获取用户列表(酒店列表)
 		getAllHotel: function() {
 			var userData = JSON.parse(sessionStorage.getItem("user"));
-			layer.msg('加载数据中...', {
+			var index = layer.msg('加载数据中...', {
 				icon: 16,
 				shade: 0.01
 			});
@@ -104,9 +127,9 @@
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
+					layer.close(index);
 					hotelList = data.data;
 					iEvent.initHotelSelect(data.data);
-					layer.closeAll();
 				}
 			});
 		},

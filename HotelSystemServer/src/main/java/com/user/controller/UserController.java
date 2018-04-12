@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.common.base.BaseController;
 import com.common.pojo.LoginUserList;
 import com.user.dto.LoginDto;
+import com.user.dto.registerDto;
 import com.user.services.UserService;
 
 @Controller
@@ -38,9 +39,8 @@ public class UserController extends BaseController {
 			success = true;
 		} catch (Exception e) {
 			e.printStackTrace();// 注意不要漏了
-			msg = e.getMessage();
+			msg = "系统内部错误";
 			success = false;
-			// TODO: handle exception
 		} finally {
 			map.put("success", success);
 			map.put("msg", msg);
@@ -51,9 +51,8 @@ public class UserController extends BaseController {
 	@SuppressWarnings("finally")
 	@ResponseBody
 	@RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public Map<String, Object> login(@RequestBody LoginDto loginDto, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		logger.info("接收到的参数" + loginDto.toString());
+	public Map<String, Object> login(@RequestBody LoginDto loginDto) throws IOException {
+		logger.info("接收到的参数注册" + loginDto.toString());
 		Map<String, Object> map = null;
 		try {
 			map = userService.login(loginDto);
@@ -65,7 +64,28 @@ public class UserController extends BaseController {
 			msg = "登录成功";
 			map.put("msg", msg);
 		} catch (Exception e) {
-			msg = e.getMessage();
+			msg = "系统内部错误";
+			success = false;
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+			return map;
+		}
+	}
+
+	@SuppressWarnings("finally")
+	@ResponseBody
+	@RequestMapping(value = "register", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public Map<String, Object> login(@RequestBody registerDto registerDto) throws IOException {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			userService.register(registerDto);
+			success = true;
+			msg = "注册成功";
+			map.put("msg", msg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "系统内部错误";
 			success = false;
 		} finally {
 			map.put("msg", msg);
@@ -108,10 +128,18 @@ public class UserController extends BaseController {
 		return map;
 	}
 
+	/**
+	 * 验证密码
+	 * 
+	 * @param userId
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
 	@ResponseBody
 	@RequestMapping(value = "verifyPass", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public Map<String, Object> verifyPass(String userId, String password) throws Exception {
-		System.out.println("userid:"+userId+"      password:"+password);
+		System.out.println("userid:" + userId + "      password:" + password);
 		Map<String, Object> map = null;
 		try {
 			map = userService.verifyPass(userId, password);

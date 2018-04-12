@@ -58,7 +58,7 @@
 		//获取用户列表(酒店列表)
 		getAllHotel: function() {
 			var userData = JSON.parse(sessionStorage.getItem("user"));
-			layer.msg('加载数据中...', {
+			var index =layer.msg('加载数据中...', {
 				icon: 16,
 				shade: 0.01
 			});
@@ -71,8 +71,8 @@
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
+					layer.close(index);
 					iEvent.initHotelSelect(data.data);
-					layer.closeAll();
 				}
 			});
 		},
@@ -131,7 +131,7 @@
 		},
 		//判断中继是否和房间绑定
 		getAgentAndRoomRelations: function(agentId) {
-			var index = layer.msg('加载数据中,请稍等...', {
+			layer.load('加载数据中ff,请稍等...', {
 				icon: 16,
 				shade: 0.01
 			});
@@ -143,7 +143,7 @@
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					layer.close(index);
+//					layer.close(index);
 					console.log("判断绑定数据：" + JSON.stringify(data));
 					if(data.data.length == 0) {
 						iEvent.generateAgentView(0, agentId);
@@ -320,7 +320,6 @@
 					iEvent.renderDeviceStatus();
 				}
 			});
-			layer.close(index);
 		},
 		//websocket连接服务端
 		startWebSocket: function(agentId) {
@@ -365,6 +364,7 @@
 					layer.closeAll('tips');
 				});
 			});
+			layer.closeAll("loading");
 		},
 		//根据agentId获取slotId
 		getslotIdByAgentId: function(agentId) {

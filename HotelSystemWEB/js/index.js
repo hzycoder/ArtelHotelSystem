@@ -36,6 +36,9 @@
 			shadeMobile.on('click', function() {
 				$('body').removeClass('site-mobile');
 			});
+			$("#signOut").on("click",function(){
+				iEvent.signOut();
+			});
 		},
 		//iframe自适应
 		iframeResize: function() {
@@ -47,7 +50,7 @@
 				});
 			}).resize();
 		},
-
+		
 	};
 	//event方法：
 	var iEvent = {
@@ -218,6 +221,12 @@
 				icon: 'fa-gear',
 				title: '设置'
 			});
+		},
+		signOut:function(){
+			sessionStorage.removeItem("user");
+			setTimeout(function() {
+							window.location.href = "login.html";
+						}, 300);
 		},
 	};
 

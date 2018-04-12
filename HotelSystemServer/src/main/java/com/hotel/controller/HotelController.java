@@ -124,7 +124,7 @@ public class HotelController extends BaseController {
 			success = true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			msg = e.getMessage();
+			msg = "系统内部错误";
 			success = false;
 		} finally {
 			map.put("msg", msg);

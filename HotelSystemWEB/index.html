@@ -21,6 +21,9 @@
 			.layui-nav-child dd {
 				background-color: #4F4F4F;
 			}
+			.layui-nav-child dd{
+				cursor: pointer;
+			}
 		</style>
 	</head>
 
@@ -59,8 +62,8 @@
 							<a class="admin-header-user">
 								<span id="welcome"></span>
 							</a>
-							<!--<dl class="layui-nav-child">
-								<dd>
+							<dl class="layui-nav-child">
+								<!--<dd>
 									<a href="javascript:;"><i class="fa fa-user-circle" aria-hidden="true"></i> 个人信息</a>
 								</dd>
 								<dd>
@@ -70,11 +73,11 @@
 									<a href="javascript:;">
 										<i class="fa fa-lock" aria-hidden="true" style="padding-right: 3px;padding-left: 1px;"></i> 锁屏 (Alt+L)
 									</a>
-								</dd>
-								<dd>
+								</dd>-->
+								<dd id="signOut">
 									<a><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
 								</dd>
-							</dl>-->
+							</dl>
 						</li>
 					</ul>
 					<ul class="layui-nav admin-header-item-mobile">

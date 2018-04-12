@@ -28,11 +28,9 @@
 				"type": "GET",
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					console.log("完成获取数据")
 					$.each(data.data, function(index, item) {
 						item.createTime = iEvent.switchUnixTime(item.createTime);
 					});
-					console.log("完成改编时间")
 					iEvent.userPaging(data.data);
 					if(data && data.success) { //如果登录成功
 					} else {

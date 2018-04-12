@@ -80,4 +80,9 @@ public class UserDaoImpl implements UserDao {
 	public String getPassByUserId(String userID) {
 		return (String) sessionFactory.getCurrentSession().createQuery("SELECT password FROM LoginUserList WHERE idUserList = ?").setParameter(0, Integer.valueOf(userID)).uniqueResult();
 	}
+
+	@Override
+	public void register(LoginUserList user) {
+		sessionFactory.getCurrentSession().saveOrUpdate(user);
+	}
 }

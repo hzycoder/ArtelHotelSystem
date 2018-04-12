@@ -11,19 +11,19 @@
             <generator class="increment" />
         </id>
         <property name="account" type="java.lang.String">
-            <column name="account" length="15" not-null="true" />
+            <column name="account" length="15" />
         </property>
         <property name="password" type="java.lang.String">
-            <column name="password" length="32" not-null="true" />
+            <column name="password" length="32" />
         </property>
         <property name="passwordSalt" type="java.lang.String">
-            <column name="passwordSalt" length="10" not-null="true" />
+            <column name="passwordSalt" length="10" />
         </property>
         <property name="userName" type="java.lang.String">
-            <column name="userName" length="25" not-null="true" />
+            <column name="userName" length="25" />
         </property>
         <property name="userId" type="java.lang.String">
-            <column name="userId" length="15" not-null="true" />
+            <column name="userId" length="15" />
         </property>
         <property name="userPhone" type="java.lang.String">
             <column name="userPhone" length="15" />
@@ -32,23 +32,23 @@
             <column name="position" length="45" />
         </property>
         <property name="permission" type="java.lang.Integer">
-            <column name="permission" not-null="true" />
+            <column name="permission" />
         </property>
         <property name="creator" type="java.lang.String">
             <column name="creator" length="45" />
         </property>
         <property name="createTime" type="java.sql.Timestamp">
-            <column name="createTime" length="23" not-null="true" />
+            <column name="createTime" length="23" />
         </property>
         <!-- <set name="userHotelLists" inverse="true">
             <key>
-                <column name="UserList_idUserList" not-null="true" />
+                <column name="UserList_idUserList" />
             </key>
             <one-to-many class="com.common.pojo.UserHotelList" />
         </set>
         <set name="loginUserInfos" inverse="true">
             <key>
-                <column name="LoginUserList_idUserList" not-null="true" />
+                <column name="LoginUserList_idUserList" />
             </key>
             <one-to-many class="com.common.pojo.LoginUserInfo" />
         </set> -->

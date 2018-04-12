@@ -48,7 +48,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		System.out.println(cause.getMessage());
 		super.exceptionCaught(ctx, cause);
 		cause.printStackTrace();
 		ctx.close();

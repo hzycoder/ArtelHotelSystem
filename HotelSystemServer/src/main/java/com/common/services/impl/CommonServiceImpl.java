@@ -37,4 +37,24 @@ public class CommonServiceImpl implements CommonService {
 			return false;
 		}
 	}
+
+	@Override
+	public boolean verifyHotelId(String hotelId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT" 
+				+ " hotelId" 
+				+ " FROM" 
+				+ " HotelList" 
+				+ " WHERE" 
+				+ " hotelId" 
+				+ " = " 
+				+ "'" + hotelId
+				+ "'");
+		List<?> list = commonDao.getOneLine(sql.toString());
+		if (list.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

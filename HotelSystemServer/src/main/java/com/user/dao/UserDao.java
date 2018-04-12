@@ -13,4 +13,5 @@ public interface UserDao {
 	public Integer modifyUser(String userName,String userPhone,String position,String userID);
 	public LoginUserList getUserByUserID(String userID);
 	public String getPassByUserId(String userID);
+	public void register(LoginUserList user);
 }

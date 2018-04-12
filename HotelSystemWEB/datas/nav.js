@@ -1,6 +1,6 @@
 var navs = [{
 		"title": "酒店管理",
-		"icon": "&#xe68e;",
+		"icon": "fa fa-building",
 		"spread": true,
 		"children": [{
 				"title": "酒店查询",
@@ -16,7 +16,7 @@ var navs = [{
 	},
 	{
 		"title": "房间管理",
-		"icon": "&#xe68e;",
+		"icon": "fa fa-hotel",
 		"spread": false,
 		"children": [{
 				"title": "房间查询",
@@ -41,7 +41,7 @@ var navs = [{
 			},
 			{
 				"title": "查询设备",
-				"icon": "&#xe654;",
+				"icon": "&#xe615;",
 				"href": "sys_device/device.html"
 			},
 			{
@@ -56,7 +56,7 @@ var navs = [{
 			},
 			{
 				"title": "在线升级",
-				"icon": "&#xe681;",
+				"icon": "fa fa-cloud-upload",
 				"href": "sys_device/upgradeDevice.html"
 			}
 		]

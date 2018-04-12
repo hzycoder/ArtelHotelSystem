@@ -26,6 +26,9 @@
 				top: 11px;
 				right: 6px;
 			}
+			.error {
+				color: red;
+			}
 		</style>
 	</head>
 
@@ -33,30 +36,30 @@
 		<fieldset class="layui-elem-field">
 			<legend align="center">添加酒店</legend>
 			<div class="layui-field-box">
-				<form class="layui-form">
+				<form class="layui-form" id="addHotelForm">
 					<div class="layui-form-item">
-						<label class="layui-form-label">酒店名称<i class="form-required-point">*</i></label>
+						<label class="layui-form-label" >酒店名称<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input type="text" name="hotelName" required lay-verify="required" class="layui-input" autocomplete="off" />
+							<input id="hotelNameInput" type="text" name="hotelName" class="layui-input" autocomplete="off"/>
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">编号<i class="form-required-point">*</i></label>
 						<div class="layui-input-block">
-							<input id="hotelID" type="text" name="hotelId" required lay-verify="required" class="layui-input" autocomplete="off" />
+							<input id="hotelIdInput" type="text" name="hotelId" class="layui-input" autocomplete="off"/>
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">地址</label>
 						<div class="layui-input-block">
-							<textarea type="" name="address" class="layui-textarea" style="resize: none;"></textarea>
+							<textarea id="addressInput" name="address" class="layui-textarea" style="resize: none;"></textarea>
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">状态<i class="form-required-point">*</i></label>
 						<div class="layui-input-inline">
-							<select name="status" lay-verify="required">
-								<option value=""></option>
+							<select id="statusSelect" name="status">
+								<option value="-1"></option>
 								<option value="正常使用" selected>正常使用</option>
 								<option value="离线">离线</option>
 								<option value="其他">其他</option>
@@ -70,14 +73,14 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label" style="font-size: 13px;">酒店所属账户<i class="form-required-point">*</i></label>
 						<div class="layui-input-inline">
-							<select name="hotelManager" lay-verify="required" id="accountSelect">
-								<option value=""></option>
+							<select name="hotelManager" id="accountSelect" required lay-verify="required">
+								<option value="-1"></option>
 							</select>
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<div class="layui-input-block">
-							<button type="button" class="layui-btn" lay-submit lay-filter="addHotel">立即提交</button>
+							<button type="submit" class="layui-btn">立即提交</button>
 							<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
 						</div>
 					</div>
@@ -88,6 +91,9 @@
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/messages_zh.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/additional-methods.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/addHotel.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 

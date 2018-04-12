@@ -49,19 +49,32 @@
 				padding-left: 47%;
 				padding-top: 9%;
 			}
+			
+			#uploadFile {
+				color: white;
+				background-color: #009688;
+				cursor: pointer;
+			}
+			
+			.layui-upload-file {
+				display: none;
+			}
 		</style>
 	</head>
 
 	<body>
 		<blockquote class="layui-elem-quote">
 			<div class="layui-form">
-				<div class="layui-form-item" style="margin-bottom: 0px;">
+				<div class="layui-form-item">
 					<label class="layui-form-label">选择酒店<i class="form-required-point">*</i></label>
 					<div class="layui-input-inline" style="width: 600px;">
 						<select name="hotelManager" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
 							<option value=""></option>
 						</select>
 					</div>
+					<button type="button" id="uploadFile" class="layui-btn">
+						 <i class="fa fa-cloud-upload"></i>上传升级软件
+					</button>
 				</div>
 			</div>
 		</blockquote>

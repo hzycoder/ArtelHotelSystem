@@ -15,11 +15,24 @@
 	});
 	var iView = {
 		init: function() {
-			$("#accountInput").on("input propertychange keyup blur change",function(){
-				console.log($("#accountInput-error").attr("class"))
-				if ($("#accountInput-error").attr("class")!="error") {
+			$("#accountInput").on("input propertychange keyup blur change", function() {
+				if($("#accountInput-error").attr("class") != "error") {
 					$("#accountInput-error").remove()
 				}
+			});
+			//重置按钮 重置检测按钮
+			$("#resetBtn").on("click", function() {
+				$("#checkBtn").attr("class", "layui-btn");
+				$("#checkIcon").attr("class", "fa fa-refresh");
+				$("#checkFont").text("检测账号");
+			});
+			$("#checkBtn").on("click", function() {
+				iEvent.checkAccount();
+			});
+			$("#accountInput").bind("input propertychange", function() {
+				$("#checkBtn").attr("class", "layui-btn");
+				$("#checkIcon").attr("class", "fa fa-refresh");
+				$("#checkFont").text("检测账号");
 			});
 		},
 	};
@@ -35,15 +48,15 @@
 						required: true,
 						minlength: 6,
 						maxlength: 32,
-						remote: { //ajax判断账户是否唯一
-							type: "POST",
-							url: CONFIG.URL + "/" + "common/verifyAccountUnique",
-							data: {
-								account: function() {
-									return $("#accountInput").val();
-								}
-							}
-						},
+						//						remote: { //ajax判断账户是否唯一
+						//							type: "POST",
+						//							url: CONFIG.URL + "/" + "common/verifyAccountUnique",
+						//							data: {
+						//								account: function() {
+						//									return $("#accountInput").val();
+						//								}
+						//							}
+						//						},
 					},
 					userName: {
 						specialCharFilter: true,
@@ -59,18 +72,48 @@
 					},
 					rePassword: {
 						equalTo: "#passwordInput",
+						required: true,
 					},
 				},
 				messages: {
 					account: {
-						remote: "该账户已被占用",
 					}
 				},
-				onfocusout: function(element) { //设置onblur验证表单
-					$(element).valid();
-				},
+				//				onfocusout: function(element) { //设置onblur验证表单
+				//					$(element).valid();
+				//				},
 				submitHandler: function(form) {
-					console.log("提交" + form);
+					if($("#checkFont").text() == "检测账号") {
+						layer.msg("请先检测账号使用情况", {
+							icon: 2,
+							shade: 0.01,
+							time: 2000,
+						});
+						return;
+					}
+					if($("#checkFont").text() == "检测中...") {
+						layer.msg("请等待账号检测", {
+							icon: 2,
+							shade: 0.01,
+							time: 2000,
+						});
+						return;
+					}
+					if($("#checkFont").text() == "该账号已被使用") {
+						layer.msg("当前账号已被使用", {
+							icon: 2,
+							shade: 0.01,
+							time: 3000,
+						});
+						$("#accountInput").focus();
+						return;
+					}
+					var registerJson = {
+						"account": form["account"].value,
+						"userName": form["userName"].value,
+						"password": hex_md5(form["password"].value)
+					}
+					iEvent.register(registerJson);
 				},
 				highlight: function(element, errorClass) { //设置错误提示样式
 					$(element).addClass(errorClass);
@@ -118,6 +161,55 @@
 					}
 				},
 			});
-		}
+		},
+		register: function(data) {
+			var index = layer.msg("提交申请中，请稍等...", {
+				icon: 16,
+				shade: 0.1,
+			});
+			ZY.ajax({
+				"url": "user/register",
+				"type": "POST",
+				"contentType": "application/json;charset=UTF-8",
+				"data": JSON.stringify(data),
+				"success": function(data) {
+					$("#resetBtn").click();
+					layer.close(index);
+					if(data && data.success) { //如果登录成功
+						layer.msg(data.msg, { //显示成功信息
+							icon: 1,
+						});
+					} else {
+						layer.msg(data.error, { //显示失败信息
+							icon: 2,
+						});
+					}
+				},
+			});
+			
+		},
+		checkAccount: function() {
+			$("#checkIcon").attr("class", "fa fa-refresh fa-spin");
+			$("#checkFont").text("检测中...");
+			ZY.ajax({
+				"url": "common/verifyAccountUnique",
+				"type": "GET",
+				"contentType": "application/json;charset=UTF-8",
+				"data": {
+					"account": $("#accountInput").val(),
+				},
+				"success": function(data) {
+					console.log("检测结果" + JSON.stringify(data));
+					if(data) {
+						$("#checkIcon").attr("class", "fa fa-check");
+						$("#checkFont").text("该账号可以使用");
+					} else {
+						$("#checkIcon").attr("class", "fa fa-close");
+						$("#checkFont").text("该账号已被使用");
+						$("#checkBtn").attr("class", "layui-btn layui-bg-red");
+					}
+				},
+			});
+		},
 	};
 }());

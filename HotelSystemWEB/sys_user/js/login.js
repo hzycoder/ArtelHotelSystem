@@ -89,8 +89,10 @@
 			});
 			var loginJson = {
 				"account": $("#userName").val(),
-				"password": $("#password").val()
+				"password": hex_md5($("#password").val())
 			}
+			console.log($("#password").val())
+			console.log(hex_md5($("#password").val()))
 			ZY.ajax({
 				"url": "user/login",
 				"type": "POST",

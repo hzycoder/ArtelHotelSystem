@@ -35,9 +35,8 @@ public class CommonController extends BaseController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping(value = "verifyAccountUnique", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "verifyAccountUnique", method = RequestMethod.GET)
 	public boolean verifyAccountUnique(String account) throws Exception {
-		Map<String, Object> map = null;
 		boolean b = false;
 		try {
 			b = commonService.verifyAccount(account);
@@ -47,4 +46,21 @@ public class CommonController extends BaseController {
 		return b;
 	}
 
+	/**
+	 * 验证酒店Id
+	 * @param hotelId
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "verifyHotelIdUnique", method = RequestMethod.POST)
+	public boolean verifyHotelIdUnique(String hotelId) throws Exception {
+		boolean b = false;
+		try {
+			b = commonService.verifyHotelId(hotelId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
 }
