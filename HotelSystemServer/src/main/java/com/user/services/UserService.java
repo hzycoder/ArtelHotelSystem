@@ -15,6 +15,12 @@ public interface UserService {
 	public Map<String, Object> getUserByUserID(String userId);
 
 	public Map<String, Object> verifyPass(String userId, String password);
-	
+
 	public void register(registerDto registerDto);
+
+	public Map<String, Object> getUnbindedUser();
+
+	public Map<String, Object> generateCode(String account);
+
+	public Map<String, Object> modifyPass(String id, String newPass, String obsoletePass);
 }

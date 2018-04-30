@@ -82,13 +82,11 @@
 					}
 					var hotelJSON = {
 						"hotelName": form["hotelName"].value,
-						"hotelId": form["hotelId"].value,
 						"address": form["address"].value,
 						"status": form["status"].value,
 						"hotelPhone": form["hotelPhone"].value,
 						"hotelManager": form["hotelManager"].value,
 					}
-					console.log(JSON.stringify(hotelJSON));
 					iEvent.addHotel(hotelJSON);
 				},
 				highlight: function(element, errorClass) { //设置错误提示样式
@@ -118,7 +116,8 @@
 		addHotel: function(hotelData) {
 			var index = layer.msg('添加酒店中...', {
 				icon: 16,
-				shade: 0.1
+				shade: 0.1,
+				time:2000
 			});
 			ZY.ajax({
 				"url": "hotel/addHotel",
@@ -128,13 +127,13 @@
 				"success": function(data) {
 					layer.close(index);
 					$('#resetBtn').click(); //重置表单
-					layui.render("select");
+					iEvent.getAllUser();
 					if(data && data.success) { //如果登录成功
 						layer.msg(data.msg, { //显示成功信息
 							icon: 1,
 						});
 					} else {
-						layer.msg("系统内部错误！", { //显示失败信息
+						layer.msg("添加失败！", { //显示失败信息
 							icon: 2,
 						});
 					}
@@ -143,20 +142,22 @@
 		},
 		//渲染
 		initUserSelect: function(userData) {
+			$("#accountSelect").empty();
+			$("#accountSelect").append('<option value="-1"></option>');
 			$(userData).each(function(i) {
 				$("#accountSelect").append('<option value="' + userData[i].idUserList + '">' + userData[i].account + '</option>')
 			});
 			form.render('select')
 		},
+		//获取没有绑定酒店的用户
 		getAllUser: function() {
 			ZY.ajax({
-				"url": "user/getAllUser",
+				"url": "user/getUnbindedUser",
 				"type": "GET",
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					iEvent.initUserSelect(data.data);
 					if(data && data.success) { //如果登录成功
-
+						iEvent.initUserSelect(data.data);
 					} else {
 						layer.msg("系统内部错误！", { //显示失败信息
 							icon: 2,

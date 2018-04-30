@@ -54,8 +54,8 @@ public class HotelDaoImpl implements HotelDao {
 
 	@Override
 	public int delHotel(String hotelID) {
-		int result = sessionFactory.getCurrentSession().createQuery("DELETE FROM HotelList WHERE idHotelList = ?")
-				.setParameter(0, Integer.parseInt(hotelID)).executeUpdate();
+		int result = sessionFactory.getCurrentSession()
+				.createSQLQuery("UPDATE HotelList SET hotelManager = -1*hotelManager WHERE idHotelList = '"+hotelID+"'").executeUpdate();
 		return result;
 	}
 
@@ -123,6 +123,17 @@ public class HotelDaoImpl implements HotelDao {
 				+ "')");
 		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).list();
 		
+	}
+
+	@Override
+	public Integer getMaxHotelId() {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT "
+				+ "max(H.idHotelList) "
+				+ "FROM HotelList "
+				+ "AS "
+				+ "H");
+		return (Integer) sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).uniqueResult();
 	}
 
 }

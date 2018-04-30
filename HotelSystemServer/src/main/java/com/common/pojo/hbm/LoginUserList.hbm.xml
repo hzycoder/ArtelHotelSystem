@@ -37,8 +37,8 @@
         <property name="creator" type="java.lang.String">
             <column name="creator" length="45" />
         </property>
-        <property name="createTime" type="java.sql.Timestamp">
-            <column name="createTime" length="23" />
+        <property name="createTime" type="java.lang.String">
+            <column name="createTime" length="13" />
         </property>
         <!-- <set name="userHotelLists" inverse="true">
             <key>

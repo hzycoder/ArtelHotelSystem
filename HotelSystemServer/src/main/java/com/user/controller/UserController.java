@@ -2,11 +2,8 @@ package com.user.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.common.base.BaseController;
-import com.common.pojo.LoginUserList;
 import com.user.dto.LoginDto;
 import com.user.dto.registerDto;
 import com.user.services.UserService;
@@ -38,7 +34,7 @@ public class UserController extends BaseController {
 			msg = "获取数据成功！";
 			success = true;
 		} catch (Exception e) {
-			e.printStackTrace();// 注意不要漏了
+			e.printStackTrace();
 			msg = "系统内部错误";
 			success = false;
 		} finally {
@@ -50,20 +46,36 @@ public class UserController extends BaseController {
 
 	@SuppressWarnings("finally")
 	@ResponseBody
-	@RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public Map<String, Object> login(@RequestBody LoginDto loginDto) throws IOException {
-		logger.info("接收到的参数注册" + loginDto.toString());
+	@RequestMapping(value = "getUnbindedUser", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public Map<String, Object> getUnbindedUser() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			map = userService.getUnbindedUser();
+			msg = "获取数据成功！";
+			success = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "系统内部错误";
+			success = false;
+		} finally {
+			map.put("success", success);
+			map.put("msg", msg);
+			return map;
+		}
+	}
+
+	@SuppressWarnings("finally")
+	@ResponseBody
+	@RequestMapping(value = "requestCode", method = RequestMethod.GET)
+	public Map<String, Object> requestCode(String account) throws IOException {
+		logger.info("接收到的参数" + account);
 		Map<String, Object> map = null;
 		try {
-			map = userService.login(loginDto);
-			if (null != map.get("error")) {
-				success = false;
-				return map;
-			}
+			map = userService.generateCode(account);
 			success = true;
-			msg = "登录成功";
-			map.put("msg", msg);
+			msg = "请求成功";
 		} catch (Exception e) {
+			e.printStackTrace();
 			msg = "系统内部错误";
 			success = false;
 		} finally {
@@ -71,6 +83,28 @@ public class UserController extends BaseController {
 			map.put("success", success);
 			return map;
 		}
+	}
+
+	@SuppressWarnings("finally")
+	@ResponseBody
+	@RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public Map<String, Object> login(@RequestBody LoginDto loginDto) throws IOException {
+		logger.info("Logining:" + loginDto.toString());
+		Map<String, Object> map = null;
+		return userService.login(loginDto);
+//		Map<String, Object> map = null;
+//		try {
+//			map = userService.login(loginDto);
+//			msg = "请求数据成功";
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			msg = "系统内部错误";
+//			success = false;
+//		} finally {
+//			map.put("msg", msg);
+//			map.put("success", success);
+//			return map;
+//		}
 	}
 
 	@SuppressWarnings("finally")
@@ -93,6 +127,24 @@ public class UserController extends BaseController {
 			return map;
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "modifyPass", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> modifyPass(String id, String newPass, String obsoletePass) throws Exception {
+//		System.out.println("接收的数据："+id+"---"+newPass+"---"+obsoletePass);
+		Map<String, Object> map = null;
+		try {
+			map = userService.modifyPass(id, newPass, obsoletePass);
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "系统内部错误";
+			success = false;
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		System.out.println(map.toString());
+		return map;
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "modifyUserInfo", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
@@ -108,6 +160,7 @@ public class UserController extends BaseController {
 			map.put("msg", msg);
 			map.put("success", success);
 		}
+		System.out.println(map.toString());
 		return map;
 	}
 

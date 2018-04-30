@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+		<META HTTP-EQUIV="expires" CONTENT="0">
+		<title>修改密码</title>
+		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css" />
+		<style type="text/css">
+			.layui-elem-field {
+				margin: 8px 16px 0 16px;
+			}
+			
+			.form-required-point {
+				color: red;
+				font-size: 16px;
+				position: absolute;
+				top: 11px;
+				right: 6px;
+			}
+			
+			.layui-form-item .layui-form-label {
+				width: 98px;
+			}
+			
+			.layui-form-item .layui-input-block {
+				margin-left: 140px;
+			}
+			
+			.layui-form-item {
+				margin: 0 auto;
+				margin-bottom: 18px;
+				width: 650px;
+			}
+			
+			.error {
+				color: red;
+			}
+		</style>
+	</head>
+
+	<body>
+		<fieldset class="layui-elem-field">
+			<legend align="center">填写以下信息</legend>
+			<div class="layui-field-box">
+				<form class="layui-form" id="modifyPassForm">
+					<div class="layui-form-item">
+						<div class="layui-form-label">请输入原密码<i class="form-required-point">*</i></div>
+						<div class="layui-input-block">
+							<input id="obsoletePassInput" type="password" name="obsoletePass" class="layui-input" autocomplete="off"  value="123"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-form-label">请输入新密码<i class="form-required-point">*</i></div>
+						<div class="layui-input-block">
+							<input id="newPassInput" type="password" name="newPass" class="layui-input" autocomplete="off"  value="123"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-form-label">重复输入新密码<i class="form-required-point">*</i></div>
+						<div class="layui-input-block">
+							<input id="newPassInput2" type="password" name="newPass2" class="layui-input" autocomplete="off"  value="123"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button type="submit" class="layui-btn">立即提交</button>
+							<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/Data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/messages_zh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/additional-methods.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/modifyPass.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

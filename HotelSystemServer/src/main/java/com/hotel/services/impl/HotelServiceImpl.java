@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -132,43 +133,48 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	public void addHotel(HotelDto hotelDto) {
+	public void addHotel(HotelDto hotelDto) throws Exception {
 		HotelList hotelList = new HotelList();
-		if (StringUtils.isNotBlank(hotelDto.getHotelName())) {
-			hotelList.setHotelName(hotelDto.getHotelName());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getCountry())) {
-			hotelList.setCountry(hotelDto.getCountry());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getCity())) {
-			hotelList.setCity(hotelDto.getCity());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getProvince())) {
-			hotelList.setProvince(hotelDto.getProvince());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getAddress())) {
-			hotelList.setAddress(hotelDto.getAddress());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getHotelPhone())) {
-			hotelList.setHotelPhone(hotelDto.getHotelPhone());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getRepeaterCount())) {
-			hotelList.setRepeaterCount(hotelDto.getRepeaterCount());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getDeviceCount())) {
-			hotelList.setDeviceCount(hotelDto.getDeviceCount());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getHotelManager())) {
-			hotelList.setHotelManager(hotelDto.getHotelManager());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getStatus())) {
-			hotelList.setStatus(hotelDto.getStatus());
-		}
-		if (StringUtils.isNotBlank(hotelDto.getHotelId())) {
-			hotelList.setHotelId(hotelDto.getHotelId());
-		}
+		hotelList.setHotelName(hotelDto.getHotelName());
+//		hotelList.setCountry(hotelDto.getCountry());
+//		hotelList.setCity(hotelDto.getCity());
+//		hotelList.setProvince(hotelDto.getProvince());
+		hotelList.setAddress(hotelDto.getAddress());
+		hotelList.setHotelPhone(hotelDto.getHotelPhone());
+		hotelList.setHotelManager(hotelDto.getHotelManager());
+		hotelList.setStatus(hotelDto.getStatus());
 		hotelList.setCreateTime(new Timestamp(new Date().getTime()));
+		Integer formatId = hotelDao.getMaxHotelId();//获取当前最大ID值
+		String hotelId = generateId(String.valueOf(++formatId));//
+		boolean b = testHotelID(hotelId);
+		if (!b) {
+			throw new Exception("Generating ID failure");
+		} 
+		hotelList.setHotelId(hotelId);
 		hotelDao.addHotel(hotelList);
+	}
+	/**
+	 * @param id
+	 * @return
+	 * 生成酒店编号
+	 */
+	public String generateId(String id){
+		StringBuffer sb = new StringBuffer(id);
+		while (sb.toString().length() != 6) {
+			sb.insert(0, "0");
+		}
+		sb.insert(0, "H");
+		System.out.println("生成的主键"+sb.toString());
+		return sb.toString();
+	}
+	
+	/**
+	 * @param id
+	 * @return
+	 * 测试是否为酒店ID
+	 */
+	public boolean testHotelID(String id){
+		return Pattern.matches("H\\d{6}", id);
 	}
 
 	@Override

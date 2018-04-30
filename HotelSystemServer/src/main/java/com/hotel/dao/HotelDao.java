@@ -22,4 +22,5 @@ public interface HotelDao {
 	public List<HotelList> gethotelsByConditions(String hotelName,String hotelAddress,String userID);
 	public List<HotelList> gethotelsByConditions(String hotelName,String hotelAddress);
 	public List<String> getTypeOfHotel(String hotelId);
+	public Integer getMaxHotelId();
 }

@@ -18,11 +18,11 @@
 			$("input").keypress(function(e) {
 				if(e.which == 13) {
 					$(".login").focus()
-					iEvent.login()
+					iEvent.beforeLogin()
 				}
 			});
 			$(".login").on("click", function() {
-				iEvent.login();
+				iEvent.beforeLogin();
 			});
 		},
 		generateVerifyCode: function() {
@@ -64,7 +64,8 @@
 	var iEvent = {
 		init: function() {},
 		//登录
-		login: function() {
+		beforeLogin: function() {
+			//判断验证码
 			if(!verifyCodeIsRight) {
 				layer.msg("请输入正确验证码", {
 					icon: 2,
@@ -73,39 +74,57 @@
 				});
 				return;
 			}
-
-			//测试暂时注释
-			//			if(ZY.ZYtrim($("#userName").val()) == "" || ZY.ZYtrim($("#password").val()) == "") {
-			//				layer.msg("用户名和密码不能为空", {
-			//					icon: 2,
-			//					time: 2000,
-			//					anim: 6
-			//				});
-			//				return;
-			//			}
+			if(ZY.ZYtrim($("#userName").val()) == "" || ZY.ZYtrim($("#password").val()) == "") {
+				layer.msg("用户名和密码不能为空", {
+					icon: 2,
+					time: 2000,
+					anim: 6
+				});
+				return;
+			}
 			var index = layer.msg('登录中...', {
 				icon: 16,
 				shade: 0.03,
 			});
+			ZY.ajax({
+				"url": "user/requestCode",
+				"type": "GET",
+				"contentType": "application/json;charset=UTF-8",
+				"data": {
+					"account": $("#userName").val()
+				},
+				"success": function(data) {
+					if(data && data.success) { //如果登录成功
+						console.log("返回的Code" + JSON.stringify(data));
+						iEvent.login(data.data)
+					} else {
+						layer.msg("登录失败", { //显示失败信息
+							icon: 2,
+						});
+					}
+				},
+			});
+		},
+		login: function(code) {
+			var pass = code + hex_md5($("#password").val());
 			var loginJson = {
 				"account": $("#userName").val(),
-				"password": hex_md5($("#password").val())
+				"password": hex_md5(pass)
 			}
-			console.log($("#password").val())
-			console.log(hex_md5($("#password").val()))
 			ZY.ajax({
 				"url": "user/login",
 				"type": "POST",
 				"contentType": "application/json;charset=UTF-8",
 				"data": JSON.stringify(loginJson),
 				"success": function(data) {
-					layer.close(index);
+					console.log("denglu:"+JSON.stringify(data))
+					layer.closeAll('loading');
 					if(data && data.success) { //如果登录成功
-						layer.msg(data.msg, { //显示成功信息
+						layer.msg("登录成功", { //显示成功信息
 							icon: 1,
 						});
 						//跳转页面
-						sessionStorage.setItem("user", JSON.stringify(data.result));
+						sessionStorage.setItem("user", JSON.stringify(data.data));
 						setTimeout(function() {
 							window.location.href = "index.html";
 						}, 300);

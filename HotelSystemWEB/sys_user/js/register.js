@@ -76,8 +76,6 @@
 					},
 				},
 				messages: {
-					account: {
-					}
 				},
 				//				onfocusout: function(element) { //设置onblur验证表单
 				//					$(element).valid();
@@ -111,7 +109,8 @@
 					var registerJson = {
 						"account": form["account"].value,
 						"userName": form["userName"].value,
-						"password": hex_md5(form["password"].value)
+						"password": hex_md5(form["password"].value),
+						"creator": JSON.parse(sessionStorage.getItem("user")).idUserList,
 					}
 					iEvent.register(registerJson);
 				},
@@ -140,28 +139,6 @@
 				return false;
 			}, "账号含有非法字符");
 		},
-		verfifyAccount: function(accouont) {
-			ZY.ajax({
-				"url": "common/verifyAccountUnique",
-				"type": "POST",
-				"contentType": "application/json;charset=UTF-8",
-				"data": {
-					"accouont": accouont,
-				},
-				"success": function(data) {
-					console.log(JSON.stringify(data));
-					if(data && data.success) { //如果登录成功
-						layer.msg(data.msg, { //显示成功信息
-							icon: 1,
-						});
-					} else {
-						layer.msg(data.error, { //显示失败信息
-							icon: 2,
-						});
-					}
-				},
-			});
-		},
 		register: function(data) {
 			var index = layer.msg("提交申请中，请稍等...", {
 				icon: 16,
@@ -180,7 +157,7 @@
 							icon: 1,
 						});
 					} else {
-						layer.msg(data.error, { //显示失败信息
+						layer.msg("注册失败", { //显示失败信息
 							icon: 2,
 						});
 					}
@@ -199,7 +176,6 @@
 					"account": $("#accountInput").val(),
 				},
 				"success": function(data) {
-					console.log("检测结果" + JSON.stringify(data));
 					if(data) {
 						$("#checkIcon").attr("class", "fa fa-check");
 						$("#checkFont").text("该账号可以使用");

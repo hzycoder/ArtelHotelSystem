@@ -1,7 +1,7 @@
 var navs = [{
 		"title": "酒店管理",
 		"icon": "fa fa-building",
-		"spread": true,
+		"spread": false,
 		"children": [{
 				"title": "酒店查询",
 				"icon": "&#xe615;",
@@ -44,11 +44,11 @@ var navs = [{
 				"icon": "&#xe615;",
 				"href": "sys_device/device.html"
 			},
-			{
-				"title": "设备组网",
-				"icon": "&#xe64c;",
-				"href": "common/img/ArtelLogo.jpg"
-			},
+//			{
+//				"title": "设备组网",
+//				"icon": "&#xe64c;",
+//				"href": "common/img/ArtelLogo.jpg"
+//			},
 			{
 				"title": "设备绑定",
 				"icon": "&#xe64c;",
@@ -62,21 +62,25 @@ var navs = [{
 		]
 	},
 	{
-		"title": "用户管理",
+		"title": "账号管理",
 		"icon": "&#xe61e;",
-		"spread": false,
+		"spread": true,
 		"children": [{
-			"title": "管理用户",
+			"title": "管理账号",
 			"icon": "&#xe613;",
 			"href": "sys_user/user.html"
 		}, {
-			"title": "当前用户信息",
+			"title": "当前账号信息",
 			"icon": "&#xe613;",
 			"href": "sys_user/userInfo.html"
 		}, {
-			"title": "注册新用户",
+			"title": "注册新账号",
 			"icon": "&#xe613;",
 			"href": "sys_user/register.html"
+		}, {
+			"title": "修改密码",
+			"icon": "&#xe613;",
+			"href": "sys_user/modifyPass.html"
 		}, ]
 	},
 	{
@@ -90,20 +94,6 @@ var navs = [{
 		},{
 			"title": "数据导出",
 			"icon": "&#xe615;",
-			"href": "common/img/ArtelLogo.jpg"
-		}, ]
-	},
-	{
-		"title": "与管理平台对接",
-		"icon": "&#xe62a;",
-		"spread": false,
-		"children": [{
-			"title": "添加",
-			"icon": "&#xe654;",
-			"href": "common/img/ArtelLogo.jpg"
-		}, {
-			"title": "删除",
-			"icon": "&#xe640;",
 			"href": "common/img/ArtelLogo.jpg"
 		}, ]
 	},
@@ -130,11 +120,11 @@ var navs2 = [{
 		}, ]
 	},
 	{
-		"title": "用户管理",
+		"title": "账户管理",
 		"icon": "&#xe61e;",
-		"spread": true,
+		"spread": false,
 		"children": [{
-			"title": "当前用户信息",
+			"title": "当前账户信息",
 			"icon": "&#xe613;",
 			"href": "sys_user/userInfo.html"
 		}, ]

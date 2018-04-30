@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.common.pojo.LoginUserList;
 import com.user.dao.UserDao;
 import com.user.dto.LoginDto;
+import com.user.dto.UserDto;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -31,23 +33,17 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public Integer getUserCount() {
-		long temp = (Long) sessionFactory.getCurrentSession()
-				.createQuery("SELECT COUNT(*) FROM LoginUserList").uniqueResult();
-		return (int) temp;
-	}
-	@Override
 	public Integer existUser(LoginDto loginDto) {
 		return (Integer) sessionFactory.getCurrentSession().createQuery("SELECT id FROM LoginUserList WHERE account = ?")
 		.setParameter(0, loginDto.getAccount()).uniqueResult();
 	}
 
 	@Override
-	public LoginUserList getUser(Integer id) {
-		return (LoginUserList) sessionFactory.getCurrentSession().createQuery("FROM LoginUserList WHERE id = ?")
-				.setParameter(0, id).uniqueResult();
+	public LoginUserList getUserById(Integer id) {
+		LoginUserList user = (LoginUserList) sessionFactory.getCurrentSession()
+				.createQuery("FROM LoginUserList WHERE id = ?").setParameter(0, id).uniqueResult();
+		return user;
 	}
-
 
 	@Override
 	public Integer modifyUser(String userName, String userPhone, String position, String userID) {
@@ -70,12 +66,6 @@ public class UserDaoImpl implements UserDao {
 		return query.executeUpdate();
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public LoginUserList getUserByUserID(String userID) {
-		return (LoginUserList) sessionFactory.getCurrentSession().createQuery("FROM LoginUserList WHERE idUserList = ?").setParameter(0, Integer.valueOf(userID)).uniqueResult();
-	}
-
 	@Override
 	public String getPassByUserId(String userID) {
 		return (String) sessionFactory.getCurrentSession().createQuery("SELECT password FROM LoginUserList WHERE idUserList = ?").setParameter(0, Integer.valueOf(userID)).uniqueResult();
@@ -84,5 +74,50 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void register(LoginUserList user) {
 		sessionFactory.getCurrentSession().saveOrUpdate(user);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserDto> getUnbindedUser() {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT"
+				+ " L.idUserList idUserList"
+				+ ",L.account account"
+				+ ",L.userName userName"
+				+ ",L.userId userId"
+				+ ",L.userPhone userPhone"
+				+ ",L.position position"
+				+ ",L.permission permission"
+				+ ",L.creator creator"
+				+ ",L.createTime createTime"
+				+ " FROM"
+				+ " LoginUserList"
+				+ " AS"
+				+ " L"
+				+ " WHERE"
+				+ " L.idUserList"
+				+ " NOT IN"
+				+ " ("
+				+ "SELECT"
+				+ " H.hotelManager"
+				+ " FROM"
+				+ " HotelList"
+				+ " AS"
+				+ " H"
+				+ " )");
+		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString())
+				.addScalar("idUserList").addScalar("account").addScalar("userName").addScalar("userId")
+				.addScalar("userPhone").addScalar("position").addScalar("permission").addScalar("creator")
+				.addScalar("createTime").setResultTransformer(Transformers.aliasToBean(UserDto.class)).list();
+		
+	}
+
+	@Override
+	public Integer modifyPass(String id, String newPass) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE " + "LoginUserList " + "SET " + "password = '" + newPass + "' WHERE " + "idUserList = '"
+				+ id + "'");
+		Query query = sessionFactory.getCurrentSession().createSQLQuery(sql.toString());
+		return query.executeUpdate();
 	}
 }

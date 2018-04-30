@@ -1,13 +1,5 @@
 package com.user.dto;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.alibaba.fastjson.annotation.JSONField;
-import com.common.pojo.LoginUserList;
-
 public class UserDto {
 
 	private Integer idUserList;
@@ -20,7 +12,7 @@ public class UserDto {
 	private String position;
 	private Integer permission;
 	private String creator;
-	private Timestamp createTime;
+	private String createTime;
 
 	public UserDto() {
 	}
@@ -89,11 +81,11 @@ public class UserDto {
 		this.creator = creator;
 	}
 
-	public Timestamp getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 

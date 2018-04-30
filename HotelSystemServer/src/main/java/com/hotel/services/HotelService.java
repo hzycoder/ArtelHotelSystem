@@ -11,7 +11,7 @@ public interface HotelService {
 
 	public Map<String, Object> delHotel(String hotelID);
 
-	public void addHotel(HotelDto hotelDto);
+	public void addHotel(HotelDto hotelDto) throws Exception;
 
 	public Map<String, Object> getRooms(String hotelId);
 

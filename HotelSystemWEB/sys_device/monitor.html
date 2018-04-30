@@ -17,6 +17,22 @@
 				overflow-x: hidden;
 			}
 			
+			.layui-form-label {
+				text-align: center;
+			}
+			
+			.layui-form-item:last-child {
+				margin-bottom: 0px;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				width: 600px;
+			}
+			
+			.layui-form-item .layui-input-inline:last-child {
+				margin-top: 8px;
+			}
+			
 			.admin-main {
 				margin: 0px;
 			}
@@ -28,6 +44,7 @@
 				top: 11px;
 				right: 6px;
 			}
+			
 			#badgeList {
 				display: inline;
 				margin-left: 30px;
@@ -52,12 +69,6 @@
 				margin: 15px 10px;
 			}
 			
-			.main {
-				width: auto;
-				height: 600px;
-				/*border: 1px solid black;*/
-			}
-			
 			#repeaters {
 				width: 100%;
 				height: 80px;
@@ -65,9 +76,9 @@
 			}
 			
 			.repeater {
-				width: 119px;
+				display: inline-block;
 				height: 78%;
-				margin: 0 auto;
+				padding: 0 10px;
 				border-radius: 50%;
 				border: 1px solid black;
 				background-color: #007cc2;
@@ -238,9 +249,73 @@
 				display: inline-block;
 				margin-top: 19px;
 			}
-			/*#soltId1{
+			
+			#main {
+				width: 83%;
+				display: inline-block;
+				float: left;
+			}
+			
+			#repeatersList {
+				width: 15%;
+				border: 1px black solid;
+				overflow-x: hidden;
+				overflow-y: auto;
+				white-space: nowrap;
+				position: fixed;
+				height: 82%;
+				top: auto;
+				right: 2px;
+				bottom: 0px;
+				background-color: #A4A8AB;
+			}
+			
+			#repeaterTitle {
+				width: 100%;
+				background-color: #A4A8AB;
+				font-size: 28px;
+				text-align: center;
+				line-height: 36px;
+			}
+			
+			.repeatersList_repeater {
+				padding: 1px 0;
+				border: 1px black solid;
+				width: 100%;
+				background-color: #007cc2;
+				font-size: 19px;
+				line-height: 24px;
+				text-align: center;
+				color: white;
+				cursor: pointer;
+				/* 内容超出宽度时隐藏超出部分的内容 */
+				overflow: hidden;
+				/* 当对象内文本溢出时显示省略标记(...) */
+				text-overflow: ellipsis;
+			}
+			
+			.deviceStatusExplainElement {
+				display: inline-block;
+			}
+			
+			.deviceStatusExplain i {
+				display: inline-block;
+				width: 12px;
+				height: 12px;
+				border-radius: 20px;
+			}
+			
+			.deviceStatusExplainElement:nth-child(1)>i {
+				background-color: #007cc2;
+			}
+			
+			.deviceStatusExplainElement:nth-child(2)>i {
 				background-color: red;
-			}*/
+			}
+			
+			.deviceStatusExplainElement:nth-child(3)>i {
+				background-color: yellow;
+			}
 		</style>
 	</head>
 
@@ -248,83 +323,43 @@
 		<div class="admin-main">
 			<blockquote class="layui-elem-quote">
 				<div class="layui-form" lay-filter="monitorFormFilter">
-					<div class="layui-form-item" style="margin-bottom: 0px;">
+					<div class="layui-form-item">
 						<label class="layui-form-label">选择酒店<i class="form-required-point">*</i></label>
-						<div class="layui-input-inline" style="width: 600px;">
+						<div class="layui-input-inline">
 							<select name="hotelManager" lay-verify="required" id="hotelSelect" lay-filter="hotelSelect">
 								<option value=""></option>
 							</select>
 						</div>
 					</div>
-					<div id="agentSelectItem" class="layui-form-item" style="margin-bottom: 0px; margin-top: 6px;">
-						<label class="layui-form-label">选择中继<i class="form-required-point">*</i></label>
-						<div class="layui-input-inline" style="width: 600px;">
-							<select name="agents" lay-verify="required" id="agentSelect" lay-filter="agentSelect">
-								<option value=""></option>
-							</select>
+					<div class="layui-form-item">
+						<label class="layui-form-label">设备状态<i class="form-required-point">*</i></label>
+						<div class="layui-input-inline deviceStatusExplain">
+							<div class="deviceStatusExplainElement">
+								<i class="deviceStatusExplainIcon"></i>
+								<span>设备正常</span>
+							</div>
+							<div class="deviceStatusExplainElement">
+								<i class="deviceStatusExplainIcon"></i>
+								<span>设备故障</span>
+							</div>
+							<div class="deviceStatusExplainElement">
+								<i class="deviceStatusExplainIcon"></i>
+								<span>下层设备故障</span>
+							</div>
 						</div>
 					</div>
-					<!--<div id="badgeList" class="layui-form-item">
-						<span class="layui-badge-dot"></span>
-						<a>状态1</a>
-						<span class="layui-badge-dot layui-bg-orange"></span>
-						<a>状态2</a>
-						<span class="layui-badge-dot layui-bg-green"></span>
-						<a>状态3</a>
-						<span class="layui-badge-dot layui-bg-cyan"></span>
-						<a>状态4</a>
-						<span class="layui-badge-dot layui-bg-blue"></span>
-						<a>状态5</a>
-						<span class="layui-badge-dot layui-bg-black"></span>
-						<a>状态6</a>
-					</div>-->
 				</div>
 			</blockquote>
 			<!--  实时监控div    -->
 			<div id="main">
-				<!--<div id="repeaters">-->
-				<!--<div class="repeater">
-						<span class="agentNum">
-							GSM1
-						</span>
-					</div>
-				</div>
-				<div class="connect">
-					<div id="toRepeaterLine"></div>
-					<div id="mainLine"></div>
-				</div>-->
-				<!-- 卡槽列表  -->
-				<!--<div id="soltList">-->
-				<!--<div class="solt" id="">
-						<div class="upLine"></div>
-						<div class="soltHead">
-							<span class="roomNum">
-								1024
-							</span>
-						</div>
-						<div class="tridentLine">
-							<div class="downLine"></div>
-							<div class="threeLine">
-								<div class="innerLine"></div>
-							</div>
-						</div>
-						<div class="soltOperations">
-							<div class="lockerBtn">
-								<span> 门锁</span>
-							</div>
-							<div class="remoteBtn">
-								<span>遥控</span>
-							</div>
-							<div class="infraredBtn">
-								<span>红外</span>
-							</div>
-						</div>
-					</div>-->
-				<!--</div>-->
-				<!--</div>-->
 				<!--  实时监控div  end   -->
 			</div>
 			<!--模板-->
+			<div id="repeatersList">
+				<div id="repeaterTitle">中继网关</div>
+				<div id="repeatersContent">
+				</div>
+			</div>
 			<script type="text/html" id="tpl">
 				{{# layui.each(d.list, function(index, item){ }}
 				<tr>

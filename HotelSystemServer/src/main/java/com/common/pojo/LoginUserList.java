@@ -1,7 +1,5 @@
 package com.common.pojo;
 
-import java.sql.Timestamp;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -24,7 +22,7 @@ public class LoginUserList implements java.io.Serializable {
 	private String position;
 	private Integer permission;
 	private String creator;
-	private Timestamp createTime;
+	private String createTime;
 //	private Set userHotelLists = new HashSet(0);
 //	private Set loginUserInfos = new HashSet(0);
 
@@ -36,7 +34,7 @@ public class LoginUserList implements java.io.Serializable {
 
 	/** minimal constructor */
 	public LoginUserList(String account, String password, String passwordSalt, String userName, String userId,
-			Integer permission, Timestamp createTime) {
+			Integer permission, String createTime) {
 		this.account = account;
 		this.password = password;
 		this.passwordSalt = passwordSalt;
@@ -48,7 +46,7 @@ public class LoginUserList implements java.io.Serializable {
 
 	/** full constructor */
 	public LoginUserList(String account, String password, String passwordSalt, String userName, String userId,
-			String userPhone, String position, Integer permission, String creator, Timestamp createTime,
+			String userPhone, String position, Integer permission, String creator, String createTime,
 			Set userHotelLists, Set loginUserInfos) {
 		this.account = account;
 		this.password = password;
@@ -146,11 +144,11 @@ public class LoginUserList implements java.io.Serializable {
 		this.creator = creator;
 	}
 
-	public Timestamp getCreateTime() {
+	public String getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 

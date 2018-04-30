@@ -4,9 +4,18 @@ public class registerDto {
 	private String account;
 	private String userName;
 	private String password;
+	private String creator;
 
 	public registerDto() {
 		super();
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
 
 	public String getAccount() {
