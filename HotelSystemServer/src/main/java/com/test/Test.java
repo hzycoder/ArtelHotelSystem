@@ -1,15 +1,22 @@
 package com.test;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
+import com.alibaba.fastjson.JSONObject;
 import com.common.util.CharacterUtils;
+import com.tcp.MsgQueue;
+import com.tcp.jsonMsg.JsonMsg;
 import com.tcp.netty.ClientBootstrap;
 
 public class Test {
 	public static void main(String[] args) {
-		Test.nettyTest();
+		// Test.nettyTest();
+		handlerQueue();
 		// Test.md5();
 		// Test.time();
 		// Test.testString2Int("H999999");
@@ -18,6 +25,18 @@ public class Test {
 		// Test.generateCode();
 		// JSONTest();
 		// testTCPSend();
+	}
+
+	public static void handlerQueue() {
+		MsgQueue<JsonMsg> msgQueue = new MsgQueue<JsonMsg>();
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("卡号", "8888");
+		JsonMsg jsonMsg = new JsonMsg(jsonObject);
+		msgQueue.push(jsonMsg);
+		msgQueue.print();
+		LinkedList<JsonMsg> queue = msgQueue.getStorage();
+		Iterator iter = queue.iterator();
+		
 	}
 
 	public static void nettyTest() {

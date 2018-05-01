@@ -8,6 +8,8 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.tcp.netty.ClientHandler;
+
 public class WebSocketHandler extends TextWebSocketHandler {
 	private static final Logger logger = Logger.getLogger(WebSocketHandler.class);
 	// 建立连接后的回调
@@ -16,17 +18,26 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		String sessionId = session.getId();
 		logger.info("ID:[" +sessionId +"]客户端建立连接！");
+		//判断是绑定操作还是监测操作
+		String cardNum = (String) session.getAttributes().get("cardNum");
 		String agentId = (String) session.getAttributes().get("agentId");
-		logger.info("中继ID："+agentId);
-		if (StringUtils.isNotBlank(sessionId) && StringUtils.isNotBlank(agentId)) {
-			WebSocketHandlerSession.put(sessionId, session);
-			WebSocketHandlerAgentIdSession.put(agentId, session);
-			AssociatedSession.put(sessionId, agentId);
-			session.sendMessage(new TextMessage("Establish connection success"));
-		}else {
-			logger.info("WEBSOCKETID WRONG");
-			session.close();
+		if (null!=cardNum) {
+			System.out.println("卡号id:"+cardNum);
+			System.out.println(ClientHandler.queueu.toString());//打印消息队列
+		} else if(null!=agentId) {
+			System.out.println("中继id:"+agentId);
 		}
+		
+		
+//		if (StringUtils.isNotBlank(sessionId) && StringUtils.isNotBlank(agentId)) {
+//			WebSocketHandlerSession.put(sessionId, session);
+//			WebSocketHandlerAgentIdSession.put(agentId, session);
+//			AssociatedSession.put(sessionId, agentId);
+//			session.sendMessage(new TextMessage("Establish connection success"));
+//		}else {
+//			logger.info("WEBSOCKETID WRONG");
+//			session.close();
+//		}
 	}
 
 	// 接收到数据后的回调（可以处理text，pong,binary等数据）
@@ -40,9 +51,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		logger.info("ID["+session.getId()+"]客户端关闭连接");
-		WebSocketHandlerSession.remove(session.getId());//从sessionid Handler中移除
-		WebSocketHandlerAgentIdSession.remove(AssociatedSession.get(session.getId()));//从agentId Handler中移除
-		AssociatedSession.remove(session.getId());
+//		WebSocketHandlerSession.remove(session.getId());//从sessionid Handler中移除
+//		WebSocketHandlerAgentIdSession.remove(AssociatedSession.get(session.getId()));//从agentId Handler中移除
+//		AssociatedSession.remove(session.getId());
 		super.afterConnectionClosed(session, status);
 	}
 
@@ -53,9 +64,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		if (session.isOpen()) {
 			session.close();
 		}
-		WebSocketHandlerSession.remove(session.getId());//从sessionid Handler中移除
-		WebSocketHandlerAgentIdSession.remove(AssociatedSession.get(session.getId()));//从agentId Handler中移除
-		AssociatedSession.remove(session.getId());
+//		WebSocketHandlerSession.remove(session.getId());//从sessionid Handler中移除
+//		WebSocketHandlerAgentIdSession.remove(AssociatedSession.get(session.getId()));//从agentId Handler中移除
+//		AssociatedSession.remove(session.getId());
 		super.handleTransportError(session, exception);
 	}
 

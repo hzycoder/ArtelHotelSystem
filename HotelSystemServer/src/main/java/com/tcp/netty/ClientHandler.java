@@ -1,15 +1,15 @@
 package com.tcp.netty;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tcp.ChannelSession;
-import com.tcp.FrameStruct.FrameStruct;
+import com.tcp.MsgQueue;
 import com.tcp.jsonMsg.JsonMsg;
 
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class ClientHandler extends ChannelInboundHandlerAdapter {
+
+	public static MsgQueue<JsonMsg> queueu = new MsgQueue<JsonMsg>();
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		String id = ctx.channel().id().asLongText();
@@ -30,8 +30,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		System.out.println("------接收到来自服务器的数据------");
 		JsonMsg jsonMsg = (JsonMsg) msg;
-		System.out.println("[Client]:" + jsonMsg.getJsonContent());
-		
+		System.out.println("[Client]:" + jsonMsg.getJsonObject().toJSONString());
+		queueu.push(jsonMsg);//把消息放进消息队列
 		// System.out.println(((FrameStruct) msg).toString());
 		// if (msg instanceof FrameStruct) {
 		// FrameStruct fs = (FrameStruct) msg;
@@ -45,7 +45,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		System.out.println("channel 通道 Read 读取 Complete 完成");
+		System.out.println("----------接收数据完成----------");
 		ctx.flush();
 	}
 
