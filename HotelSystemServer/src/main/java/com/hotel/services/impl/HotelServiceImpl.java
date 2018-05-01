@@ -1,6 +1,7 @@
 package com.hotel.services.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,22 +40,11 @@ public class HotelServiceImpl implements HotelService {
 		StringBuffer sql = new StringBuffer();
 		if (Integer.valueOf(permission) == 0) {
 			hotelList = hotelDao.gethotels();
-			sql.append("SELECT "
-					+ "COUNT(*) "
-					+ "FROM "
-					+ "HotelList");
+			sql.append("SELECT " + "COUNT(*) " + "FROM " + "HotelList");
 		} else {
 			hotelList = hotelDao.gethotels(userID);
-			sql.append("SELECT"
-					+ " COUNT(*)"
-					+ " FROM"
-					+ " HotelList"
-					+ " WHERE"
-					+ " hotelManager"
-					+ " = "
-					+ "'" 
-					+ userID 
-					+ "'");
+			sql.append("SELECT" + " COUNT(*)" + " FROM" + " HotelList" + " WHERE" + " hotelManager" + " = " + "'"
+					+ userID + "'");
 		}
 		int count = commonDao.getCount(sql.toString());
 		map.put("data", hotelList);
@@ -71,46 +61,13 @@ public class HotelServiceImpl implements HotelService {
 		StringBuffer sql = new StringBuffer();
 		if (Integer.valueOf(permission) == 0) {
 			hotelList = hotelDao.gethotelsByConditions(hotelName, address);
-			sql.append("SELECT"
-					+ " COUNT(*)"
-					+ " FROM"
-					+ " HotelList"
-					+ " WHERE"
-					+ " hotelName"
-					+ " like"
-					+ " '%" 
-					+ hotelName 
-					+ "%'"
-					+ " and"
-					+ " address"
-					+ " like "
-					+ "'%"
-					+ address 
-					+ "%'");
+			sql.append("SELECT" + " COUNT(*)" + " FROM" + " HotelList" + " WHERE" + " hotelName" + " like" + " '%"
+					+ hotelName + "%'" + " and" + " address" + " like " + "'%" + address + "%'");
 		} else {
 			hotelList = hotelDao.gethotelsByConditions(hotelName, address, userID);
-			sql.append("SELECT"
-					+ " COUNT(*)"
-					+ " FROM"
-					+ " HotelList"
-					+ " WHERE"
-					+ " hotelName"
-					+ " like"
-					+ " '%" 
-					+ hotelName 
-					+ "%'"
-					+ " and"
-					+ " address"
-					+ " like"
-					+ " '%"
-					+ address 
-					+ "%'"
-					+ " and"
-					+ " hotelManager"
-					+ " = "
-					+ "'" 
-					+ userID 
-					+ "'");
+			sql.append("SELECT" + " COUNT(*)" + " FROM" + " HotelList" + " WHERE" + " hotelName" + " like" + " '%"
+					+ hotelName + "%'" + " and" + " address" + " like" + " '%" + address + "%'" + " and"
+					+ " hotelManager" + " = " + "'" + userID + "'");
 		}
 		int count = commonDao.getCount(sql.toString());
 		map.put("data", hotelList);
@@ -136,49 +93,49 @@ public class HotelServiceImpl implements HotelService {
 	public void addHotel(HotelDto hotelDto) throws Exception {
 		HotelList hotelList = new HotelList();
 		hotelList.setHotelName(hotelDto.getHotelName());
-//		hotelList.setCountry(hotelDto.getCountry());
-//		hotelList.setCity(hotelDto.getCity());
-//		hotelList.setProvince(hotelDto.getProvince());
+		// hotelList.setCountry(hotelDto.getCountry());
+		// hotelList.setCity(hotelDto.getCity());
+		// hotelList.setProvince(hotelDto.getProvince());
 		hotelList.setAddress(hotelDto.getAddress());
 		hotelList.setHotelPhone(hotelDto.getHotelPhone());
 		hotelList.setHotelManager(hotelDto.getHotelManager());
 		hotelList.setStatus(hotelDto.getStatus());
 		hotelList.setCreateTime(new Timestamp(new Date().getTime()));
-		Integer formatId = hotelDao.getMaxHotelId();//获取当前最大ID值
+		Integer formatId = hotelDao.getMaxHotelId();// 获取当前最大ID值
 		String hotelId = generateId(String.valueOf(++formatId));//
 		boolean b = testHotelID(hotelId);
 		if (!b) {
 			throw new Exception("Generating ID failure");
-		} 
+		}
 		hotelList.setHotelId(hotelId);
 		hotelDao.addHotel(hotelList);
 	}
+
 	/**
 	 * @param id
-	 * @return
-	 * 生成酒店编号
+	 * @return 生成酒店编号
 	 */
-	public String generateId(String id){
+	public String generateId(String id) {
 		StringBuffer sb = new StringBuffer(id);
 		while (sb.toString().length() != 6) {
 			sb.insert(0, "0");
 		}
 		sb.insert(0, "H");
-		System.out.println("生成的主键"+sb.toString());
+		System.out.println("生成的主键" + sb.toString());
 		return sb.toString();
 	}
-	
+
 	/**
 	 * @param id
-	 * @return
-	 * 测试是否为酒店ID
+	 * @return 测试是否为酒店ID
 	 */
-	public boolean testHotelID(String id){
+	public boolean testHotelID(String id) {
 		return Pattern.matches("H\\d{6}", id);
 	}
 
 	@Override
 	public void addRoom(RoomDto roomDto) {
+		
 		RoomList roomList = new RoomList();
 		int roomCount = hotelDao.getRoomCountByHotelID(roomDto.getHotelId());
 		roomList.setRoomId(roomDto.getHotelNum() + "_" + String.valueOf(roomCount));
@@ -226,13 +183,22 @@ public class HotelServiceImpl implements HotelService {
 		return map;
 	}
 
-	
 	@Override
 	public Map<String, Object> getTypeOfHotel(String hotelId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> deviceCountList = hotelDao.getTypeOfHotel(hotelId);
 		map.put("data", deviceCountList);
 		return map;
+	}
+
+	@Override
+	public boolean verifyHotelName(String hotelName) {
+		List<HotelList> list = hotelDao.getHotelByHotelName(hotelName);
+		if (list.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

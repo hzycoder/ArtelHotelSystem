@@ -33,7 +33,7 @@ var navs = [{
 	{
 		"title": "设备管理",
 		"icon": "&#xe631;",
-		"spread": false,
+		"spread": true,
 		"children": [{
 				"title": "在线监测",
 				"icon": "&#xe62c;",
@@ -44,11 +44,11 @@ var navs = [{
 				"icon": "&#xe615;",
 				"href": "sys_device/device.html"
 			},
-//			{
-//				"title": "设备组网",
-//				"icon": "&#xe64c;",
-//				"href": "common/img/ArtelLogo.jpg"
-//			},
+			//			{
+			//				"title": "设备组网",
+			//				"icon": "&#xe64c;",
+			//				"href": "common/img/ArtelLogo.jpg"
+			//			},
 			{
 				"title": "设备绑定",
 				"icon": "&#xe64c;",
@@ -64,7 +64,7 @@ var navs = [{
 	{
 		"title": "账号管理",
 		"icon": "&#xe61e;",
-		"spread": true,
+		"spread": false,
 		"children": [{
 			"title": "管理账号",
 			"icon": "&#xe613;",
@@ -91,7 +91,7 @@ var navs = [{
 			"title": "故障检索",
 			"icon": "&#xe615;",
 			"href": "common/img/ArtelLogo.jpg"
-		},{
+		}, {
 			"title": "数据导出",
 			"icon": "&#xe615;",
 			"href": "common/img/ArtelLogo.jpg"
@@ -106,7 +106,7 @@ var navs2 = [{
 		"children": [{
 			"title": "酒店查询",
 			"icon": "&#xe615;",
-			"href": "sys_hotel/hotel.html"
+			"href": "sys_hotel/hotel_.html"
 		}, ]
 	},
 	{
@@ -127,6 +127,10 @@ var navs2 = [{
 			"title": "当前账户信息",
 			"icon": "&#xe613;",
 			"href": "sys_user/userInfo.html"
+		}, {
+			"title": "修改密码",
+			"icon": "&#xe613;",
+			"href": "sys_user/modifyPass.html"
 		}, ]
 	},
 ];

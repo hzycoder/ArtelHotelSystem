@@ -1,9 +1,8 @@
-package com.tcp.netty;
+package com.tcp.FrameStruct;
 
 import java.util.List;
 
 import com.tcp.ConstantValue;
-import com.tcp.FrameStruct;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

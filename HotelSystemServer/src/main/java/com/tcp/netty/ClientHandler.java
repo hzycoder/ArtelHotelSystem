@@ -1,8 +1,11 @@
 package com.tcp.netty;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tcp.ChannelSession;
-import com.tcp.FrameStruct;
+import com.tcp.FrameStruct.FrameStruct;
+import com.tcp.jsonMsg.JsonMsg;
 
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -11,9 +14,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		String id = ctx.channel().id().asLongText();
 		System.out.println("※※※※※※※※※※※客户端与服务端通道激活" + id);
-		// ctx.writeAndFlush("i am Client\r\n");
-		// ctx.writeAndFlush("i am Client\r\n");
-		// ctx.writeAndFlush("我是客户端！");
 		ChannelSession.addChannelSession(id, ctx.channel());
 		super.channelActive(ctx);
 	}
@@ -28,15 +28,18 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		System.out.println("※※※※※※※※※※※开始读取数据");
-		System.out.println(((FrameStruct) msg).toString());
-		if (msg instanceof FrameStruct) {
-			FrameStruct fs = (FrameStruct) msg;
-			System.out.println("[Client]:" + (byte[])fs.getContent());
-		} else {
-			System.out.println("[Client]:not instanceof FrameStruct");
-		}
-		count++;
+		System.out.println("------接收到来自服务器的数据------");
+		JsonMsg jsonMsg = (JsonMsg) msg;
+		System.out.println("[Client]:" + jsonMsg.getJsonContent());
+		
+		// System.out.println(((FrameStruct) msg).toString());
+		// if (msg instanceof FrameStruct) {
+		// FrameStruct fs = (FrameStruct) msg;
+		// System.out.println("[Client]:" + (byte[])fs.getContent());
+		// } else {
+		// System.out.println("[Client]:not instanceof FrameStruct");
+		// }
+		// count++;
 		super.channelRead(ctx, msg);
 	}
 

@@ -1,6 +1,4 @@
-package com.tcp.netty;
-
-import com.tcp.FrameStruct;
+package com.tcp.FrameStruct;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

@@ -25,4 +25,6 @@ public interface HotelService {
 			String permission);
 
 	public Map<String, Object> getTypeOfHotel(String hotelId);
+	
+	public boolean verifyHotelName(String hotelName);
 }

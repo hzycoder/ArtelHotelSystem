@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+		<META HTTP-EQUIV="expires" CONTENT="0">
+		<title>查询用户</title>
+		<link rel="stylesheet" type="text/css" href="../plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/table.css" />
+		<style type="text/css">
+			.layui-elem-field {
+				margin: 20px;
+			}
+			.layui-form-label {
+				text-align: center;
+			}
+			.layui-laypage-skip .layui-input {
+				display: inline;
+				/*防止分页layui-laypage-skip 跳行*/
+				height: 26px;
+				line-height: 26px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="admin-main">
+			<blockquote class="layui-elem-quote">
+				<div class="layui-inline">
+					<label class="layui-form-label">客户名称</label>
+					<div class="layui-input-inline">
+						<input id="hotelNameInput" type="text" name="title" placeholder="请输入客户名称" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">地址</label>
+					<div class="layui-input-inline">
+						<input id="addressInput" type="text" name="title" placeholder="请输入地址" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<button class="layui-btn" id="research">
+					<i class="layui-icon">&#xe615;</i>搜索
+				</button>
+				<button class="layui-btn" id="refresh">
+					<i class="layui-icon">&#xe615;</i>刷新
+				</button>
+			</blockquote>
+			<fieldset class="layui-elem-field">
+				<legend>酒店列表</legend>
+				<table id="hotelTable" lay-filter="hotelTableFilter"></table>
+				<div class="admin-table-page">
+					<div id="paged" class="page">
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<!--  表头工具   -->
+		<script type="text/html" id="hotelTableBar">
+			<a class="layui-btn  layui-btn-xs" lay-event="mod">修改</a>
+		</script>
+		<!--  分页模板    -->
+		<!--<script type="text/html" id="conTemp">
+			{{# layui.each(d.list, function(index, item){ }}
+			<tr>
+				<td><input type="checkbox" lay-skin="primary"></td>
+				<td>{{ item.hotelName }}</td>
+				<td>{{ item.hotelId }}</td>
+				<td>{{ item.address }}</td>
+				<td>{{ item.repeaterCount }}</td>
+				<td>{{ item.deviceCount }}</td>
+				<td>{{ item.status }}</td>
+				<td>{{ item.createTime }}</td>
+				<td>
+					<a href="/detail-1" target="_blank" class="layui-btn layui-btn-normal layui-btn-mini">操作1</a>
+					<a href="javascript:;" data-name="{{ item.name }}" data-opt="edit" class="layui-btn layui-btn-mini">操作2</a>
+					<a href="javascript:;" data-id="1" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini">操作3</a>
+				</td>
+			</tr>
+			{{# }); }}
+		</script>-->
+		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/hotel.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

@@ -1,8 +1,8 @@
 (function() {
 	//全局变量定义：
-//	layui.config({ //使用自定义模块paging
-//		base: '../js/'
-//	});
+	//	layui.config({ //使用自定义模块paging
+	//		base: '../js/'
+	//	});
 	var layerTips,
 		layer,
 		form,
@@ -11,7 +11,7 @@
 	btnArray.push('<span style="color: #ffffff;transition:color 1s linear;">确定</span>');
 	btnArray.push('<span>取消<span>');
 	layui.use(["form", ], function() {
-//		paging = layui.paging();
+		//		paging = layui.paging();
 		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 		layer = layui.layer; //获取当前窗口的layer对象
 		form = layui.form;
@@ -71,7 +71,7 @@
 		//获取用户列表(酒店列表)
 		getAllHotel: function() {
 			var userData = JSON.parse(sessionStorage.getItem("user"));
-			var index =layer.load(2);
+			var index = layer.load(2);
 			ZY.ajax({
 				"url": "hotel/getHotels",
 				"type": "GET",
@@ -212,40 +212,5 @@
 			});
 			iEvent.getAllHotel();
 		},
-		/*
-		 * 使用laypage分页 
-		 */
-//		laypage: function(data) {
-//			layui.config({
-//				base: 'js/'
-//			}).use(['paging', 'code'], function() {
-//				layui.code();
-//				var $ = layui.jquery,
-//					paging = layui.paging();
-//				paging.init({
-//					url: CONFIG.URL + 'hotel/getHotels', //地址
-//					type: 'GET',
-//					elem: '#content', //内容容器
-//					params: { //发送到服务端的参数
-//
-//					},
-//					tempElem: '#conTemp', //模块容器
-//					pageConfig: { //分页参数配置
-//						elem: '#paged', //分页容器
-//						pageSize: 3 //分页大小
-//					},
-//					success: function() { //渲染成功的回调
-//						//alert('渲染成功');
-//					},
-//					fail: function(msg) { //获取数据失败的回调
-//						//alert('获取数据失败')
-//					},
-//					complate: function() { //完成的回调
-//						//alert('处理完成');
-//					},
-//				});
-//			});
-//		},
-
 	};
 }());

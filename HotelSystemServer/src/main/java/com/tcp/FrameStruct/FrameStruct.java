@@ -1,6 +1,8 @@
-package com.tcp;
+package com.tcp.FrameStruct;
 
 import java.util.Arrays;
+
+import com.tcp.ConstantValue;
 
 public class FrameStruct {
 

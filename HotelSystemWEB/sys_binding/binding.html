@@ -9,13 +9,96 @@
 		<title>绑定设备</title>
 		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
 		<style type="text/css">
-			
 			.form-required-point {
 				color: red;
 				font-size: 16px;
 				position: absolute;
 				top: 11px;
 				right: 6px;
+			}
+			
+			#receviedData {
+				width: 40%;
+				border: 1px black solid;
+				height: 500px;
+				display: inline-block;
+				float: left;
+			}
+			
+			#roomList {
+				width: 35%;
+				border: 1px black solid;
+				height: 500px;
+				display: inline-block;
+				float: left;
+				overflow-x: hidden;
+				overflow-y: auto;
+				white-space: nowrap;
+			}
+			
+			#roomList table {
+				font-size: 12px;
+			}
+			
+			#roomList table {
+				table-layout: fixed;
+				empty-cells: show;
+				border-collapse: collapse;
+				margin: 0 auto;
+			}
+			
+			#roomList td {
+				height: 30px;
+			}
+			
+			#roomList h1,
+			#roomList h2,
+			#roomList h3 {
+				font-size: 12px;
+				margin: 0;
+				padding: 0;
+			}
+			
+			#roomList .table {
+				border: 1px solid #e2e2e2;
+				color: #666;
+			}
+			
+			#roomList .table th {
+				background-color: #e2e2e2;
+				;
+				background-repeat: repeat-x;
+				height: 30px;
+			}
+			
+			#roomList .table td {
+				height: 38px;
+			}
+			
+			#roomList .table td,
+			#roomList .table th {
+				border: 1px solid #e2e2e2;
+				padding: 0 1em 0;
+			}
+			
+			#roomList .table tr.alter {
+				background-color: #f5fafe;
+			}
+			
+			#roomListTable {
+				width: 98%;
+			}
+			/*设置表格标题样式 第一个tr子元素*/
+			
+			tr:first-child {
+				position: absolute;
+			}
+			
+			tr:first-child th {
+				width: 115px;
+			}
+			tbody{
+				padding-top: 20px;
 			}
 		</style>
 	</head>
@@ -34,21 +117,44 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">卡号<i class="form-required-point">*</i></label>
 					<div class="layui-input-inline">
-						<input class="layui-input" type="text" name="cardNum"  />
+						<input class="layui-input" type="text" id="cardNum" />
 					</div>
 					<div class="layui-input-inline">
-						<button class="layui-btn">监听</button>
+						<button class="layui-btn" id="listeningBtn">监听</button>
 					</div>
 				</div>
 			</div>
 		</blockquote>
 		<fieldset class="layui-elem-field">
 			<legend>绑定</legend>
+			<div id="receviedData">
+
+			</div>
+			<div id="roomList">
+				<table class="table" id="roomListTable">
+					<tr>
+						<th>房间编号</th>
+						<th>楼层</th>
+						<th>是否绑定</th>
+					</tr>
+					<tr>
+						<td>遮挡</td>
+						<td>遮挡</td>
+						<td>遮挡</td>
+					</tr>
+					<!--<tr class="alter">
+						<td>2</td>
+						<td>2</td>
+						<td>2</td>
+					</tr>-->
+				</table>
+			</div>
 		</fieldset>
 		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/websocket/reconnecting-websocket.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/binding.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 

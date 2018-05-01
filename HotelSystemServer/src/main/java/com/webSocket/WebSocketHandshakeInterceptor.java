@@ -27,9 +27,14 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
 			Map<String, Object> attributes) throws Exception {
 		logger.info("beforeHandshke");
 		String agentId = ((ServletServerHttpRequest)request).getServletRequest().getParameter("agentId");
-		logger.info("get agentId from client:"+agentId);
+		String cardNum = ((ServletServerHttpRequest)request).getServletRequest().getParameter("cardNum");
 		if (StringUtils.isNotBlank(agentId)) {
 			attributes.put("agentId", agentId);
+			logger.info("get agentId from client:"+agentId);
+			return true;
+		}else if (StringUtils.isNotBlank(cardNum)) {
+			attributes.put("cardNum", cardNum);
+			logger.info("get cardNum from client:"+cardNum);
 			return true;
 		}else {
 			logger.info("websocket's parameter is wrong");

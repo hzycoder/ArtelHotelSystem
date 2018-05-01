@@ -29,6 +29,9 @@
 			.error {
 				color: red;
 			}
+			#addHotelForm > .layui-form-item:nth-child(1) >.layui-input-inline{
+				width: 350px;
+			}
 		</style>
 	</head>
 
@@ -39,16 +42,11 @@
 				<form class="layui-form" id="addHotelForm">
 					<div class="layui-form-item">
 						<label class="layui-form-label" >酒店名称<i class="form-required-point">*</i></label>
-						<div class="layui-input-block">
+						<div class="layui-input-inline">
 							<input id="hotelNameInput" type="text" name="hotelName" class="layui-input" autocomplete="off"/>
 						</div>
+						<div class="layui-form-mid layui-word-aux">例：广州**酒店(上下九店)</div>
 					</div>
-					<!--<div class="layui-form-item">
-						<label class="layui-form-label">编号<i class="form-required-point">*</i></label>
-						<div class="layui-input-block">
-							<input id="hotelIdInput" type="text" name="hotelId" class="layui-input" autocomplete="off"/>
-						</div>
-					</div>-->
 					<div class="layui-form-item">
 						<label class="layui-form-label">地址</label>
 						<div class="layui-input-block">

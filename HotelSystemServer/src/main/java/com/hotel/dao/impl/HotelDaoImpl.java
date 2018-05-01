@@ -23,13 +23,13 @@ public class HotelDaoImpl implements HotelDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<HotelList> gethotels() {
-		return sessionFactory.getCurrentSession().createQuery("FROM HotelList").list();
+		return sessionFactory.getCurrentSession().createQuery("FROM HotelList WHERE hotelManager > 0").list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<HotelList> gethotels(String userID) {
-		return sessionFactory.getCurrentSession().createQuery("FROM HotelList where hotelManager = ?")
+		return sessionFactory.getCurrentSession().createQuery("FROM HotelList WHERE hotelManager = ?")
 				.setParameter(0, userID).list();
 	}
 
@@ -38,7 +38,7 @@ public class HotelDaoImpl implements HotelDao {
 	public List<HotelList> gethotelsByConditions(String hotelName, String hotelAddress, String userID) {
 		return sessionFactory.getCurrentSession()
 				.createQuery(
-						"FROM HotelList WHERE hotelName like :hotelName and address like :address and hotelManager = :hotelManager")
+						"FROM HotelList WHERE hotelName like :hotelName and address like :address AND hotelManager = :hotelManager")
 				.setString("hotelName", "%" + hotelName + "%").setString("address", "%" + hotelAddress + "%")
 				.setString("hotelManager", userID).list();
 	}
@@ -48,7 +48,7 @@ public class HotelDaoImpl implements HotelDao {
 	@Override
 	public List<HotelList> gethotelsByConditions(String hotelName, String hotelAddress) {
 		return sessionFactory.getCurrentSession()
-				.createQuery("FROM HotelList WHERE hotelName like :hotelName and address like :address")
+				.createQuery("FROM HotelList WHERE hotelName like :hotelName AND address like :address AND hotelManager > 0")
 				.setString("hotelName", "%" + hotelName + "%").setString("address", "%" + hotelAddress + "%").list();
 	}
 
@@ -134,6 +134,14 @@ public class HotelDaoImpl implements HotelDao {
 				+ "AS "
 				+ "H");
 		return (Integer) sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).uniqueResult();
+	}
+
+	@Override
+	public List<HotelList> getHotelByHotelName(String hotelName) {
+		@SuppressWarnings("unchecked")
+		List<HotelList> hotelList = sessionFactory.getCurrentSession().createQuery("FROM HotelList WHERE hotelName = :hotelName")
+				.setString("hotelName", hotelName).list();
+		return hotelList;
 	}
 
 }

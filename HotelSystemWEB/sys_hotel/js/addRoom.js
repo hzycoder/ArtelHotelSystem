@@ -107,9 +107,9 @@
 					},
 				});
 			}
-			
 		},
 		addRoomAjax:function(roomData,type){
+			console.log(JSON.stringify(roomData));
 			var index = layer.msg('添加房间中...', {
 				icon: 16,
 				shade: 0.01

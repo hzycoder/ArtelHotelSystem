@@ -236,4 +236,23 @@ public class HotelController extends BaseController {
 		}
 		return map;
 	}
+
+	/**
+	 * @param hotelName
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "verifyHotelName", method = RequestMethod.POST)
+	public boolean verifyHotelName(String hotelName) throws Exception {
+		System.out.println("验证：" + hotelName);
+		boolean b = false;
+		try {
+			b = hotelService.verifyHotelName(hotelName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+
 }

@@ -17,6 +17,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 		// WebIM WebSocket通道
 		registry.addHandler(chatWebSocketHandler(), "/websocket").setAllowedOrigins("*")
 				.addInterceptors(myInterceptor());
+		registry.addHandler(chatWebSocketHandler(), "/listening").setAllowedOrigins("*")
+				.addInterceptors(myInterceptor());
 		registry.addHandler(chatWebSocketHandler(), "/sockjs/websocket").setAllowedOrigins("*")
 				.addInterceptors(myInterceptor()).withSockJS();
 	}

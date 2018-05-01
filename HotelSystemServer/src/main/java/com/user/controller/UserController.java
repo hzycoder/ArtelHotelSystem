@@ -92,19 +92,6 @@ public class UserController extends BaseController {
 		logger.info("Logining:" + loginDto.toString());
 		Map<String, Object> map = null;
 		return userService.login(loginDto);
-//		Map<String, Object> map = null;
-//		try {
-//			map = userService.login(loginDto);
-//			msg = "请求数据成功";
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			msg = "系统内部错误";
-//			success = false;
-//		} finally {
-//			map.put("msg", msg);
-//			map.put("success", success);
-//			return map;
-//		}
 	}
 
 	@SuppressWarnings("finally")

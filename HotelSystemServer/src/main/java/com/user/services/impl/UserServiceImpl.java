@@ -68,30 +68,6 @@ public class UserServiceImpl implements UserService {
 			map.put("success", success);
 		}
 		return map;
-		// 判断用户是否存在
-		// if (null == id) {
-		// map.put("error", "用户不存在");
-		// return map;
-		// } else {
-		// LoginUserList loginUserList = userDao.getUserById(id);
-		// if (!judgePass(loginUserList, loginDto.getPassword())) {
-		// map.put("error", "密码错误");
-		// return map;
-		// } else {
-		// UserDto user = new UserDto();
-		// map.put("success", true);
-		// try {
-		// BeanUtils.copyProperties(user, loginUserList);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// map.put("msg", "系统内部错误");
-		// map.put("success", false);
-		// } finally {
-		// map.put("result", user);
-		// return map;
-		// }
-		// }
-		// }
 	}
 
 	public static boolean judgePass(LoginUserList loginUserList, String toBeCheckedPass) {

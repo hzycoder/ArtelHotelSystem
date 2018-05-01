@@ -35,28 +35,28 @@
 						specialCharFilter: true,
 						minlength: 6,
 						maxlength: 32,
+						remote: { //ajax判断账户是否唯一
+							type: "POST",
+							url: CONFIG.URL + "/" + "hotel/verifyHotelName",
+							data: {
+								hotelId: function() {
+									return $("#hotelNameInput").val();
+								}
+							}
+						},
 					},
 					hotelId: {
 						required: true,
 						minlength: 6,
 						maxlength: 32,
-						remote: { //ajax判断账户是否唯一
-							type: "POST",
-							url: CONFIG.URL + "/" + "common/verifyHotelIdUnique",
-							data: {
-								hotelId: function() {
-									return $("#hotelIdInput").val();
-								}
-							}
-						},
 					},
 					address: {
 						maxlength: 180,
 					},
 				},
 				messages: {
-					hotelId: {
-						remote: "该账户已被占用",
+					hotelName: {
+						remote: "该酒店名已存在",
 					},
 				},
 				onfocusout: function(element) { //设置onblur验证表单
@@ -117,7 +117,7 @@
 			var index = layer.msg('添加酒店中...', {
 				icon: 16,
 				shade: 0.1,
-				time:2000
+				time: 2000
 			});
 			ZY.ajax({
 				"url": "hotel/addHotel",

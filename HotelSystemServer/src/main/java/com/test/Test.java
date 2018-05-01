@@ -1,25 +1,62 @@
 package com.test;
 
 import java.util.Date;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.util.PatternMatchUtils;
-
 import com.common.util.CharacterUtils;
-import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 import com.tcp.netty.ClientBootstrap;
 
 public class Test {
 	public static void main(String[] args) {
-		// Test.nettyTest();
+		Test.nettyTest();
 		// Test.md5();
 		// Test.time();
 		// Test.testString2Int("H999999");
 		// Test.testID();
 		// Test.testGenerateId(String.valueOf(123456));
-		Test.generateCode();
+		// Test.generateCode();
+		// JSONTest();
+		// testTCPSend();
+	}
+
+	public static void nettyTest() {
+		ClientBootstrap.connectServer("192.168.0.110", 7777);
+	}
+
+	private static void testTCPSend() {
+		System.out.println(new Date().getTime() % 3);
+		long l = new Date().getTime();
+		String msg = "";
+		switch ((int) l % 3) {
+		case 1:
+			msg = "a";
+			break;
+		case 2:
+			msg = "b";
+			break;
+		case 3:
+			msg = "c";
+			break;
+		default:
+			break;
+		}
+		System.out.println(msg);
+	}
+
+	private static void JSONTest() {
+		// JSONObject jsonObject = new JSONObject();
+		// jsonObject.put("学号", "1234");
+		// jsonObject.put("学号1", "1234a");
+		// jsonObject.put("学号2", "1234b");
+		// jsonObject.put("学号3", "1234c");
+		// jsonObject.put("学号4", "1234d");
+		// JsonMsg jsonMsg = new JsonMsg(jsonObject);
+		// System.out.println(jsonMsg.toString());
+		// byte[] b = Util.object2Bytes(jsonMsg);
+		// System.out.println(Arrays.toString(b));
+		// Object obj = Util.bytes2Object(b);
+		// ((JsonMsg) obj).print();
 	}
 
 	private static void generateCode() {
@@ -29,10 +66,6 @@ public class Test {
 
 	private static void time() {
 		System.out.println(new Date().getTime());
-	}
-
-	public static void nettyTest() {
-		ClientBootstrap.connectServer("192.168.0.110", 9909);
 	}
 
 	public static void testID() {
