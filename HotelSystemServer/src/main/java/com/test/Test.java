@@ -1,5 +1,8 @@
 package com.test;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,7 +19,7 @@ import com.tcp.netty.ClientBootstrap;
 public class Test {
 	public static void main(String[] args) {
 		// Test.nettyTest();
-		handlerQueue();
+		// handlerQueue();
 		// Test.md5();
 		// Test.time();
 		// Test.testString2Int("H999999");
@@ -25,18 +28,39 @@ public class Test {
 		// Test.generateCode();
 		// JSONTest();
 		// testTCPSend();
+		testTimestamp();
 	}
 
 	public static void handlerQueue() {
-		MsgQueue<JsonMsg> msgQueue = new MsgQueue<JsonMsg>();
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("卡号", "8888");
-		JsonMsg jsonMsg = new JsonMsg(jsonObject);
-		msgQueue.push(jsonMsg);
-		msgQueue.print();
-		LinkedList<JsonMsg> queue = msgQueue.getStorage();
-		Iterator iter = queue.iterator();
-		
+		// MsgQueue<JsonMsg> msgQueue = new MsgQueue<JsonMsg>();
+		// JSONObject jsonObject = new JSONObject();
+		// jsonObject.put("卡号", "8888");
+		// JsonMsg jsonMsg = new JsonMsg(jsonObject);
+		// msgQueue.push(jsonMsg);
+		// msgQueue.print();
+		// LinkedList<JsonMsg> queue = msgQueue.getStorage();
+		// Iterator iter = queue.iterator();
+
+	}
+
+	public static void testTimestamp() {
+		String param = "";
+		System.out.println(DigestUtils.md5Hex("break"+param));
+		try {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			long timestamp = new Date().getTime();
+			String time1 = simpleDateFormat.format(timestamp);
+			System.out.println("===========");
+			System.out.println(time1);
+			String time = time1;
+			Date date = new Date();
+			DateFormat df = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+			date = df.parse(time);
+			System.out.println(date.getTime());
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void nettyTest() {

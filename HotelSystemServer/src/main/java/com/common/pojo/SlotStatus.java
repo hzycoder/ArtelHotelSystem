@@ -8,12 +8,16 @@ public class SlotStatus implements java.io.Serializable {
 
 	// Fields
 
-	private Integer idslotStatus;
-	private SoltList soltList;
-	private String slotStatus;
-	private String dev1status;
-	private String dev2status;
-	private String dev3status;
+	private Integer id;
+	private Integer idslotList;
+	private Boolean slotStatus;
+	private String slotCardNum;
+	private Boolean isSlotIllegal;
+	private String lockStatus;
+	private String isChildDeviceRegister;
+	private String isChildDeviceOnline;
+	private String isServiceLightOn;
+	private Boolean isRoomLightOn;
 
 	// Constructors
 
@@ -22,62 +26,98 @@ public class SlotStatus implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public SlotStatus(SoltList soltList, String slotStatus, String dev1status, String dev2status, String dev3status) {
-		this.soltList = soltList;
+	public SlotStatus(Integer idslotList, Boolean slotStatus, Boolean isSlotIllegal, String lockStatus,
+			String isChildDeviceRegister, String isChildDeviceOnline, String isServiceLightOn, Boolean isRoomLightOn) {
+		this.idslotList = idslotList;
 		this.slotStatus = slotStatus;
-		this.dev1status = dev1status;
-		this.dev2status = dev2status;
-		this.dev3status = dev3status;
+		this.isSlotIllegal = isSlotIllegal;
+		this.lockStatus = lockStatus;
+		this.isChildDeviceRegister = isChildDeviceRegister;
+		this.isChildDeviceOnline = isChildDeviceOnline;
+		this.isServiceLightOn = isServiceLightOn;
+		this.isRoomLightOn = isRoomLightOn;
 	}
 
 	// Property accessors
 
-	public Integer getIdslotStatus() {
-		return this.idslotStatus;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setIdslotStatus(Integer idslotStatus) {
-		this.idslotStatus = idslotStatus;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public SoltList getSoltList() {
-		return this.soltList;
+	public Integer getIdslotList() {
+		return this.idslotList;
 	}
 
-	public void setSoltList(SoltList soltList) {
-		this.soltList = soltList;
+	public void setIdslotList(Integer idslotList) {
+		this.idslotList = idslotList;
 	}
 
-	public String getSlotStatus() {
+	public Boolean getSlotStatus() {
 		return this.slotStatus;
 	}
 
-	public void setSlotStatus(String slotStatus) {
+	public void setSlotStatus(Boolean slotStatus) {
 		this.slotStatus = slotStatus;
 	}
 
-	public String getDev1status() {
-		return this.dev1status;
+	public Boolean getIsSlotIllegal() {
+		return this.isSlotIllegal;
 	}
 
-	public void setDev1status(String dev1status) {
-		this.dev1status = dev1status;
+	public void setIsSlotIllegal(Boolean isSlotIllegal) {
+		this.isSlotIllegal = isSlotIllegal;
 	}
 
-	public String getDev2status() {
-		return this.dev2status;
+	public String getLockStatus() {
+		return this.lockStatus;
 	}
 
-	public void setDev2status(String dev2status) {
-		this.dev2status = dev2status;
+	public void setLockStatus(String lockStatus) {
+		this.lockStatus = lockStatus;
 	}
 
-	public String getDev3status() {
-		return this.dev3status;
+	public String getIsChildDeviceRegister() {
+		return this.isChildDeviceRegister;
 	}
 
-	public void setDev3status(String dev3status) {
-		this.dev3status = dev3status;
+	public void setIsChildDeviceRegister(String isChildDeviceRegister) {
+		this.isChildDeviceRegister = isChildDeviceRegister;
+	}
+
+	public String getIsChildDeviceOnline() {
+		return this.isChildDeviceOnline;
+	}
+
+	public void setIsChildDeviceOnline(String isChildDeviceOnline) {
+		this.isChildDeviceOnline = isChildDeviceOnline;
+	}
+
+	public String getIsServiceLightOn() {
+		return isServiceLightOn;
+	}
+
+	public void setIsServiceLightOn(String isServiceLightOn) {
+		this.isServiceLightOn = isServiceLightOn;
+	}
+
+	public Boolean getIsRoomLightOn() {
+		return this.isRoomLightOn;
+	}
+
+	public void setIsRoomLightOn(Boolean isRoomLightOn) {
+		this.isRoomLightOn = isRoomLightOn;
+	}
+
+	public String getSlotCardNum() {
+		return slotCardNum;
+	}
+
+	public void setSlotCardNum(String slotCardNum) {
+		this.slotCardNum = slotCardNum;
 	}
 
 }

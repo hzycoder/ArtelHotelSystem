@@ -8,6 +8,7 @@
 		<META HTTP-EQUIV="expires" CONTENT="0">
 		<title>绑定设备</title>
 		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css" />
 		<style type="text/css">
 			.form-required-point {
 				color: red;
@@ -17,88 +18,146 @@
 				right: 6px;
 			}
 			
-			#receviedData {
-				width: 40%;
-				border: 1px black solid;
-				height: 500px;
-				display: inline-block;
-				float: left;
+			#stopListenBtn {
+				background-color: #FF5722;
+				display: none;
 			}
 			
-			#roomList {
-				width: 35%;
-				border: 1px black solid;
+			#bindingDiv {
+				display: inline-block;
+				width: 100%;
+			}
+			
+			.layui-btn+.layui-btn {
+				margin-left: 0px;
+			}
+			
+			thead tr th {
+				height: 35px;
+				border: 1px white solid;
+			}
+			
+			#leftDiv {
+				width: 49%;
 				height: 500px;
 				display: inline-block;
 				float: left;
-				overflow-x: hidden;
+				border-right: 1px black solid;
+			}
+			
+			#receviedTableHead table {
+				font-size: 14px;
+				width: 100%;
+			}
+			
+			#receviedTableBody {
+				height: 500px;
+				display: inline-block;
+				overflow-x: auto;
 				overflow-y: auto;
 				white-space: nowrap;
 			}
 			
-			#roomList table {
+			#cardData {
+				width: 100%;
+			}
+			
+			#rightDiv {
+				width: 49%;
+				height: 500px;
+				display: inline-block;
+				float: left;
+				border-left: 1px black solid;
+			}
+			
+			#roomTableHead table {
+				font-size: 14px;
+				width: 100%;
+			}
+			
+			#roomTableBody {
+				height: 500px;
+				display: inline-block;
+				overflow-x: auto;
+				overflow-y: auto;
+				white-space: nowrap;
+			}
+			
+			#roomData {
+				width: 100%;
+			}
+			
+			tr:nth-child(odd) {
+				background-color: #EAEAEA;
+			}
+			
+			table {
 				font-size: 12px;
 			}
 			
-			#roomList table {
+			table {
 				table-layout: fixed;
 				empty-cells: show;
 				border-collapse: collapse;
 				margin: 0 auto;
 			}
 			
-			#roomList td {
+			td {
 				height: 30px;
 			}
 			
-			#roomList h1,
-			#roomList h2,
-			#roomList h3 {
+			h1,
+			h2,
+			h3 {
 				font-size: 12px;
 				margin: 0;
 				padding: 0;
 			}
 			
-			#roomList .table {
+			.table {
 				border: 1px solid #e2e2e2;
 				color: #666;
 			}
 			
-			#roomList .table th {
+			.table th {
 				background-color: #e2e2e2;
 				;
 				background-repeat: repeat-x;
 				height: 30px;
 			}
 			
-			#roomList .table td {
+			.table td {
 				height: 38px;
 			}
 			
-			#roomList .table td,
-			#roomList .table th {
-				border: 1px solid #e2e2e2;
+			table>tr {
+				font-size: 15px;
+				cursor: pointer;
+			}
+			
+			.table td,
+			.table th {
+				border: 1px solid white;
 				padding: 0 1em 0;
 			}
 			
-			#roomList .table tr.alter {
+			.table tr.alter {
 				background-color: #f5fafe;
 			}
 			
-			#roomListTable {
-				width: 98%;
-			}
-			/*设置表格标题样式 第一个tr子元素*/
-			
-			tr:first-child {
-				position: absolute;
-			}
-			
-			tr:first-child th {
+			#roomListTable tr:first-child th {
 				width: 115px;
+				height: 37px;
 			}
-			tbody{
-				padding-top: 20px;
+			
+			#leftDivTable tr:first-child th {
+				width: 135px;
+				height: 37px;
+			}
+			
+			.trSelected {
+				background-color: #1AA094;
+				color: white;
 			}
 		</style>
 	</head>
@@ -120,40 +179,52 @@
 						<input class="layui-input" type="text" id="cardNum" />
 					</div>
 					<div class="layui-input-inline">
-						<button class="layui-btn" id="listeningBtn">监听</button>
+						<button class="layui-btn" id="listenBtn"><i class="fa fa-assistive-listening-systems"></i> 请求监听</button>
+						<button class="layui-btn" id="stopListenBtn"><i class="fa fa-refresh fa-spin"></i> 正在监听</button>
 					</div>
 				</div>
 			</div>
 		</blockquote>
 		<fieldset class="layui-elem-field">
 			<legend>绑定</legend>
-			<div id="receviedData">
-
-			</div>
-			<div id="roomList">
-				<table class="table" id="roomListTable">
-					<tr>
-						<th>房间编号</th>
-						<th>楼层</th>
-						<th>是否绑定</th>
-					</tr>
-					<tr>
-						<td>遮挡</td>
-						<td>遮挡</td>
-						<td>遮挡</td>
-					</tr>
-					<!--<tr class="alter">
-						<td>2</td>
-						<td>2</td>
-						<td>2</td>
-					</tr>-->
-				</table>
+			<div id="bindingDiv">
+				<div id="leftDiv">
+					<div id="receviedTableHead">
+						<table>
+							<thead>
+								<th>监听的卡号</th>
+								<th>卡槽号</th>
+								<th>发送时间</th>
+							</thead>
+						</table>
+					</div>
+					<div id="receviedTableBody">
+						<table class="table" id="cardData">
+						</table>
+					</div>
+				</div>
+				<div id="rightDiv">
+					<div id="roomTableHead">
+						<table>
+							<thead>
+								<th>房间编号</th>
+								<th>楼层</th>
+								<th>是否绑定</th>
+							</thead>
+						</table>
+					</div>
+					<div id="roomTableBody">
+						<table class="table" id="roomData">
+						</table>
+					</div>
+				</div>
 			</div>
 		</fieldset>
 		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/Date.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/websocket/reconnecting-websocket.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/binding.js" type="text/javascript" charset="utf-8"></script>
 	</body>

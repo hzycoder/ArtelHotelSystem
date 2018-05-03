@@ -38,7 +38,6 @@
 	<mapping resource="com/common/pojo/hbm/LoginUserList.hbm.xml" />
 	<mapping resource="com/common/pojo/hbm/RoomList.hbm.xml" />
 	<mapping resource="com/common/pojo/hbm/RoomSoltList.hbm.xml" />
-	<mapping resource="com/common/pojo/hbm/SlotStatus.hbm.xml" />
 	<mapping resource="com/common/pojo/hbm/SoltConfigure.hbm.xml" />
 	<mapping resource="com/common/pojo/hbm/SoltList.hbm.xml" />
 	<mapping resource="com/common/pojo/hbm/TokenIdList.hbm.xml" />
