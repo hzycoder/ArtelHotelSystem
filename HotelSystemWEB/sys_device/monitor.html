@@ -158,12 +158,12 @@
 			
 			.roomNum {
 				color: white;
-				font-size: 170%;
+				font-size: 135%;
 				padding-top: 11px;
 				text-align: center;
-				display: block;
+				display: inline-block;
 				margin: 0 auto;
-				height: 100%;
+				height: 47%;
 				position: relative;
 				top: 5px;
 				left: 1px;
@@ -304,17 +304,38 @@
 				height: 12px;
 				border-radius: 20px;
 			}
-			
+			/*状态图标样式*/
 			.deviceStatusExplainElement:nth-child(1)>i {
 				background-color: #007cc2;
 			}
 			
 			.deviceStatusExplainElement:nth-child(2)>i {
-				background-color: red;
+				background-color: darkgray;
 			}
 			
 			.deviceStatusExplainElement:nth-child(3)>i {
 				background-color: yellow;
+			}
+			.deviceStatusExplainElement:nth-child(4)>i {
+				background-color: #ff5722;
+			}
+			.serverLight {
+				margin-left: 2px;
+				width: 5px;
+				height: 5px;
+				border: 1px solid black;
+				display: inline-block;
+				border-radius: 2px;
+				background-color: white;
+			}
+			
+			.fa-lightbulb-o {
+				display: inline-block;
+				font-size: 15px;
+				color: #FFB800;
+				position: relative;
+				top: 5px;
+				left: 7px;
 			}
 		</style>
 	</head>
@@ -340,11 +361,15 @@
 							</div>
 							<div class="deviceStatusExplainElement">
 								<i class="deviceStatusExplainIcon"></i>
-								<span>设备故障</span>
+								<span>设备下线</span>
 							</div>
 							<div class="deviceStatusExplainElement">
 								<i class="deviceStatusExplainIcon"></i>
 								<span>下层设备故障</span>
+							</div>
+							<div class="deviceStatusExplainElement">
+								<i class="deviceStatusExplainIcon"></i>
+								<span>非法用电</span>
 							</div>
 						</div>
 					</div>

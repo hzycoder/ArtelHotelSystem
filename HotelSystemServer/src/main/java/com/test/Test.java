@@ -3,15 +3,18 @@ package com.test;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.common.util.CharacterUtils;
+import com.mchange.v1.lang.GentleThread;
 import com.tcp.MsgQueue;
 import com.tcp.jsonMsg.JsonMsg;
 import com.tcp.netty.ClientBootstrap;
@@ -28,7 +31,10 @@ public class Test {
 		// Test.generateCode();
 		// JSONTest();
 		// testTCPSend();
-		testTimestamp();
+		// testTimestamp();
+		GeneratedMsg gentleThread = new GeneratedMsg();
+		Thread thread = new Thread(gentleThread, "生成msg");
+		thread.start();
 	}
 
 	public static void handlerQueue() {
@@ -45,7 +51,7 @@ public class Test {
 
 	public static void testTimestamp() {
 		String param = "";
-		System.out.println(DigestUtils.md5Hex("break"+param));
+		System.out.println(DigestUtils.md5Hex("break" + param));
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			long timestamp = new Date().getTime();
@@ -153,4 +159,26 @@ public class Test {
 		System.out.println(a.toString());
 		System.out.println("合并后的盐：" + DigestUtils.md5Hex(a.toString()));
 	}
+}
+
+class GeneratedMsg implements Runnable {
+	@Override
+	public void run() {
+		try {
+			Random random = new Random();
+			StringBuffer bf;
+			while (true) {
+				bf = new StringBuffer();
+				for (int i = 0; i < 3; i++) {
+					bf.append(String.valueOf(random.nextInt(2)));
+				}
+				System.out.println(bf.toString());
+				Thread.sleep(1000);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

@@ -9,6 +9,9 @@
 			<column name="id" />
 			<generator class="increment" />
 		</id>
+		<property name="isDeviceOnlinie" type="java.lang.Boolean">
+			<column name="is_device_online" />
+		</property>
 		<property name="idslotList" type="java.lang.Integer">
 			<column name="idslotList" />
 		</property>
@@ -36,5 +39,6 @@
 		<property name="slotCardNum" type="java.lang.String">
 			<column name="slot_cardNum" length="8" />
 		</property>
+
 	</class>
 </hibernate-mapping>

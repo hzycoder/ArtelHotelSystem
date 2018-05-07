@@ -1,5 +1,6 @@
 package com.tcp.jsonMsg;
 
+import java.io.EOFException;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,9 +18,15 @@ public class JsonMsgDecoder extends ByteToMessageDecoder {
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+		System.out.println(in);
 		byte[] byteArray = Util.readBuffer(in);
-		Object obj = Util.bytes2Object(byteArray);
-		out.add(obj);
+		Object obj;
+		try {
+			obj = Util.bytes2Object(byteArray);
+			out.add(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

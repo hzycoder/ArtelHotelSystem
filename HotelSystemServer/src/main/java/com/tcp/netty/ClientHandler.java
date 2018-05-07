@@ -3,13 +3,16 @@ package com.tcp.netty;
 import com.tcp.ChannelSession;
 import com.tcp.MsgQueue;
 import com.tcp.jsonMsg.JsonMsg;
+import com.tcp.newStruct.JsonStruct;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
-	public static MsgQueue<JsonMsg> queueu = new MsgQueue<JsonMsg>();
+	public static MsgQueue<JsonStruct> queueu = new MsgQueue<JsonStruct>();
+
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		String id = ctx.channel().id().asLongText();
@@ -28,24 +31,21 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		System.out.println("------接收到来自服务器的数据------");
-		JsonMsg jsonMsg = (JsonMsg) msg;
-		System.out.println("[Client]:" + jsonMsg.getJsonObject().toJSONString());
-		queueu.push(jsonMsg);//把消息放进消息队列
-		// System.out.println(((FrameStruct) msg).toString());
-		// if (msg instanceof FrameStruct) {
-		// FrameStruct fs = (FrameStruct) msg;
-		// System.out.println("[Client]:" + (byte[])fs.getContent());
-		// } else {
-		// System.out.println("[Client]:not instanceof FrameStruct");
-		// }
+		count++;
+		// JsonMsg jsonMsg = (JsonMsg) msg;
+		// System.out.println("[Client]"+count+":" + jsonMsg.getJsonContent());
+
+		// 测试解决半包
+		JsonStruct jsonStruct = (JsonStruct) msg;
+//		System.out.println("[Client]" + count + ":" + jsonStruct.getContent());
+		queueu.push(jsonStruct);// 把消息放进消息队列
+
 		// count++;
 		super.channelRead(ctx, msg);
 	}
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		System.out.println("----------接收数据完成----------");
 		ctx.flush();
 	}
 

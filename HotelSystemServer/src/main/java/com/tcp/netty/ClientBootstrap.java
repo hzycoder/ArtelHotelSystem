@@ -4,6 +4,8 @@ import com.tcp.FrameStruct.SyncFrameCoder;
 import com.tcp.FrameStruct.SyncFrameDecoder;
 import com.tcp.jsonMsg.JsonMsgDecoder;
 import com.tcp.jsonMsg.JsonMsgEncoder;
+import com.tcp.newStruct.JsonDecoder;
+import com.tcp.newStruct.JsonEncoder;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -32,10 +34,14 @@ public class ClientBootstrap {
 			protected void initChannel(SocketChannel socketChannel) throws Exception {
 				// 添加消息编解码
 				ChannelPipeline pipeline = socketChannel.pipeline();
-				pipeline.addLast(new JsonMsgEncoder());
-				pipeline.addLast(new JsonMsgDecoder());
 				// pipeline.addLast(new SyncFrameCoder());
 				// pipeline.addLast(new SyncFrameDecoder());
+				// pipeline.addLast(new JsonMsgEncoder());
+				// pipeline.addLast(new JsonMsgDecoder());
+				
+				//自定义json编解码
+				pipeline.addLast(new JsonDecoder());
+				pipeline.addLast(new JsonEncoder());
 				// 添加handler
 				pipeline.addLast(new ClientHandler());
 			}

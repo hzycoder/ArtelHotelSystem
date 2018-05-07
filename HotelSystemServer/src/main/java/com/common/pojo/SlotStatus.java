@@ -9,6 +9,7 @@ public class SlotStatus implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
+	private Boolean isDeviceOnlinie;
 	private Integer idslotList;
 	private Boolean slotStatus;
 	private String slotCardNum;
@@ -25,11 +26,15 @@ public class SlotStatus implements java.io.Serializable {
 	public SlotStatus() {
 	}
 
-	/** full constructor */
-	public SlotStatus(Integer idslotList, Boolean slotStatus, Boolean isSlotIllegal, String lockStatus,
-			String isChildDeviceRegister, String isChildDeviceOnline, String isServiceLightOn, Boolean isRoomLightOn) {
+	public SlotStatus(Integer id, Boolean isDeviceOnlinie, Integer idslotList, Boolean slotStatus, String slotCardNum,
+			Boolean isSlotIllegal, String lockStatus, String isChildDeviceRegister, String isChildDeviceOnline,
+			String isServiceLightOn, Boolean isRoomLightOn) {
+		super();
+		this.id = id;
+		this.isDeviceOnlinie = isDeviceOnlinie;
 		this.idslotList = idslotList;
 		this.slotStatus = slotStatus;
+		this.slotCardNum = slotCardNum;
 		this.isSlotIllegal = isSlotIllegal;
 		this.lockStatus = lockStatus;
 		this.isChildDeviceRegister = isChildDeviceRegister;
@@ -39,6 +44,13 @@ public class SlotStatus implements java.io.Serializable {
 	}
 
 	// Property accessors
+	public Boolean getIsDeviceOnlinie() {
+		return isDeviceOnlinie;
+	}
+
+	public void setIsDeviceOnlinie(Boolean isDeviceOnlinie) {
+		this.isDeviceOnlinie = isDeviceOnlinie;
+	}
 
 	public Integer getId() {
 		return this.id;

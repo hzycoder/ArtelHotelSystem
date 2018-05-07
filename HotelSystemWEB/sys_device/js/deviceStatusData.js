@@ -1,41 +1,79 @@
-var deviceStatus = [{
-		"soltId": "1",
-		"soltStatus": "1000"
-	}, {
-		"soltId": "2",
-		"soltStatus": "1111"
-	}, {
-		"soltId": "3",
-		"soltStatus": "1010"
-	}, {
-		"soltId": "4",
-		"soltStatus": "1100"
+var deviceStatus = {
+	"slotId2": {
+		"slotId": "2",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
 	},
-	{
-		"soltId": "5",
-		"soltStatus": "1100"
+	"slotId3": {
+		"slotId": "3",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
 	},
-	{
-		"soltId": "32",
-		"soltStatus": "1100"
+	"slotId4": {
+		"slotId": "4",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
 	},
-	{
-		"soltId": "33",
-		"soltStatus": "1100"
+	"slotId5": {
+		"slotId": "5",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
 	},
-	{
-		"soltId": "34",
-		"soltStatus": "1100"
+	"slotId38": {
+		"slotId": "38",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
 	},
-	{
-		"soltId": "35",
-		"soltStatus": "1100"
-	}
-];
-
-// {
-//	"1": "1000",
-//	"2": "1111",
-//	"3": "1010",
-//	"4": "1100",
-//}
+	"slotId39": {
+		"slotId": "39",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
+	},
+	"slotId40": {
+		"slotId": "40",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
+	},
+	"slotId41": {
+		"slotId": "41",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
+	},
+	"slotId42": {
+		"slotId": "42",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
+	},
+	"slotId43": {
+		"slotId": "43",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
+	},
+	"slotId44": {
+		"slotId": "44",
+		"isRoomLightOn": true,
+		"lockStatus": "0010",
+		"isChildDeviceRegister": "111",
+		"isChildDeviceOnline": "101"
+	},
+}

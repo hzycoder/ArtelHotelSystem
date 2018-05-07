@@ -26,11 +26,11 @@ public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler arg2,
 			Map<String, Object> attributes) throws Exception {
 		logger.info("beforeHandshke");
-		String agentId = ((ServletServerHttpRequest)request).getServletRequest().getParameter("agentId");
+		String hotelId = ((ServletServerHttpRequest)request).getServletRequest().getParameter("hotelId");
 		String cardNum = ((ServletServerHttpRequest)request).getServletRequest().getParameter("cardNum");
-		if (StringUtils.isNotBlank(agentId)) {
-			attributes.put("agentId", agentId);
-			logger.info("get agentId from client:"+agentId);
+		if (StringUtils.isNotBlank(hotelId)) {
+			attributes.put("hotelId", hotelId);
+			logger.info("get hotelId from client:"+hotelId);
 			return true;
 		}else if (StringUtils.isNotBlank(cardNum)) {
 			attributes.put("cardNum", cardNum);

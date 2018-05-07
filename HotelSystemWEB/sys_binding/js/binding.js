@@ -91,8 +91,8 @@
 			$.each(roomData, function(index, item) {
 				var roomListElement = '<tr><td>' +
 					item.roomNum + '</td><td>' +
-					item.floor + '</td><td>' +
-					item.idRoomList + '</td></tr>'
+					item.floor + '</td>' 
+//					+item.idRoomList + '</td></tr>'
 
 				var $roomListElement = $(roomListElement);
 				$("#roomData").append($roomListElement);

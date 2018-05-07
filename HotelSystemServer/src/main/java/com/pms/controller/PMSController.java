@@ -49,17 +49,18 @@ public class PMSController extends BaseController {
 
 			switch (requestType) {
 			case "getHotelList":
-				bf.append(requestDto.get("sign").toString())
+				bf.append(requestType)
 						.append(simpleDateFormat.parse(requestDto.get("timestamp").toString()).getTime());
+				System.out.println(bf.toString());
 				sign = DigestUtils.md5Hex(bf.toString());
-				if (!requestType.equals(sign)) {
+				if (!requestDto.get("sign").toString().equals(sign)) {
 					throw new MyException("验证失败");
 				}
 				bf.setLength(0);
 				bf.append(requestType);
 				map = pmsServices.getHotelList(1);
 				break;
-			case "getRommStatusListByHotelCode":
+			case "getRoomStatusListByHotelCode":
 				if (null == data.get("hotelCode")) {
 					throw new MyException("参数错误");
 				}
