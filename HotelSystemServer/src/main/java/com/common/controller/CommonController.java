@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,6 +49,7 @@ public class CommonController extends BaseController {
 
 	/**
 	 * 验证酒店Id
+	 * 
 	 * @param hotelId
 	 * @return
 	 * @throws Exception
@@ -63,4 +65,24 @@ public class CommonController extends BaseController {
 		}
 		return b;
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "export", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> export() throws Exception {
+		Map<String, Object> map = null;
+		try {
+			map = commonService.export();
+			msg = "获取数据成功";
+			success = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "系统内部错误!";
+			success = false;
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
+
 }

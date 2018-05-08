@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.common.base.BaseController;
-import com.common.util.MyException;
+import com.common.base.BaseException;
 import com.pms.services.PMSServices;
 
 @Controller
@@ -35,13 +35,13 @@ public class PMSController extends BaseController {
 			String timestamp = requestDto.get("timestamp").toString();
 			String requestType = requestDto.get("requestType").toString();
 			if (null == requestType) {
-				throw new MyException("请求方法错误");
+				throw new BaseException("请求方法错误");
 			}
 			if (null == timestamp) {
-				throw new MyException("时间戳错误");
+				throw new BaseException("时间戳错误");
 			}
 			if (null == sign) {
-				throw new MyException("验证错误");
+				throw new BaseException("验证错误");
 			}
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			StringBuffer bf = new StringBuffer();
@@ -54,7 +54,7 @@ public class PMSController extends BaseController {
 				System.out.println(bf.toString());
 				sign = DigestUtils.md5Hex(bf.toString());
 				if (!requestDto.get("sign").toString().equals(sign)) {
-					throw new MyException("验证失败");
+					throw new BaseException("验证失败");
 				}
 				bf.setLength(0);
 				bf.append(requestType);
@@ -62,14 +62,14 @@ public class PMSController extends BaseController {
 				break;
 			case "getRoomStatusListByHotelCode":
 				if (null == data.get("hotelCode")) {
-					throw new MyException("参数错误");
+					throw new BaseException("参数错误");
 				}
 				param = data.get("hotelCode").toString();
 				bf.append(param).append(requestType)
 						.append(simpleDateFormat.parse(requestDto.get("timestamp").toString()).getTime());
 				sign = DigestUtils.md5Hex(bf.toString());
 				if (!requestDto.get("sign").toString().equals(sign)) {
-					throw new MyException("验证失败");
+					throw new BaseException("验证失败");
 				}
 				bf.setLength(0);
 				bf.append(data.get("hotelCode").toString()).append(requestType);
@@ -77,14 +77,14 @@ public class PMSController extends BaseController {
 				break;
 			case "getRoomStatusByRoomCode":
 				if (null == data.get("roomCode")) {
-					throw new MyException("参数错误");
+					throw new BaseException("参数错误");
 				}
 				param = data.get("roomCode").toString();
 				bf.append(param).append(requestType)
 						.append(simpleDateFormat.parse(requestDto.get("timestamp").toString()).getTime());
 				sign = DigestUtils.md5Hex(bf.toString());
 				if (!requestDto.get("sign").toString().equals(sign)) {
-					throw new MyException("验证失败");
+					throw new BaseException("验证失败");
 				}
 				bf.setLength(0);
 				bf.append(data.get("roomCode").toString()).append(requestType);
@@ -92,7 +92,7 @@ public class PMSController extends BaseController {
 				break;
 			case "getInstructionsHistory":
 				if (null == data.get("beginId") && null == data.get("endId")) {
-					throw new MyException("参数错误");
+					throw new BaseException("参数错误");
 				}
 				String beginId = data.get("beginId").toString();
 				String endId = data.get("endId").toString();
@@ -100,14 +100,14 @@ public class PMSController extends BaseController {
 						.append(simpleDateFormat.parse(requestDto.get("timestamp").toString()).getTime());
 				sign = DigestUtils.md5Hex(bf.toString());
 				if (!requestDto.get("sign").toString().equals(sign)) {
-					throw new MyException("验证失败");
+					throw new BaseException("验证失败");
 				}
 				bf.setLength(0);
 				bf.append(beginId).append(requestType);
 				map = pmsServices.getInstructionsHistory(beginId, endId);
 				break;
 			default:
-				throw new MyException("请求方法错误");
+				throw new BaseException("请求方法错误");
 			}
 			long backTimestamp = new Date().getTime();
 			String time = simpleDateFormat.format(backTimestamp);
@@ -117,7 +117,7 @@ public class PMSController extends BaseController {
 			sign = DigestUtils.md5Hex(bf.toString());
 			map.put("sign", sign);
 			return map;
-		} catch (MyException e) {
+		} catch (BaseException e) {
 			e.printStackTrace();
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("failure", e.getMessage());

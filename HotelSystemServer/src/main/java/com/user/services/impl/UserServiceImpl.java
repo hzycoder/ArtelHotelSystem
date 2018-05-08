@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.common.base.BaseException;
 import com.common.pojo.LoginUserList;
 import com.common.util.CharacterUtils;
-import com.common.util.MyException;
 import com.user.LoginSession;
 import com.user.dao.UserDao;
 import com.user.dto.LoginDto;
@@ -48,17 +48,17 @@ public class UserServiceImpl implements UserService {
 		try {
 			Integer id = userDao.existUser(loginDto);
 			if (null == id) {
-				throw new MyException("用户不存在");
+				throw new BaseException("用户不存在");
 			}
 			LoginUserList loginUserList = userDao.getUserById(id);
 			if (!judgePass(loginUserList, loginDto.getPassword())) {
-				throw new MyException("密码错误");
+				throw new BaseException("密码错误");
 			}
 			UserDto user = new UserDto();
 			BeanUtils.copyProperties(user, loginUserList);
 			success = true;
 			map.put("data", user);
-		} catch (MyException e) {
+		} catch (BaseException e) {
 			map.put("error", e.getMessage());
 			success = false;
 		} catch (Exception e) {

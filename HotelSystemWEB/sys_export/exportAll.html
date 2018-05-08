@@ -11,19 +11,82 @@
 		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="../css/table.css" />
 		<style type="text/css">
+			.admin-main {
+				position: relative;
+			}
+			
 			.layui-elem-field {
-				margin: 20px;
+				padding: 10px 10px;
 			}
 			
-			.layui-form-label {
+			html,
+			body {
+				height: 100%;
+				overflow: hidden;
+			}
+			
+			body {
+				font-size: 12px;
+			}
+			
+			table {
+				width: 100%;
+				table-layout: fixed;
+				border-collapse: collapse;
+				color: #666;
+			}
+			
+			table td {
 				text-align: center;
+				border: 1px solid white;
+				height: 30px;
+				overflow: hidden;
 			}
 			
-			.layui-laypage-skip .layui-input {
-				display: inline;
-				/*防止分页layui-laypage-skip 跳行*/
-				height: 26px;
-				line-height: 26px;
+			table th {
+				background-color: #e2e2e2;
+				border: 1px solid white;
+				height: 38px;
+			}
+			
+			table tr {
+				cursor: pointer;
+			}
+			
+			tr:nth-child(odd) {
+				background-color: #EAEAEA;
+			}
+			
+			#allData {
+				height: 580px;
+				display: inline-block;
+				overflow-x: auto;
+				overflow-y: auto;
+				white-space: nowrap;
+			}
+			
+			#allDataTable td:nth-child(5),
+			td:nth-child(6) {
+				width: 60px;
+			}
+			
+			#allDataTable td:nth-child(12) {
+				width: 65px;
+			}
+			
+			#allDataTable td:nth-child(11) {
+				width: 100px;
+			}
+			
+			.exportBtn {
+				position: absolute;
+				right: 40px;
+				bottom: 20px;
+				opacity: 0.7;
+				border-radius: 20px;
+			}
+			#jjjj{
+				z-index: -1;
 			}
 		</style>
 	</head>
@@ -32,23 +95,64 @@
 		<div class="admin-main">
 			<fieldset class="layui-elem-field">
 				<legend>数据列表</legend>
-				<table id="allDataTable" lay-filter="allDataTableFilter"></table>
-				<div class="admin-table-page">
-					<div id="paged" class="page">
+				<div id="dataContent">
+					<div id="allData">
+						<table class="table" id="allDataTable">
+							<thead>
+								<th>酒店名</th>
+								<th>酒店编号</th>
+								<th>地址</th>
+								<th>酒店电话</th>
+								<th style="width: 60px;">房间数量</th>
+								<th style="width: 60px;">设备数量</th>
+								<th>管理者</th>
+								<th>管理者账号</th>
+								<th>管理者电话</th>
+								<th>PMS</th>
+								<th style="width: 100px;">酒店创建时间</th>
+								<th style="width: 65px;">使用情况</th>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
 					</div>
 				</div>
+				<button id="jjjj" class="layui-btn exportBtn">导出Excel</button>
 			</fieldset>
 		</div>
-		<!--  表头工具   -->
-		<script type="text/html" id="hotelTableBar">
-			<a class="layui-btn  layui-btn-xs" lay-event="mod">修改</a>
-			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-		</script>
 		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/Date.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/xlsx.core.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/blob.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/FileSaver.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/tableexport.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/export.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			autodivheight();
+
+			function autodivheight() { //函数：获取尺寸
+				//获取浏览器窗口高度
+				var winHeight = 0;
+				if(window.innerHeight)
+					winHeight = window.innerHeight;
+				else if((document.body) && (document.body.clientHeight))
+					winHeight = document.body.clientHeight;
+				//通过深入Document内部对body进行检测，获取浏览器窗口高度
+				if(document.documentElement && document.documentElement.clientHeight)
+					winHeight = document.documentElement.clientHeight;
+				//DIV高度为浏览器窗口的高度
+				//document.getElementById("test").style.height= winHeight +"px";
+				//DIV高度为浏览器窗口高度的一半
+				document.getElementById("allData").style.height = winHeight * 0.90 + "px";
+			}
+
+			window.onresize = function() {
+				autodivheight();
+			}; //浏览器窗口发生变化时同时变化DIV高度
+		</script>
 	</body>
 
 </html>

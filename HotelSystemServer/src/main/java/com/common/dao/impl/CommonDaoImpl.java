@@ -3,10 +3,12 @@ package com.common.dao.impl;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.common.dao.CommonDao;
+import com.common.dto.AllDataDto;
 
 @Repository
 public class CommonDaoImpl implements CommonDao {
@@ -22,6 +24,42 @@ public class CommonDaoImpl implements CommonDao {
 	public List<?> getOneLine(String sql) {
 		List<?> list = sessionFactory.getCurrentSession().createSQLQuery(sql).list();
 		return list;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AllDataDto> export() {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT H.hotelName AS hotelName,"
+				+ "H.address AS hotelAddress,"
+				+ "H.hotelID AS hotelCode,"
+				+ "H.hotelPhone AS hotelPhone,"
+				+ "H.createTime AS hotelCreateTime,"
+				+ "H.STATUS AS hotelStatus,"
+				+ "L.userName AS userName,"
+				+ "L.account AS userAccount,"
+				+ "L.userPhone AS userPhone,"
+				+ "P.pmsName AS pmsName,"
+				+ "(SELECT COUNT(*) FROM RoomList AS R WHERE R.HotelList_idHotelList = H.idHotelList) AS roomCount,"
+				+ "(SELECT COUNT(*) FROM AgentList AS A,HotelAgentList AS HA WHERE A.idAgentList = HA.HotelList_idHotelList AND HA.HotelList_idHotelList = H.idHotelList) AS deviceCount "
+				+ "FROM HotelList AS H,"
+				+ "LoginUserList AS L,"
+				+ "PMSList AS P "
+				+ "WHERE H.hotelManager = L.idUserList "
+				+ "AND "
+				+ "P.pmsId = H.pmsId");
+		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString())
+				.addScalar("hotelName")
+				.addScalar("hotelAddress")
+				.addScalar("hotelCode")
+				.addScalar("hotelPhone")
+				.addScalar("hotelCreateTime")
+				.addScalar("hotelStatus")
+				.addScalar("userName")
+				.addScalar("userAccount")
+				.addScalar("userPhone")
+				.addScalar("pmsName")
+				.addScalar("roomCount")
+				.addScalar("deviceCount").setResultTransformer(Transformers.aliasToBean(AllDataDto.class)).list();
 	}
 	
 	

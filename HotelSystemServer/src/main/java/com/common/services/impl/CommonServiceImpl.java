@@ -1,6 +1,8 @@
 package com.common.services.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.common.dao.CommonDao;
+import com.common.dto.AllDataDto;
 import com.common.services.CommonService;
 
 @Transactional
@@ -54,5 +57,13 @@ public class CommonServiceImpl implements CommonService {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public Map<String, Object> export() {
+		Map<String,Object> map = new HashMap<>();
+		List<AllDataDto> dataList = commonDao.export();
+		map.put("data",dataList);
+		return map;
 	}
 }
