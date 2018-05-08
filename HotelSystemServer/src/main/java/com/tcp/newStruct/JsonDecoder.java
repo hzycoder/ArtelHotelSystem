@@ -27,5 +27,4 @@ public class JsonDecoder extends ByteToMessageDecoder {
 		JsonStruct jsonStruct = new JsonStruct(length, JSONObject.parseObject(new String(data)));
 		out.add(jsonStruct);
 	}
-
 }

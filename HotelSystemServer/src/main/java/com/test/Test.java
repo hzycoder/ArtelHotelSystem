@@ -32,9 +32,20 @@ public class Test {
 		// JSONTest();
 		// testTCPSend();
 		// testTimestamp();
-		GeneratedMsg gentleThread = new GeneratedMsg();
-		Thread thread = new Thread(gentleThread, "生成msg");
-		thread.start();
+//		GeneratedMsg gentleThread = new GeneratedMsg();
+//		Thread thread = new Thread(gentleThread, "生成msg");
+//		thread.start();
+		testBeginEnd();
+	}
+	public static void testBeginEnd(){
+		int begin = 1;
+		int end = 7;
+		StringBuffer idBuf = new StringBuffer();
+		for (int i = begin; i < end+1; i++) {
+			idBuf.append("'"+i+"',");
+		}
+		idBuf.deleteCharAt(idBuf.length()-1);
+		System.out.println(idBuf.toString());
 	}
 
 	public static void handlerQueue() {

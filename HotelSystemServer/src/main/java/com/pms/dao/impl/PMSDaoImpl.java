@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pms.dao.PMSDao;
 import com.pms.dto.HotelDto;
+import com.pms.dto.InstructionsHistoryDto;
 import com.pms.dto.RoomStatusDto;
 
 @Repository
@@ -105,6 +106,31 @@ public class PMSDaoImpl implements PMSDao {
 				.addScalar("isServiceLightOn")
 				.addScalar("isRoomLightOn")
 				.setResultTransformer(Transformers.aliasToBean(RoomStatusDto.class)).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<InstructionsHistoryDto> getInstructionsHistory(String beginId, String endId) {
+		StringBuffer sql = new StringBuffer();
+		int begin = Integer.valueOf(beginId);
+		int end = Integer.valueOf(endId);
+		StringBuffer idBuf = new StringBuffer();
+		for (int i = begin; i < end+1; i++) {
+			idBuf.append("'"+i+"',");
+		}
+		idBuf.deleteCharAt(idBuf.length()-1);
+		sql.append("SELECT "
+				+ "P.instructions_content AS instructionsContent, "
+				+ "P.sendTime AS sendTime "
+				+ "FROM "
+				+ "PMSInstru AS P "
+				+ "WHERE "
+				+ "id "
+				+ "in("+idBuf.toString()+")");
+		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString())
+				.addScalar("instructionsContent")
+				.addScalar("sendTime")
+				.setResultTransformer(Transformers.aliasToBean(InstructionsHistoryDto.class)).list();
 	}
 	
 

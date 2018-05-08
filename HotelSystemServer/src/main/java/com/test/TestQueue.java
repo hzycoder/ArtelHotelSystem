@@ -10,9 +10,10 @@ import java.util.concurrent.TimeUnit;
 import com.alibaba.fastjson.JSONObject;
 import com.tcp.MsgQueue;
 import com.tcp.jsonMsg.JsonMsg;
+import com.tcp.newStruct.JsonStruct;
 
 public class TestQueue {
-	public static MsgQueue<JsonMsg> msgQueue = new MsgQueue<JsonMsg>();
+	public static MsgQueue<JsonStruct> msgQueue = new MsgQueue<JsonStruct>();
 
 	public static void main(String[] args) {
 		PushThread pushThread = new PushThread();
@@ -80,13 +81,13 @@ class ErgodicThread implements Runnable {
 		int count = 0;
 		try {
 			while (flag) {
-				ConcurrentLinkedQueue<JsonMsg> queue = TestQueue.msgQueue.getStorage();
+				ConcurrentLinkedQueue<JsonStruct> queue = TestQueue.msgQueue.getStorage();
 				Iterator iter = queue.iterator();
 				System.out.println("-----------开始遍历-----------");
 				while (iter.hasNext()) {
 					count++;
-					JsonMsg jsonMsg = (JsonMsg) iter.next();
-					JSONObject jsonObject = jsonMsg.getJsonObject();
+					JsonStruct jsonMsg = (JsonStruct) iter.next();
+					JSONObject jsonObject = jsonMsg.getContent();
 					String jsonContent = jsonObject.toJSONString();
 					if ("10010".equals(jsonObject.getString("卡号"))) {
 						System.out.println("##找到一个叛徒:" + jsonContent);
@@ -118,11 +119,11 @@ class DelThread implements Runnable {
 	public void run() {
 		System.out.println("--------执行删除线程--------");
 		long time = new Date().getTime();
-		ConcurrentLinkedQueue<JsonMsg> queue = TestQueue.msgQueue.getStorage();
+		ConcurrentLinkedQueue<JsonStruct> queue = TestQueue.msgQueue.getStorage();
 		Iterator iter = queue.iterator();
 		while (iter.hasNext()) {
-			JsonMsg jsonMsg = (JsonMsg) iter.next();
-			JSONObject jsonObject = jsonMsg.getJsonObject();
+			JsonStruct jsonStruct = (JsonStruct) iter.next();
+			JSONObject jsonObject = jsonStruct.getContent();
 			String jsonContent = jsonObject.toJSONString();
 			// System.out.println("发送的时间：" + jsonObject.getLong("发送时间") +
 			// ",time:" + time + ",已经存在:"

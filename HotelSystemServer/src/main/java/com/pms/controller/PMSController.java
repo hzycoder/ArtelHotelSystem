@@ -1,5 +1,6 @@
 package com.pms.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,8 +50,7 @@ public class PMSController extends BaseController {
 
 			switch (requestType) {
 			case "getHotelList":
-				bf.append(requestType)
-						.append(simpleDateFormat.parse(requestDto.get("timestamp").toString()).getTime());
+				bf.append(requestType).append(simpleDateFormat.parse(requestDto.get("timestamp").toString()).getTime());
 				System.out.println(bf.toString());
 				sign = DigestUtils.md5Hex(bf.toString());
 				if (!requestDto.get("sign").toString().equals(sign)) {
@@ -65,7 +65,7 @@ public class PMSController extends BaseController {
 					throw new MyException("参数错误");
 				}
 				param = data.get("hotelCode").toString();
-				bf.append(data.get("hotelCode").toString()).append(requestType)
+				bf.append(param).append(requestType)
 						.append(simpleDateFormat.parse(requestDto.get("timestamp").toString()).getTime());
 				sign = DigestUtils.md5Hex(bf.toString());
 				if (!requestDto.get("sign").toString().equals(sign)) {
@@ -80,7 +80,7 @@ public class PMSController extends BaseController {
 					throw new MyException("参数错误");
 				}
 				param = data.get("roomCode").toString();
-				bf.append(data.get("roomCode").toString()).append(requestType)
+				bf.append(param).append(requestType)
 						.append(simpleDateFormat.parse(requestDto.get("timestamp").toString()).getTime());
 				sign = DigestUtils.md5Hex(bf.toString());
 				if (!requestDto.get("sign").toString().equals(sign)) {
@@ -89,6 +89,22 @@ public class PMSController extends BaseController {
 				bf.setLength(0);
 				bf.append(data.get("roomCode").toString()).append(requestType);
 				map = pmsServices.getRoomStatusByRoomCode(param);
+				break;
+			case "getInstructionsHistory":
+				if (null == data.get("beginId") && null == data.get("endId")) {
+					throw new MyException("参数错误");
+				}
+				String beginId = data.get("beginId").toString();
+				String endId = data.get("endId").toString();
+				bf.append(beginId).append(requestType)
+						.append(simpleDateFormat.parse(requestDto.get("timestamp").toString()).getTime());
+				sign = DigestUtils.md5Hex(bf.toString());
+				if (!requestDto.get("sign").toString().equals(sign)) {
+					throw new MyException("验证失败");
+				}
+				bf.setLength(0);
+				bf.append(beginId).append(requestType);
+				map = pmsServices.getInstructionsHistory(beginId, endId);
 				break;
 			default:
 				throw new MyException("请求方法错误");
@@ -105,6 +121,11 @@ public class PMSController extends BaseController {
 			e.printStackTrace();
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("failure", e.getMessage());
+			return map;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("failure", "时间戳解析失败");
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();

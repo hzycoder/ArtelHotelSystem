@@ -8,7 +8,6 @@ public class LoadManager {
 	
 	@PostConstruct
 	public void loadInit() {
-		System.out.println("PostConstruct");
 		new Thread(new Runnable() {
 			@Override
 			public void run() {

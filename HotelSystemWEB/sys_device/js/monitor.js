@@ -401,7 +401,8 @@
 				console.log("websocket连接上");
 			};
 			ws.onmessage = function(evnt) {
-				console.log("[接收来自服务端的数据]:" + event.data)
+				console.log("[接收来自服务端的数据]:" + event.data);
+				//接收数据做页面渲染处理
 				iEvent.changeRoomStatus(event.data);
 			};
 			ws.onerror = function(evnt) {

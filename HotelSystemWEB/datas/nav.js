@@ -33,7 +33,7 @@ var navs = [{
 	{
 		"title": "设备管理",
 		"icon": "&#xe631;",
-		"spread": true,
+		"spread": false,
 		"children": [{
 				"title": "在线监测",
 				"icon": "&#xe62c;",
@@ -86,15 +86,11 @@ var navs = [{
 	{
 		"title": "数据导出",
 		"icon": "&#xe61e;",
-		"spread": false,
+		"spread": true,
 		"children": [{
-			"title": "故障检索",
-			"icon": "&#xe615;",
-			"href": "common/img/ArtelLogo.jpg"
-		}, {
 			"title": "数据导出",
 			"icon": "&#xe615;",
-			"href": "common/img/ArtelLogo.jpg"
+			"href": "sys_export/exportAll.html"
 		}, ]
 	},
 ];

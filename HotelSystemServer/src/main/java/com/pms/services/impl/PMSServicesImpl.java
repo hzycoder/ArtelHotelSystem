@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.pms.dao.PMSDao;
 import com.pms.dto.HotelDto;
+import com.pms.dto.InstructionsHistoryDto;
 import com.pms.dto.RoomStatusDto;
 import com.pms.services.PMSServices;
 
@@ -42,6 +43,14 @@ public class PMSServicesImpl implements PMSServices {
 		Map<String ,Object> map = new HashMap<String,Object>();
 		RoomStatusDto roomStatus = pmsDao.getRoomStatusByRoomCode(roomCode);
 		map.put("data", roomStatus);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getInstructionsHistory(String beginId, String endId) {
+		Map<String ,Object> map = new HashMap<String,Object>();
+		List<InstructionsHistoryDto> instructionsList = pmsDao.getInstructionsHistory(beginId,endId);
+		map.put("data", instructionsList);
 		return map;
 	}
 

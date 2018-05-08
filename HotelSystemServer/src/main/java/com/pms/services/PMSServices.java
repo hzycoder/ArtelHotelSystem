@@ -7,4 +7,5 @@ public interface PMSServices {
 	public Map<String,Object> getHotelList(Integer pmsId);
 	public Map<String, Object> getRommStatusListByHotelCode(String hotelCode);
 	public Map<String, Object> getRoomStatusByRoomCode(String roomCode);
+	public Map<String, Object> getInstructionsHistory(String beginId,String endId);
 }
