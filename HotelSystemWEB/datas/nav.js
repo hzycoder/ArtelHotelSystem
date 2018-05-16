@@ -1,7 +1,7 @@
 var navs = [{
 		"title": "酒店管理",
 		"icon": "fa fa-building",
-		"spread": false,
+		"spread": true,
 		"children": [{
 				"title": "酒店查询",
 				"icon": "&#xe615;",
@@ -86,7 +86,7 @@ var navs = [{
 	{
 		"title": "数据导出",
 		"icon": "&#xe61e;",
-		"spread": true,
+		"spread": false,
 		"children": [{
 			"title": "数据导出",
 			"icon": "&#xe615;",

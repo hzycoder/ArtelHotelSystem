@@ -16,9 +16,9 @@ public class TestQueue {
 	public static MsgQueue<JsonStruct> msgQueue = new MsgQueue<JsonStruct>();
 
 	public static void main(String[] args) {
-		PushThread pushThread = new PushThread();
-		Thread thread1 = new Thread(pushThread, "push进程");
-		thread1.start();
+//		PushThread pushThread = new PushThread();
+//		Thread thread1 = new Thread(pushThread, "push进程");
+//		thread1.start();
 
 		ErgodicThread ergodicThread = new ErgodicThread();
 		Thread thread2 = new Thread(ergodicThread, "遍历进程");
@@ -31,47 +31,47 @@ public class TestQueue {
 	}
 }
 
-class PushThread implements Runnable {
-	@Override
-	public void run() {
-		try {
-			while (true) {
-				JsonMsg jsonMsg = null;
-				long l = new Date().getTime();
-				switch ((int) l % 4) {
-				case 0:
-					jsonMsg = new JsonMsg("a");
-					TestQueue.msgQueue.push(jsonMsg);
-					break;
-				case 1:
-					jsonMsg = new JsonMsg("b");
-					TestQueue.msgQueue.push(jsonMsg);
-					break;
-				case 2:
-					jsonMsg = new JsonMsg("c");
-					TestQueue.msgQueue.push(jsonMsg);
-					break;
-				case 3:
-					jsonMsg = new JsonMsg("d");
-					TestQueue.msgQueue.push(jsonMsg);
-					break;
-				default:
-					jsonMsg = new JsonMsg("a");
-					TestQueue.msgQueue.push(jsonMsg);
-					break;
-				}
-				System.out.println("push一个,当前个数：" + TestQueue.msgQueue.getStorage().size());
-				TestQueue.msgQueue.print();
-				Thread.sleep(1500);
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-}
+//class PushThread implements Runnable {
+//	@Override
+//	public void run() {
+//		try {
+//			while (true) {
+//				JsonMsg jsonMsg = null;
+//				long l = new Date().getTime();
+//				switch ((int) l % 4) {
+//				case 0:
+//					jsonMsg = new JsonMsg("a");
+//					TestQueue.msgQueue.push(jsonMsg);
+//					break;
+//				case 1:
+//					jsonMsg = new JsonMsg("b");
+//					TestQueue.msgQueue.push(jsonMsg);
+//					break;
+//				case 2:
+//					jsonMsg = new JsonMsg("c");
+//					TestQueue.msgQueue.push(jsonMsg);
+//					break;
+//				case 3:
+//					jsonMsg = new JsonMsg("d");
+//					TestQueue.msgQueue.push(jsonMsg);
+//					break;
+//				default:
+//					jsonMsg = new JsonMsg("a");
+//					TestQueue.msgQueue.push(jsonMsg);
+//					break;
+//				}
+//				System.out.println("push一个,当前个数：" + TestQueue.msgQueue.getStorage().size());
+//				TestQueue.msgQueue.print();
+//				Thread.sleep(1500);
+//			}
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//	}
+//
+//}
 
 class ErgodicThread implements Runnable {
 	@Override

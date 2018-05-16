@@ -66,6 +66,11 @@ public class CommonController extends BaseController {
 		return b;
 	}
 
+	/**
+	 * 导出所有数据
+	 * @return
+	 * @throws Exception
+	 */
 	@ResponseBody
 	@RequestMapping(value = "export", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public Map<String, Object> export() throws Exception {

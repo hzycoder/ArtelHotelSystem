@@ -62,6 +62,9 @@
 				onfocusout: function(element) { //设置onblur验证表单
 					$(element).valid();
 				},
+				onsubmit:function(element){
+					$(element).valid();
+				},
 				submitHandler: function(form) {
 					if(form["accountSelect"].value == -1) {
 						layer.msg("请选择酒店所属账户", {

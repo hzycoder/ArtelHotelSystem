@@ -139,7 +139,7 @@ public class HotelDaoImpl implements HotelDao {
 	@Override
 	public List<HotelList> getHotelByHotelName(String hotelName) {
 		@SuppressWarnings("unchecked")
-		List<HotelList> hotelList = sessionFactory.getCurrentSession().createQuery("FROM HotelList WHERE hotelName = :hotelName")
+		List<HotelList> hotelList = sessionFactory.getCurrentSession().createQuery("FROM HotelList WHERE hotelName = :hotelName AND hotelManager > 0")
 				.setString("hotelName", hotelName).list();
 		return hotelList;
 	}

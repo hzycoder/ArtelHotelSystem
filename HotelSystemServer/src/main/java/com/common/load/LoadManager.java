@@ -11,7 +11,7 @@ public class LoadManager {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				ClientBootstrap.connectServer("192.168.0.110", 7777);
+				ClientBootstrap.connectServer("localhost", 7777);
 			}
 		}).start();
 	}
