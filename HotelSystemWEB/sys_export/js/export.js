@@ -61,7 +61,7 @@
 		alertTips:function(){
 			layer.tips("点击此处可以导出Excel表","#jjjj",{
 				tips:[1,"#000"],
-				time:3000,
+				time:5000,
 			});
 		},
 	};
@@ -102,13 +102,13 @@
 					'<td>' + iEvent.switchUnixTime(item.hotelCreateTime) + '</td>' +
 					'<td>' + item.hotelStatus + '</td>';
 				var $trData = $(trData);
-				var $trData1 = $(trData);
-				var $trData2 = $(trData);
-				var $trData3 = $(trData);
+//				var $trData1 = $(trData);
+//				var $trData2 = $(trData);
+//				var $trData3 = $(trData);
 				$("#allDataTable").append($trData);
-				$("#allDataTable").append($trData1);
-				$("#allDataTable").append($trData2);
-				$("#allDataTable").append($trData3);
+//				$("#allDataTable").append($trData1);
+//				$("#allDataTable").append($trData2);
+//				$("#allDataTable").append($trData3);
 			});
 			$("table").tableExport({
 				headings: true,

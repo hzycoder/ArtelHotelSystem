@@ -62,7 +62,14 @@
 	};
 	//event方法：
 	var iEvent = {
-		init: function() {},
+		init: function() {
+			//已登录
+			if(sessionStorage.getItem("user") != null) {
+				setTimeout(function() {
+					window.location.href = "index.html";
+				}, 300);
+			}
+		},
 		//登录
 		beforeLogin: function() {
 			//判断验证码
@@ -117,7 +124,6 @@
 				"contentType": "application/json;charset=UTF-8",
 				"data": JSON.stringify(loginJson),
 				"success": function(data) {
-					console.log("denglu:"+JSON.stringify(data))
 					layer.closeAll('loading');
 					if(data && data.success) { //如果登录成功
 						layer.msg("登录成功", { //显示成功信息

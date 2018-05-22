@@ -1,7 +1,9 @@
 package com.hotel.dto;
 
+import java.sql.Timestamp;
+
 public class HotelDto {
-	private String idHotelList;
+	private Integer idHotelList;
 	private String hotelId;
 	private String hotelName;
 	private String country;
@@ -13,17 +15,25 @@ public class HotelDto {
 	private String repeaterCount;
 	private String deviceCount;
 	private String status;
+	private Timestamp createTime;
+	private Integer idUserList;
+	private Integer pmsId;
+
+	private String account;
+	private String userName;
+	private String userPhone;
+	private Integer permission;
 
 	public HotelDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getIdHotelList() {
+	public Integer getIdHotelList() {
 		return idHotelList;
 	}
 
-	public void setIdHotelList(String idHotelList) {
+	public void setIdHotelList(Integer idHotelList) {
 		this.idHotelList = idHotelList;
 	}
 
@@ -115,11 +125,70 @@ public class HotelDto {
 		this.status = status;
 	}
 
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getIdUserList() {
+		return idUserList;
+	}
+
+	public void setIdUserList(Integer idUserList) {
+		this.idUserList = idUserList;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+
+	public Integer getPermission() {
+		return permission;
+	}
+
+	public void setPermission(Integer permission) {
+		this.permission = permission;
+	}
+
+	public Integer getPmsId() {
+		return pmsId;
+	}
+
+	public void setPmsId(Integer pmsId) {
+		this.pmsId = pmsId;
+	}
+
 	@Override
 	public String toString() {
-		return "HotelDto [hotelId=" + hotelId + ", hotelName=" + hotelName + ", country=" + country + ", province="
-				+ province + ", city=" + city + ", address=" + address + ", hotelPhone=" + hotelPhone
-				+ ", hotelManager=" + hotelManager + ", repeaterCount=" + repeaterCount + ", deviceCount=" + deviceCount
-				+ ", status=" + status + "]";
+		return "HotelDto [idHotelList=" + idHotelList + ", hotelId=" + hotelId + ", hotelName=" + hotelName
+				+ ", country=" + country + ", province=" + province + ", city=" + city + ", address=" + address
+				+ ", hotelPhone=" + hotelPhone + ", hotelManager=" + hotelManager + ", repeaterCount=" + repeaterCount
+				+ ", deviceCount=" + deviceCount + ", status=" + status + ", createTime=" + createTime + ", idUserList="
+				+ idUserList + ", pmsId=" + pmsId + ", account=" + account + ", userName=" + userName + ", userPhone="
+				+ userPhone + ", permission=" + permission + "]";
 	}
+
 }

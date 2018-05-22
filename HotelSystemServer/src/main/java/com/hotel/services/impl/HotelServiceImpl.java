@@ -36,7 +36,7 @@ public class HotelServiceImpl implements HotelService {
 	@Override
 	public Map<String, Object> getHotels(String userID, String permission) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<HotelList> hotelList = null;
+		List<HotelDto> hotelList = null;
 		StringBuffer sql = new StringBuffer();
 		if (Integer.valueOf(permission) == 0) {
 			hotelList = hotelDao.gethotels();
@@ -96,19 +96,68 @@ public class HotelServiceImpl implements HotelService {
 		// hotelList.setCountry(hotelDto.getCountry());
 		// hotelList.setCity(hotelDto.getCity());
 		// hotelList.setProvince(hotelDto.getProvince());
+		if (null != hotelDto.getIdHotelList()) {
+			hotelList.setIdHotelList(Integer.valueOf(hotelDto.getIdHotelList()));
+		}
+		if (StringUtils.isNotBlank(hotelDto.getAddress())) {
+			hotelList.setAddress(hotelDto.getAddress());
+
+		}
+		if (StringUtils.isNotBlank(hotelDto.getHotelPhone())) {
+			hotelList.setHotelPhone(hotelDto.getHotelPhone());
+
+		}
+		if (StringUtils.isNotBlank(hotelDto.getStatus())) {
+			hotelList.setStatus(hotelDto.getStatus());
+
+		}
+		if (null == hotelDto.getCreateTime()) {
+			hotelList.setCreateTime(new Timestamp(new Date().getTime()));
+		} else {
+			hotelList.setCreateTime(hotelDto.getCreateTime());
+		}
+		hotelList.setHotelManager(hotelDto.getHotelManager());
+		if (null != hotelDto.getIdHotelList()) {// 修改酒店
+			hotelList.setHotelId(hotelDto.getHotelId());
+		} else {// 新增酒店
+			Integer formatId = hotelDao.getMaxHotelId();// 获取当前最大ID值
+			if(null == formatId) formatId = 0;
+			String hotelId = generateId(String.valueOf(++formatId));//
+			boolean b = testHotelID(hotelId);
+			if (!b) {
+				throw new Exception("Generating ID failure");
+			}
+			hotelList.setHotelId(hotelId);
+		}
+		hotelDao.addHotel(hotelList);
+	}
+
+	@Override
+	public void modifyHotel(HotelDto hotelDto) {
+		HotelList hotelList = new HotelList();
+		hotelList.setIdHotelList(Integer.valueOf(hotelDto.getIdHotelList()));
+		hotelList.setHotelId(hotelDto.getHotelId());
+		hotelList.setHotelName(hotelDto.getHotelName());
+		// hotelList.setCountry(hotelDto.getCountry());
+		// hotelList.setCity(hotelDto.getCity());
+		// hotelList.setProvince(hotelDto.getProvince());
 		hotelList.setAddress(hotelDto.getAddress());
 		hotelList.setHotelPhone(hotelDto.getHotelPhone());
 		hotelList.setHotelManager(hotelDto.getHotelManager());
 		hotelList.setStatus(hotelDto.getStatus());
-		hotelList.setCreateTime(new Timestamp(new Date().getTime()));
-		Integer formatId = hotelDao.getMaxHotelId();// 获取当前最大ID值
-		String hotelId = generateId(String.valueOf(++formatId));//
-		boolean b = testHotelID(hotelId);
-		if (!b) {
-			throw new Exception("Generating ID failure");
-		}
-		hotelList.setHotelId(hotelId);
+		hotelList.setCreateTime(hotelDto.getCreateTime());
 		hotelDao.addHotel(hotelList);
+	}
+
+	@Override
+	public void modifyRoom(RoomDto roomDto) {
+		RoomList roomList = new RoomList();
+		roomList.setIdRoomList(Integer.valueOf(roomDto.getIdRoomList()));
+		roomList.setRoomId(roomDto.getRoomId());
+		roomList.setRoomNum(roomDto.getRoomNum());
+		roomList.setFloor(roomDto.getFloor());
+		roomList.setHotelId(roomDto.getHotelId());
+		hotelDao.addRoom(roomList);
 	}
 
 	/**
@@ -135,7 +184,6 @@ public class HotelServiceImpl implements HotelService {
 
 	@Override
 	public void addRoom(RoomDto roomDto) {
-		
 		RoomList roomList = new RoomList();
 		int roomCount = hotelDao.getRoomCountByHotelID(roomDto.getHotelId());
 		roomList.setRoomId(roomDto.getHotelNum() + "_" + String.valueOf(roomCount));
@@ -163,6 +211,16 @@ public class HotelServiceImpl implements HotelService {
 	public Map<String, Object> getRooms(String hotelId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<RoomList> roomList = hotelDao.getRooms(hotelId);
+		int count = hotelDao.getRoomsCount(hotelId);
+		map.put("data", roomList);
+		map.put("count", count);
+		return map;
+	}
+	
+	@Override
+	public Map<String, Object> getUnbindedRooms(String hotelId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<RoomList> roomList = hotelDao.getUnbindedRooms(hotelId);
 		int count = hotelDao.getRoomsCount(hotelId);
 		map.put("data", roomList);
 		map.put("count", count);
@@ -200,5 +258,16 @@ public class HotelServiceImpl implements HotelService {
 			return false;
 		}
 	}
+
+	@Override
+	public boolean verifyRoomNum(String roomNum, Integer hotelId) {
+		List<RoomList> list = hotelDao.verifyRoomNum(roomNum,hotelId);
+		if (list.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 
 }

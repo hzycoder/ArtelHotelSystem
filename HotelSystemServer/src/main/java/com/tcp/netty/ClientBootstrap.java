@@ -1,7 +1,5 @@
 package com.tcp.netty;
 
-import com.tcp.FrameStruct.SyncFrameCoder;
-import com.tcp.FrameStruct.SyncFrameDecoder;
 import com.tcp.jsonMsg.JsonMsgDecoder;
 import com.tcp.jsonMsg.JsonMsgEncoder;
 import com.tcp.newStruct.JsonDecoder;

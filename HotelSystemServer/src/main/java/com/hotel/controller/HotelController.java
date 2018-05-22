@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.alibaba.fastjson.JSON;
 import com.common.base.BaseController;
 import com.hotel.dto.HotelDto;
 import com.hotel.dto.RoomDto;
@@ -40,6 +41,7 @@ public class HotelController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "getHotels", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public Map<String, Object> getHotels(String userID, String permission) throws Exception {
+		JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
 		Map<String, Channel> channelMap = ChannelSession.getChannels();
 		Iterator<String> it = channelMap.keySet().iterator();
 		while (it.hasNext()) {
@@ -134,6 +136,26 @@ public class HotelController extends BaseController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "modifyHotel", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public Map<String, Object> modifyHotel(@RequestBody HotelDto hotelDto) throws Exception {
+		System.out.println("修改酒店：" + hotelDto.toString());
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			hotelService.modifyHotel(hotelDto);
+			msg = "保存成功！";
+			success = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "系统内部错误";
+			success = false;
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "addRoom", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public Map<String, Object> addRoom(@RequestBody RoomDto roomDto) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -144,6 +166,25 @@ public class HotelController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			msg = "系统内部错误！";
+			success = false;
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
+	@ResponseBody
+	@RequestMapping(value = "modifyRoom", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public Map<String, Object> modifyRoom(@RequestBody RoomDto roomDto) throws Exception {
+		System.out.println("修改房间：" + roomDto.toString());
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			hotelService.modifyRoom(roomDto);
+			msg = "保存成功！";
+			success = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "系统内部错误";
 			success = false;
 		} finally {
 			map.put("msg", msg);
@@ -177,6 +218,26 @@ public class HotelController extends BaseController {
 		Map<String, Object> map = null;
 		try {
 			map = hotelService.getRooms(hotelId);
+			msg = "获取数据成功";
+			success = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			success = false;
+			msg = "系统内部错误!";
+			map.put("msg", msg);
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "getUnbindedRooms", method = RequestMethod.GET)
+	public Map<String, Object> getUnbindedRooms(String hotelId) throws Exception {
+		Map<String, Object> map = null;
+		try {
+			map = hotelService.getUnbindedRooms(hotelId);
 			msg = "获取数据成功";
 			success = true;
 		} catch (Exception e) {
@@ -243,7 +304,7 @@ public class HotelController extends BaseController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping(value = "verifyHotelName", method = RequestMethod.POST)
+	@RequestMapping(value = "verifyHotelName", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	public boolean verifyHotelName(String hotelName) throws Exception {
 		System.out.println("验证：" + hotelName);
 		boolean b = false;
@@ -252,6 +313,21 @@ public class HotelController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("结果：" + b);
+		return b;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "verifyRoomNum", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	public boolean verifyRoomNum(String roomNum, Integer hotelId) throws Exception {
+		System.out.println("验证：" + roomNum + "=====" + hotelId);
+		boolean b = false;
+		try {
+			b = hotelService.verifyRoomNum(roomNum,hotelId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("结果：" + b);
 		return b;
 	}
 

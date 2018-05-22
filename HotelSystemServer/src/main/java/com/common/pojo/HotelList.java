@@ -153,6 +153,14 @@ public class HotelList implements java.io.Serializable {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "HotelList [idHotelList=" + idHotelList + ", hotelId=" + hotelId + ", hotelName=" + hotelName
+				+ ", country=" + country + ", province=" + province + ", city=" + city + ", address=" + address
+				+ ", hotelPhone=" + hotelPhone + ", hotelManager=" + hotelManager + ", createTime=" + createTime
+				+ ", repeaterCount=" + repeaterCount + ", deviceCount=" + deviceCount + ", status=" + status + "]";
+	}
+
 	// public Set getHotelAgentLists() {
 	// return this.hotelAgentLists;
 	// }

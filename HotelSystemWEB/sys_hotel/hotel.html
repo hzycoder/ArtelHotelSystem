@@ -14,14 +14,35 @@
 			.layui-elem-field {
 				margin: 20px;
 			}
+			
 			.layui-form-label {
 				text-align: center;
 			}
+			
 			.layui-laypage-skip .layui-input {
 				display: inline;
 				/*防止分页layui-laypage-skip 跳行*/
 				height: 26px;
 				line-height: 26px;
+			}
+			
+			.layui-table-cell {
+				overflow: hidden;
+			}
+			
+			.layui-layer.layui-layer-tips.layui-table-tips {
+				display: none;
+			}
+			
+			tr>td:nth-child(6)>div {
+				margin-right: -63px;
+			}
+			
+			tr>th:nth-child(6)>div {
+				margin-right: -63px;
+			}
+			
+			.layui-table-page {
 			}
 		</style>
 	</head>
@@ -30,7 +51,7 @@
 		<div class="admin-main">
 			<blockquote class="layui-elem-quote">
 				<div class="layui-inline">
-					<label class="layui-form-label">客户名称</label>
+					<label class="layui-form-label">酒店名称</label>
 					<div class="layui-input-inline">
 						<input id="hotelNameInput" type="text" name="title" placeholder="请输入客户名称" autocomplete="off" class="layui-input">
 					</div>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.common.base.BaseController;
 import com.common.services.CommonService;
 
@@ -68,6 +69,7 @@ public class CommonController extends BaseController {
 
 	/**
 	 * 导出所有数据
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -90,4 +92,29 @@ public class CommonController extends BaseController {
 		return map;
 	}
 
+	/**
+	 * 导出房间状态报表
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "exportStatus", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> exportStatus(String hotelId) throws Exception {
+		JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+		Map<String, Object> map = null;
+		try {
+			map = commonService.exportSlotStauts(hotelId);
+			msg = "获取数据成功";
+			success = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "系统内部错误!";
+			success = false;
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
 }

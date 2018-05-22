@@ -8,6 +8,7 @@
 		<META HTTP-EQUIV="expires" CONTENT="0">
 		<title>添加房间</title>
 		<link rel="stylesheet" type="text/css" href="../common/layui/css/layui.css" />
+		<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
 		<style type="text/css">
 			.layui-elem-field {
 				margin: 8px 16px 0 16px;
@@ -17,6 +18,24 @@
 				margin: 0 auto;
 				margin-bottom: 18px;
 				width: 650px;
+			}
+			
+			.layui-text em,
+			.layui-word-aux {
+				margin: 8px 14px;
+				color: #FFB800!important;
+				padding: 0 5px!important;
+			}
+			
+			.error {
+				color: red;
+			}
+			
+			.fa-exclamation-triangle {
+				color: #FFB800;
+				position: relative;
+				top: 10px;
+				left: -13px;
 			}
 			
 			.form-required-point {
@@ -81,36 +100,72 @@
 			<fieldset class="layui-elem-field">
 				<legend align="center">添加房间</legend>
 				<div class="layui-field-box">
-					<form class="layui-form">
+					<form class="layui-form" id="addRoomForm">
 						<div class="layui-form-item" style="display: none;">
 							<label class="layui-form-label"></label>
 							<div class="layui-input-block">
-								<input id="hotelID" type="text" name="hotelID" required lay-verify="required" class="layui-input">
+								<input id="hotelIDInput" type="text" name="hotelID" required lay-verify="required" class="layui-input" disabled="disabled">
 							</div>
 						</div>
 						<div class="layui-form-item" style="display: none;">
 							<label class="layui-form-label"></label>
 							<div class="layui-input-block">
-								<input id="hotelNum" type="text" name="hotelNum" required lay-verify="required" class="layui-input">
+								<input id="hotelNum" type="text" name="hotelNum" required lay-verify="required" class="layui-input" disabled="disabled">
 							</div>
 						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">房间编号<i class="form-required-point">*</i></label>
-							<div class="layui-input-block">
-								<input id="roomNumInput" type="text" name="roomNum" class="layui-input">
-								<textarea id="roomNumTextarea" type="text" name="roomNumList" class="layui-textarea" style="display:none;resize: none;"></textarea>
-								<div id="roomNumPrompt" class="layui-form-mid layui-word-aux" style="display: none;">批量增加：使用逗号把房间编号隔开，如：101,102,103,104</br>注：批量增加的房间将添加到同一楼层</div>
+							<div class="layui-input-inline">
+								<input id="roomNumInput" type="text" name="roomNum" class="layui-input" autocomplete="off" disabled="disabled">
+							</div>
+							<div id="warning" style="display: none;">
+								<i class="fa fa-exclamation-triangle"></i>
+								<div class="layui-form-mid layui-word-aux">该房间编号已被创建</div>
 							</div>
 						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">楼层<i class="form-required-point">*</i></label>
 							<div class="layui-input-block">
-								<input id="floorInput" type="text" name="floor" required lay-verify="required" class="layui-input" autocomplete="off" />
+								<input id="floorInput" type="text" name="floor" required lay-verify="required" class="layui-input" autocomplete="off" disabled="disabled"/>
 							</div>
 						</div>
 						<div class="layui-form-item">
 							<div class="layui-input-block">
-								<button type="button" class="layui-btn" lay-submit lay-filter="addRoom">立即提交</button>
+								<button type="submit" class="layui-btn" >立即提交</button>
+								<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
+							</div>
+						</div>
+					</form>
+					<!--批量增加-->
+					<form class="layui-form" id="batchAddRoomForm" style="display: none;">
+						<div class="layui-form-item" style="display: none;">
+							<label class="layui-form-label"></label>
+							<div class="layui-input-block">
+								<input id="hotelIDInput1" type="text" name="hotelID1" required lay-verify="required" class="layui-input" disabled="disabled">
+							</div>
+						</div>
+						<div class="layui-form-item" style="display: none;">
+							<label class="layui-form-label"></label>
+							<div class="layui-input-block">
+								<input id="hotelNum1" type="text" name="hotelNum1" required lay-verify="required" class="layui-input" disabled="disabled">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">房间编号<i class="form-required-point">*</i></label>
+							<div class="layui-input-block">
+								<textarea id="roomNumTextarea" type="text" name="roomNumList" class="layui-textarea" style="resize: none;" disabled="disabled"></textarea>
+								<div id="roomNumPrompt" class="layui-form-mid layui-word-aux" style="color: darkgray!important">批量增加：使用逗号把房间编号隔开，如：101,102,103,104</br>注：批量增加的房间将添加到同一楼层</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">楼层<i class="form-required-point">*</i></label>
+							<div class="layui-input-block">
+								<input id="floorInput" type="text" name="floor" required lay-verify="required" class="layui-input" autocomplete="off" disabled="disabled"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button type="submit" class="layui-btn">立即提交</button>
 								<button type="reset" class="layui-btn layui-btn-primary" id="resetBtn">重置</button>
 							</div>
 						</div>
@@ -122,6 +177,9 @@
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/messages_zh.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/validate/additional-methods.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/addRoom.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 

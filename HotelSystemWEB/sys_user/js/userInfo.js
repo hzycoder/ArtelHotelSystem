@@ -129,11 +129,7 @@
 			$("#userPhone").val(userData.userPhone);
 			$("#createTime").val(iEvent.switchUnixTime(userData.createTime));
 			$("#position").val(userData.position);
-			if(userData.permission == 0) {
-				$("#permission").val("管理员权限");
-			} else {
-				$("#permission").val("普通用户");
-			}
+			$("#permission").val(GlobalUserData.permission[userData.permission]);
 		},
 	};
 }());

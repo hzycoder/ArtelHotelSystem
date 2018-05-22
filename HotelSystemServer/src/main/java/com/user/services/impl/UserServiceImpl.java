@@ -1,6 +1,8 @@
 package com.user.services.impl;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,10 +132,10 @@ public class UserServiceImpl implements UserService {
 		StringBuffer sb = new StringBuffer();
 		// 生成密码
 		user.setPasswordSalt(null);
-		user.setPassword(DigestUtils.md5Hex(registerDto.getPassword()));
+		user.setPassword(registerDto.getPassword());
 		user.setAccount(registerDto.getAccount());
 		user.setUserName(registerDto.getUserName());
-		user.setCreateTime(String.valueOf(time));
+		user.setCreateTime(new Timestamp(new Date().getTime()));
 		user.setPermission(NORMAL_PERMISSION);
 		user.setCreator(registerDto.getCreator());
 		userDao.register(user);

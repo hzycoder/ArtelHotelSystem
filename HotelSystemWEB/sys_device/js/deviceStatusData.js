@@ -1,34 +1,34 @@
 var deviceStatus = {
-	"slotId2": {
-		"slotId": "2",
+	"slotId6": {
+		"slotId": "6",
 		"isRoomLightOn": true,
 		"lockStatus": "0010",
 		"isChildDeviceRegister": "111",
 		"isChildDeviceOnline": "101"
 	},
-	"slotId3": {
-		"slotId": "3",
+	"slotId7": {
+		"slotId": "7",
 		"isRoomLightOn": true,
 		"lockStatus": "0010",
 		"isChildDeviceRegister": "111",
 		"isChildDeviceOnline": "101"
 	},
-	"slotId4": {
-		"slotId": "4",
+	"slotId8": {
+		"slotId": "8",
 		"isRoomLightOn": true,
 		"lockStatus": "0010",
 		"isChildDeviceRegister": "111",
 		"isChildDeviceOnline": "101"
 	},
-	"slotId5": {
-		"slotId": "5",
+	"slotId9": {
+		"slotId": "9",
 		"isRoomLightOn": true,
 		"lockStatus": "0010",
 		"isChildDeviceRegister": "111",
 		"isChildDeviceOnline": "101"
 	},
-	"slotId38": {
-		"slotId": "38",
+	"slotId10": {
+		"slotId": "10",
 		"isRoomLightOn": true,
 		"lockStatus": "0010",
 		"isChildDeviceRegister": "111",

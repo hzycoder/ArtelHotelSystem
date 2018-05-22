@@ -104,7 +104,7 @@
 			});
 			//添加特殊字符验证
 			$.validator.addMethod("specialCharFilter", function(value, element) {
-				var pattern = new RegExp("[`~!@#$^&*()=|{}':;,.<>/?~！@#￥……&*（）——|【】‘；：”“'。，、？%+ 　\"\\\\]");
+				var pattern = new RegExp("[`!#$^*=|':;,.<>/?~！@#￥……*——|‘；：”“'。，、？%+ 　\"\\\\]");
 				var specialStr = "";
 				for(var i = 0; i < value.length; i++) {
 					specialStr += value.substr(i, 1).replace(pattern, '');
@@ -129,9 +129,12 @@
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
 					layer.close(index);
-					$('#resetBtn').click(); //重置表单
+//					$('#resetBtn').click(); //重置表单
 					iEvent.getAllUser();
 					if(data && data.success) { //如果登录成功
+						setTimeout(function(){
+							window.location.reload();
+						},3000)
 						layer.msg(data.msg, { //显示成功信息
 							icon: 1,
 						});

@@ -15,8 +15,8 @@
 				padding-right: 15px;
 			}
 			
-			.layui-field-box {
-				width: 60%;
+			.error {
+				color: red;
 			}
 		</style>
 	</head>
@@ -27,27 +27,41 @@
 			<div class="layui-field-box">
 				<form class="layui-form">
 					<div class="layui-form-item" style="display: none;">
-						<label class="layui-form-label">酒店名称</label>
 						<div class="layui-input-block">
-							<input id="idHotelList" type="text" name="idHotelList" required lay-verify="required" class="layui-input">
+							<input id="idHotelList" type="text" name="idHotelList" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item" style="display: none;">
+						<div class="layui-input-block">
+							<input id="defaultName" type="text" name="defaultName" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item" style="display: none;">
+						<div class="layui-input-block">
+							<input id="createTime" type="text" name="createTime" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item" style="display: none;">
+						<div class="layui-input-block">
+							<input id="hotelId" type="text" name="hotelId" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item" style="display: none;">
+						<div class="layui-input-block">
+							<input id="hotelManager" type="text" name="hotelManager" class="layui-input">
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">酒店名称</label>
 						<div class="layui-input-block">
-							<input id="hotelName" type="text" name="hotelName" required lay-verify="required" class="layui-input">
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label">编号</label>
-						<div class="layui-input-block">
-							<input id="hotelId" type="text" name="hotelId" required lay-verify="required" class="layui-input">
+							<input id="hotelName" type="text" name="hotelName" required lay-verify="required" class="layui-input" autocomplete="off">
+							<label hidden="hidden" id="hotelNameInput-error" class="error" for="hotelNameInput">该酒店名已存在</label>
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">地址</label>
 						<div class="layui-input-block">
-							<textarea id="address" type="" name="address" required lay-verify="required" class="layui-textarea" style="resize: none;"></textarea>
+							<textarea id="address" type="" name="address" required lay-verify="required" class="layui-textarea" style="resize: none;" autocomplete="off"></textarea>
 						</div>
 					</div>
 					<div class="layui-form-item">
@@ -55,7 +69,7 @@
 						<div class="layui-input-inline">
 							<select name="status" lay-verify="required">
 								<option value=""></option>
-								<option value="正常使用">正常使用</option>
+								<option value="正常使用" selected="">正常使用</option>
 								<option value="离线">离线</option>
 								<option value="其他">其他</option>
 							</select>
@@ -64,15 +78,7 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label" style="font-size: 13px;">酒店联系电话</label>
 						<div class="layui-input-inline">
-							<input id="hotelPhone" name="hotelPhone" required lay-verify="required" class="layui-input" />
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label" style="font-size: 13px;">酒店所属账户</label>
-						<div class="layui-input-inline">
-							<select name="hotelManager" lay-verify="required" id="accountSelect">
-								<option value=""></option>
-							</select>
+							<input id="hotelPhone" name="hotelPhone" class="layui-input" autocomplete="off" />
 						</div>
 					</div>
 					<div class="layui-form-item" style="display: none;">
@@ -86,54 +92,57 @@
 		</fieldset>
 		<script>
 			window.onload = function() {
+				$("#hotelName").on("input propertychange", function() {
+					$("#hotelNameInput-error").hide();
+				});
 				layui.use(["form", ], function() {
 					layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 					layer = layui.layer; //获取当前窗口的layer对象
 					form = layui.form;
 					var index = parent.layer.getFrameIndex(window.name);
-					var index = layer.msg('加载数据中,请稍等...', {
-						icon: 16,
-						shade: 0.01
-					});
-					ZY.ajax({
-						"url": "user/getAllUser",
-						"type": "GET",
-						"contentType": "application/json;charset=UTF-8",
-						"success": function(data) {
-							$(data.result).each(function(i) {
-								$("#accountSelect").append('<option value="' + data.result[i].idUserList + '">' + data.result[i].account + '</option>')
-							});
-							form.render('select')
-							if(data && data.success) { //如果登录成功
-							} else {
-								layer.msg("系统内部错误！", { //显示失败信息
-									icon: 2,
-								});
-							}
-						}
-					});
-					layer.close(index);
 					form.on('submit(modifyHotelCommit)', function(data) {
-						console.log(JSON.stringify(data.field));
+						var formData = data.field;
+						console.log("需要验证的名字：" + formData.hotelName);
 						ZY.ajax({
-							"url": "hotel/addHotel",
+							"url": "hotel/verifyHotelName",
 							"type": "POST",
-							"data": JSON.stringify(data.field),
-							"contentType": "application/json;charset=UTF-8",
+							"data": {
+								"hotelName": formData.hotelName
+							},
 							"success": function(data) {
-								if(data && data.success) { //如果登录成功
-									layer.msg(data.msg, { //显示成功信息
-										icon: 1,
-									});
+								if(formData.defaultName == formData.hotelName) {
+									console.log("没改名字");
+								} else if(data) {
+									console.log("没有重名");
 								} else {
-									console.log(data.msg)
-									layer.msg("系统内部错误！", { //显示失败信息
-										icon: 2,
-									});
+									console.log("已有重名");
+									$("#hotelNameInput-error").show();
+									return;
 								}
+								ZY.ajax({
+									"url": "hotel/modifyHotel",
+									"type": "POST",
+									"data": JSON.stringify(formData),
+									"contentType": "application/json;charset=UTF-8",
+									"success": function(data) {
+										if(data && data.success) { //如果登录成功
+											layer.msg(data.msg, { //显示成功信息
+												icon: 1,
+												time:500
+											});
+										} else {
+											console.log(data.msg)
+											layer.msg("系统内部错误！", { //显示失败信息
+												icon: 2,
+											});
+										}
+										parent.layer.close(index);
+										parent.$("#refresh").click(); //点击父窗口的刷新按钮
+									}
+								});
+
 							}
 						});
-						parent.layer.close(index);
 					});
 				});
 			}

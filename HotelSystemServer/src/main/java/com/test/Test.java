@@ -32,19 +32,29 @@ public class Test {
 		// JSONTest();
 		// testTCPSend();
 		// testTimestamp();
-//		GeneratedMsg gentleThread = new GeneratedMsg();
-//		Thread thread = new Thread(gentleThread, "生成msg");
-//		thread.start();
-		testBeginEnd();
+		// GeneratedMsg gentleThread = new GeneratedMsg();
+		// Thread thread = new Thread(gentleThread, "生成msg");
+		// thread.start();
+//		testBeginEnd();
+		testsqlbuffer();
 	}
-	public static void testBeginEnd(){
+
+	public static void testsqlbuffer() {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT " + "A.deviceCount " + "FROM " + "AgentList A " + "WHERE " + "A.idAgentList " + "IN "
+				+ "(SELECT " + "HA.AgentList_idAgentList " + "FROM " + "HotelAgentList HA " + "WHERE "
+				+ "HA.HotelList_idHotelList " + "=" + "'')");
+		System.out.println(sql.toString());
+	}
+
+	public static void testBeginEnd() {
 		int begin = 1;
 		int end = 7;
 		StringBuffer idBuf = new StringBuffer();
-		for (int i = begin; i < end+1; i++) {
-			idBuf.append("'"+i+"',");
+		for (int i = begin; i < end + 1; i++) {
+			idBuf.append("'" + i + "',");
 		}
-		idBuf.deleteCharAt(idBuf.length()-1);
+		idBuf.deleteCharAt(idBuf.length() - 1);
 		System.out.println(idBuf.toString());
 	}
 

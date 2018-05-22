@@ -21,15 +21,20 @@
 			$("#stopListenBtn").on("click", function() {
 				ws.close(); //停止监听
 			});
+			$("body").on("click","#roomData>tr",function(){
+				$this = $(this);
+				console.log()
+				$this.addClass("trSelected");
+				$this.siblings().removeClass("trSelected");
+			});
+			$("body").on("click","#cardData>tr",function(){
+				$this = $(this);
+				console.log()
+				$this.addClass("trSelected");
+				$this.siblings().removeClass("trSelected");
+			});
 			//监听酒店选择下拉框
 			form.on('select(hotelSelect)', function(data) {
-				//				$("#layui-elem-field").empty();
-				//				if(data.value == "") {
-				//					table.reload("roomTable", {
-				//						data: null,
-				//					})
-				//					return;
-				//				}
 				iEvent.getRoom(data.value);
 			});
 		},
@@ -60,7 +65,6 @@
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					console.log("获取的酒店" + JSON.stringify(data));
 					iEvent.initHotelSelect(data.data);
 					layer.closeAll();
 				}
@@ -73,14 +77,13 @@
 				shade: 0.01
 			});
 			ZY.ajax({
-				"url": "hotel/getRooms",
+				"url": "hotel/getUnbindedRooms",
 				"type": "GET",
 				"data": {
 					"hotelId": hotelId
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
-					console.log("获取的房间" + JSON.stringify(data))
 					iEvent.generatedRommList(data.data);
 					layer.close(index);
 				}
@@ -91,7 +94,8 @@
 			$.each(roomData, function(index, item) {
 				var roomListElement = '<tr><td>' +
 					item.roomNum + '</td><td>' +
-					item.floor + '</td>' ;
+					item.floor + '</td><td style="display:none">' +
+					item.idRoomList + '</td>';
 //					+item.idRoomList + '</td></tr>'
 
 				var $roomListElement = $(roomListElement);
@@ -99,21 +103,6 @@
 			});
 		},
 		//发送监听的卡号
-		listening: function() {
-			ZY.ajax({
-				"url": "hotel/getRooms",
-				"type": "GET",
-				"data": {
-					"hotelId": hotelId
-				},
-				"contentType": "application/json;charset=UTF-8",
-				"success": function(data) {
-					console.log("获取的房间" + JSON.stringify(data))
-					iEvent.generatedRommList(data.data);
-					layer.close(index);
-				}
-			});
-		},
 		//连接websocket
 		listening: function(cardNum) {
 			var url = 'ws://' + CONFIG.WS_URL + '?cardNum=' + cardNum;

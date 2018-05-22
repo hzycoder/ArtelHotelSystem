@@ -28,6 +28,7 @@
 				</property>
 				<property name="features">
 					<list>
+						<value>WriteDateUseDateFormat</value>
 						<value>PrettyFormat</value>
 						<value>WriteMapNullValue</value>
 						<value>WriteNullStringAsEmpty</value>

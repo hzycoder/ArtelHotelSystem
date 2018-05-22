@@ -1,5 +1,7 @@
 package com.user.dto;
 
+import java.sql.Timestamp;
+
 public class UserDto {
 
 	private Integer idUserList;
@@ -7,12 +9,11 @@ public class UserDto {
 	// private String password;
 	// private String passwordSalt;
 	private String userName;
-	private String userId;
 	private String userPhone;
 	private String position;
-	private Integer permission;
+	private String permission;
 	private String creator;
-	private String createTime;
+	private Timestamp createTime;
 
 	public UserDto() {
 	}
@@ -41,14 +42,6 @@ public class UserDto {
 		this.userName = userName;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	public String getUserPhone() {
 		return userPhone;
 	}
@@ -65,11 +58,11 @@ public class UserDto {
 		this.position = position;
 	}
 
-	public Integer getPermission() {
+	public String getPermission() {
 		return permission;
 	}
 
-	public void setPermission(Integer permission) {
+	public void setPermission(String permission) {
 		this.permission = permission;
 	}
 
@@ -81,11 +74,11 @@ public class UserDto {
 		this.creator = creator;
 	}
 
-	public String getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 

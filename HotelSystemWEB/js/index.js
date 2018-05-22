@@ -36,7 +36,7 @@
 			shadeMobile.on('click', function() {
 				$('body').removeClass('site-mobile');
 			});
-			$("#signOut").on("click",function(){
+			$("#signOut").on("click", function() {
 				iEvent.signOut();
 			});
 		},
@@ -50,17 +50,29 @@
 				});
 			}).resize();
 		},
-		
+
 	};
 	//event方法：
 	var iEvent = {
 		init: function() {
+			layui.use(["layer"], function() {
+				layer = layui.layer;
+			});
+			if(null == sessionStorage.getItem("user")) {
+				layer.msg('您未登录!，即将跳转登录页...', {
+					icon: 2,
+					title: '系统提示'
+				});
+				setTimeout(function() {
+						window.location.href = "login.html";
+					}, 3000);
+				return;
+			}
 			iEvent.welcome();
 			var userData = JSON.parse(sessionStorage.getItem("user"));
-			layui.use(["layer", "element", "navbar", "tab"], function() {
+			layui.use(["element", "navbar", "tab"], function() {
 				element = layui.element(); //
 				navbar = layui.navbar();
-				layer = layui.layer;
 				//				console.log("   " + JSON.stringify(navbar));
 				//清除缓存
 				$('#clearCached').on('click', function() {
@@ -146,11 +158,11 @@
 					console.log("tap!\n" + data.field.title);
 					switch(data.field.title) {
 						case "酒店查询":
+							console.log("=======")
 							break;
 						default:
 							break;
 					}
-
 					tab.tabAdd(data.field);
 				});
 				//navbar初始化 end
@@ -158,9 +170,9 @@
 		},
 		//设置欢迎信息
 		welcome: function() {
-			console.log(sessionStorage.getItem("user"));
+			console.log("+++++++:" + sessionStorage.getItem("user"));
 			var user = JSON.parse(sessionStorage.getItem("user"));
-			$("#welcome").text("欢迎您！"+user.userName);
+			$("#welcome").text("欢迎您！" + user.userName);
 		},
 		clearCached: function() {
 			navbar.cleanCached();
@@ -222,11 +234,11 @@
 				title: '设置'
 			});
 		},
-		signOut:function(){
+		signOut: function() {
 			sessionStorage.removeItem("user");
 			setTimeout(function() {
-							window.location.href = "login.html";
-						}, 300);
+				window.location.href = "login.html";
+			}, 300);
 		},
 	};
 

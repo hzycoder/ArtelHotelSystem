@@ -31,6 +31,16 @@
 				$("#addressInput").val("");
 				iEvent.getAllHotel();
 			});
+			$("body").on("click", "td:not(tr td:eq(6))", function(e) {
+				$this = $(this);
+				layer.open({
+					type: 4,
+					content: [$this.children().text(), e.target], //数组第二项即吸附元素选择器或者DOM
+					shade: 0,
+				});
+			}).on("mouseout", function(e) {
+				layer.closeAll('tips');
+			});
 		},
 	};
 	//event方法：
@@ -86,6 +96,7 @@
 					if(data && data.success) { //如果登录成功
 						layer.msg(data.msg, { //显示成功信息
 							icon: 1,
+							time: 300
 						});
 					} else {
 						layer.msg("获取数据失败！", { //显示失败信息
@@ -97,6 +108,7 @@
 		},
 		//表格重载分页
 		hotelPaging: function(hotelData) {
+						console.log(JSON.stringify(hotelData))
 			layui.use('table', function() {
 				var table = layui.table;
 				var hotelTabelId = table.render({
@@ -105,7 +117,7 @@
 					height: 380,
 					data: hotelData,
 					page: {
-						limit: 5,
+						limit: 8,
 						layout: ['count', 'prev', 'page', 'next', 'skip'],
 						theme: 'zypage',
 					},
@@ -113,8 +125,8 @@
 						[ //表头
 							{
 								field: 'hotelName',
-								title: '客户名称',
-								width: 135,
+								title: '酒店名称',
+								width: 205,
 							}, {
 								field: 'hotelId',
 								title: '编号',
@@ -129,16 +141,36 @@
 								width: 80,
 							}, {
 								field: 'createTime',
-								title: '时间',
-								width: 135,
+								title: '添加时间',
+								width: 75,
 							}, {
-								field: '',
+								field: 'account',
+								title: '管理员',
+								width: 127,
+							},
+							{
+								field: 'button',
 								title: '操作',
 								width: 150,
 								toolbar: "#hotelTableBar",
 							}
 						]
-					]
+					],
+					done: function(res, curr, count) {
+//						$("body").on("click", "tr td:eq(5)", function(e) {
+//							$this = $(this);
+//							layer.open({
+//								type: 4,
+//								content: ["昵称："+hotelData.userName
+//								+"</br>权限："+hotelData.permission
+//								+"</br>联系方式："+hotelData.userPhone, e.target], //数组第二项即吸附元素选择器或者DOM
+//								shade: 0,
+//								tips:4,
+//							});
+//						}).on("mouseout", function(e) {
+//							layer.closeAll('tips');
+//						});
+					}
 				});
 				//监听工具条操作
 				table.on('tool(hotelTableFilter)', function(obj) {
@@ -159,17 +191,20 @@
 						layer.open({
 							type: 2,
 							title: "修改酒店信息",
-							area: ["900px", "550px"],
+							area: ["700px", "460px"],
 							content: ["modifyHotel.html"],
 							btn: btnArray,
 							btnAlign: "c",
 							success: function(layero, index) {
-								console.log("SUCCESS!!!!")
 								var $body = layer.getChildFrame("body", index);
-								$body.find("#hotelId").val(data.hotelId);
-								$body.find("#hotelName").val(data.hotelName);
-								$body.find("#idHotelList").val(data.idHotelList);
 								$body.find("#address").val(data.address);
+								$body.find("#createTime").val(data.createTime);
+								$body.find("#hotelId").val(data.hotelId);
+								$body.find("#hotelManager").val(data.hotelManager);
+								$body.find("#hotelName").val(data.hotelName);
+								$body.find("#defaultName").val(data.hotelName);
+								$body.find("#hotelPhone").val(data.hotelPhone);
+								$body.find("#idHotelList").val(data.idHotelList);
 								$body.find("#hotelPhone").val(data.hotelPhone);
 							},
 							yes: function(index, layero) {
@@ -198,6 +233,7 @@
 					"hotelID": hotel.idHotelList
 				},
 				"success": function(data) {
+					iEvent.getAllHotel();
 					layer.closeAll();
 					if(data && data.success) {
 						layer.msg(data.msg, { //显示成功信息
@@ -210,7 +246,7 @@
 					}
 				}
 			});
-			iEvent.getAllHotel();
+
 		},
 	};
 }());

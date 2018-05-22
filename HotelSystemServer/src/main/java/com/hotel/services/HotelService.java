@@ -13,7 +13,12 @@ public interface HotelService {
 
 	public void addHotel(HotelDto hotelDto) throws Exception;
 
+	public void modifyHotel(HotelDto hotelDto);
+	public void modifyRoom(RoomDto roomDto);
+
 	public Map<String, Object> getRooms(String hotelId);
+
+	public Map<String, Object> getUnbindedRooms(String hotelId);
 
 	public Map<String, Object> delRoom(String roomID);
 
@@ -25,6 +30,8 @@ public interface HotelService {
 			String permission);
 
 	public Map<String, Object> getTypeOfHotel(String hotelId);
-	
+
 	public boolean verifyHotelName(String hotelName);
+
+	public boolean verifyRoomNum(String roomNum, Integer hotelId);
 }

@@ -25,10 +25,15 @@ public class UserDaoImpl implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<LoginUserList> getAllUser() {
-		String hql = "FROM LoginUserList";
-		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List<LoginUserList> userList = query.list();
-		return userList;
+//		String hql = "FROM LoginUserList";
+//		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+//		List<LoginUserList> userList = query.list();
+//		return userList;
+		String sql = "select L.idUserList,L.account,L.userName,L.userPhone,L.position,L.creator,L.createTime,"
+				+ "CASE L.permission WHEN 1 THEN '普通' WHEN 0 THEN '管理员' END AS 'permission' "
+				+ "FROM LoginUserList AS L";
+		List<LoginUserList> userLists = sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).setResultTransformer(Transformers.aliasToBean(UserDto.class)).list();
+		return userLists;
 		
 	}
 
@@ -84,10 +89,8 @@ public class UserDaoImpl implements UserDao {
 				+ " L.idUserList idUserList"
 				+ ",L.account account"
 				+ ",L.userName userName"
-				+ ",L.userId userId"
 				+ ",L.userPhone userPhone"
 				+ ",L.position position"
-				+ ",L.permission permission"
 				+ ",L.creator creator"
 				+ ",L.createTime createTime"
 				+ " FROM"
@@ -106,8 +109,8 @@ public class UserDaoImpl implements UserDao {
 				+ " H"
 				+ " )");
 		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString())
-				.addScalar("idUserList").addScalar("account").addScalar("userName").addScalar("userId")
-				.addScalar("userPhone").addScalar("position").addScalar("permission").addScalar("creator")
+				.addScalar("idUserList").addScalar("account").addScalar("userName")
+				.addScalar("userPhone").addScalar("position").addScalar("creator")
 				.addScalar("createTime").setResultTransformer(Transformers.aliasToBean(UserDto.class)).list();
 		
 	}

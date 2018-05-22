@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.common.dao.CommonDao;
 import com.common.dto.AllDataDto;
+import com.common.dto.SlotStatusDto;
 import com.common.services.CommonService;
 
 @Transactional
@@ -63,6 +64,14 @@ public class CommonServiceImpl implements CommonService {
 	public Map<String, Object> export() {
 		Map<String,Object> map = new HashMap<>();
 		List<AllDataDto> dataList = commonDao.export();
+		map.put("data",dataList);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> exportSlotStauts(String hotelId) {
+		Map<String,Object> map = new HashMap<>();
+		List<SlotStatusDto> dataList = commonDao.exportSlotStatus(hotelId);
 		map.put("data",dataList);
 		return map;
 	}

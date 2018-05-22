@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.common.dao.CommonDao;
 import com.common.dto.AllDataDto;
+import com.common.dto.SlotStatusDto;
 
 @Repository
 public class CommonDaoImpl implements CommonDao {
@@ -60,6 +61,26 @@ public class CommonDaoImpl implements CommonDao {
 				.addScalar("pmsName")
 				.addScalar("roomCount")
 				.addScalar("deviceCount").setResultTransformer(Transformers.aliasToBean(AllDataDto.class)).list();
+	}
+	@Override
+	public List<SlotStatusDto> exportSlotStatus(String hotelId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT R.roomNum AS roomNum,"
+				+ "CASE WHEN SS.SlotStatus = 0 THEN '插卡' ELSE '供电' END AS slotStatus,"
+				+ "CASE WHEN SS.is_slot_illegal = 0 THEN '非法用电' ELSE '正常供电' END AS isSlotIllegal,"
+				+ "CASE WHEN SS.lockStatus = '0' THEN '开门' ELSE '关门' END AS lockStatus,"
+				+ "CASE WHEN SS.is_roomLight_on = 0 THEN '关灯' ELSE '开灯' END AS isRoomLightOn,"
+				+ "CASE WHEN SS.is_device_online = 0 THEN '离线' ELSE '正常' END AS isDeviceOnline,"
+				+ "SS.time "
+				+ "FROM RoomList AS R,"
+				+ "SoltList AS S,"
+				+ "RoomSoltList AS RS,"
+				+ "slotStatus AS SS "
+				+ "WHERE S.idsoltList = RS.soltList_idsoltList "
+				+ "AND R.idRoomList = RS.RoomList_idRoomList "
+				+ "AND SS.idslotList = S.idsoltList "
+				+ "AND R.HotelList_idHotelList = '"+hotelId+"'");
+		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).setResultTransformer(Transformers.aliasToBean(SlotStatusDto.class)).list();
 	}
 	
 	

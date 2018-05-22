@@ -84,7 +84,7 @@
 							},
 							{
 								field: 'soltNum',
-								title: '设备编号',
+								title: '设备地址',
 								width: 240,
 							}, {
 								field: 'floor',
@@ -122,7 +122,7 @@
 						layer.open({
 							type: 2,
 							title: "修改房间信息",
-							area:["600px","310px"],
+							area:["600px","250px"],
 							content: ["modifyRoom.html"],
 							btn: btnArray,
 							btnAlign: "c",
@@ -141,6 +141,9 @@
 								var $body = layer.getChildFrame("body",index);
 								$body.find("#modifyRoomCommit").click();
 							},
+							end:function(){
+								iEvent.getRoom($("#hotelSelect").val());
+							}
 						});
 					}
 				});

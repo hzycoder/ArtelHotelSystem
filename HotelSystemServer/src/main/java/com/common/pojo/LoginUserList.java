@@ -1,5 +1,6 @@
 package com.common.pojo;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -22,9 +23,9 @@ public class LoginUserList implements java.io.Serializable {
 	private String position;
 	private Integer permission;
 	private String creator;
-	private String createTime;
-//	private Set userHotelLists = new HashSet(0);
-//	private Set loginUserInfos = new HashSet(0);
+	private Timestamp createTime;
+	// private Set userHotelLists = new HashSet(0);
+	// private Set loginUserInfos = new HashSet(0);
 
 	// Constructors
 
@@ -32,22 +33,13 @@ public class LoginUserList implements java.io.Serializable {
 	public LoginUserList() {
 	}
 
-	/** minimal constructor */
-	public LoginUserList(String account, String password, String passwordSalt, String userName, String userId,
-			Integer permission, String createTime) {
-		this.account = account;
-		this.password = password;
-		this.passwordSalt = passwordSalt;
-		this.userName = userName;
-		this.userId = userId;
-		this.permission = permission;
-		this.createTime = createTime;
-	}
+	// Property accessors
 
-	/** full constructor */
-	public LoginUserList(String account, String password, String passwordSalt, String userName, String userId,
-			String userPhone, String position, Integer permission, String creator, String createTime,
-			Set userHotelLists, Set loginUserInfos) {
+	public LoginUserList(Integer idUserList, String account, String password, String passwordSalt, String userName,
+			String userId, String userPhone, String position, Integer permission, String creator,
+			Timestamp createTime) {
+		super();
+		this.idUserList = idUserList;
 		this.account = account;
 		this.password = password;
 		this.passwordSalt = passwordSalt;
@@ -58,11 +50,7 @@ public class LoginUserList implements java.io.Serializable {
 		this.permission = permission;
 		this.creator = creator;
 		this.createTime = createTime;
-//		this.userHotelLists = userHotelLists;
-//		this.loginUserInfos = loginUserInfos;
 	}
-
-	// Property accessors
 
 	public Integer getIdUserList() {
 		return this.idUserList;
@@ -144,28 +132,28 @@ public class LoginUserList implements java.io.Serializable {
 		this.creator = creator;
 	}
 
-	public String getCreateTime() {
-		return this.createTime;
+	public Timestamp getCreateTime() {
+		return createTime;
 	}
 
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
-//	public Set getUserHotelLists() {
-//		return this.userHotelLists;
-//	}
-//
-//	public void setUserHotelLists(Set userHotelLists) {
-//		this.userHotelLists = userHotelLists;
-//	}
-//
-//	public Set getLoginUserInfos() {
-//		return this.loginUserInfos;
-//	}
-//
-//	public void setLoginUserInfos(Set loginUserInfos) {
-//		this.loginUserInfos = loginUserInfos;
-//	}
+	// public Set getUserHotelLists() {
+	// return this.userHotelLists;
+	// }
+	//
+	// public void setUserHotelLists(Set userHotelLists) {
+	// this.userHotelLists = userHotelLists;
+	// }
+	//
+	// public Set getLoginUserInfos() {
+	// return this.loginUserInfos;
+	// }
+	//
+	// public void setLoginUserInfos(Set loginUserInfos) {
+	// this.loginUserInfos = loginUserInfos;
+	// }
 
 }

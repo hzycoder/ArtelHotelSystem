@@ -358,7 +358,6 @@
 					});
 					iEvent.startWebSocket(data.value);
 					//从数据库获取当前设备的状态
-					//并把下面这句放在succes里面
 					iView.renderDeviceStatus();
 				}
 			});
@@ -424,7 +423,6 @@
 			ZY.ajax({
 				"url": "device/getslotIdByAgentId",
 				"type": "GET",
-				//				"async": false,
 				"data": {
 					"agentId": agentId
 				},

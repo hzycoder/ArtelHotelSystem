@@ -1,5 +1,7 @@
 package com.common.pojo;
 
+import java.sql.Timestamp;
+
 /**
  * SlotStatus entity. @author MyEclipse Persistence Tools
  */
@@ -19,6 +21,7 @@ public class SlotStatus implements java.io.Serializable {
 	private String isChildDeviceOnline;
 	private String isServiceLightOn;
 	private Boolean isRoomLightOn;
+	private Timestamp time;
 
 	// Constructors
 
@@ -28,7 +31,7 @@ public class SlotStatus implements java.io.Serializable {
 
 	public SlotStatus(Integer id, Boolean isDeviceOnlinie, Integer idslotList, Boolean slotStatus, String slotCardNum,
 			Boolean isSlotIllegal, String lockStatus, String isChildDeviceRegister, String isChildDeviceOnline,
-			String isServiceLightOn, Boolean isRoomLightOn) {
+			String isServiceLightOn, Boolean isRoomLightOn, Timestamp time) {
 		super();
 		this.id = id;
 		this.isDeviceOnlinie = isDeviceOnlinie;
@@ -41,6 +44,7 @@ public class SlotStatus implements java.io.Serializable {
 		this.isChildDeviceOnline = isChildDeviceOnline;
 		this.isServiceLightOn = isServiceLightOn;
 		this.isRoomLightOn = isRoomLightOn;
+		this.time = time;
 	}
 
 	// Property accessors
@@ -130,6 +134,14 @@ public class SlotStatus implements java.io.Serializable {
 
 	public void setSlotCardNum(String slotCardNum) {
 		this.slotCardNum = slotCardNum;
+	}
+
+	public Timestamp getTime() {
+		return time;
+	}
+
+	public void setTime(Timestamp time) {
+		this.time = time;
 	}
 
 }

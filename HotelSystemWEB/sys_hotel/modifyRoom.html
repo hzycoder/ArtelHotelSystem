@@ -40,19 +40,13 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">房间编号</label>
 					<div class="layui-input-block">
-						<input id="roomNum" type="text" name="roomNum" required lay-verify="required" class="layui-input">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">设备编号</label>
-					<div class="layui-input-block">
-						<input id="soltNum" type="text" name="soltNum" class="layui-input" disabled="disabled">
+						<input id="roomNum" type="text" name="roomNum" required lay-verify="required" class="layui-input" autocomplete="off">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">楼层</label>
 					<div class="layui-input-block">
-						<input id="floor" type="text" name="floor" required lay-verify="required" class="layui-input">
+						<input id="floor" type="text" name="floor" required lay-verify="required" class="layui-input" autocomplete="off">
 					</div>
 				</div>
 				<div class="layui-form-item" style="display: none;">
@@ -72,7 +66,7 @@
 					form.on('submit(modifyRoomCommit)', function(data) {
 						console.log(data.field);
 						ZY.ajax({
-							"url": "hotel/addRoom",
+							"url": "hotel/modifyRoom",
 							"type": "POST",
 							"data": JSON.stringify(data.field),
 							"contentType": "application/json;charset=UTF-8",

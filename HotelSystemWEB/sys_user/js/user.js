@@ -28,6 +28,7 @@
 				"type": "GET",
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
+					console.log( JSON.stringify(data));
 					$.each(data.data, function(index, item) {
 						item.createTime = iEvent.switchUnixTime(item.createTime);
 					});

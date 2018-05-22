@@ -14,7 +14,7 @@
 				type: option.type, //HTTP请求类型
 				data: option.data || {},
 				dataType: 'json' || option.dataType, //服务器返回数据格式数据
-				contentType: option.contentType || 'application/x-www-form-urlencoded',
+				contentType: option.contentType || 'application/x-www-form-urlencoded;charset=utf-8',
 				timeout: option.timeout || 60000, //超时时间设置;
 				async: option.async,
 				success: function(data, status, xmlHttpRequest) {
@@ -47,6 +47,14 @@
 		},
 		ZYtrim:function(data){
 			return data.replace(/^\s+|\s+$/gm,'');
+		},
+		ZYswitchUnixTime: function(unixTime) {
+			if(typeof unixTime != "number") {
+				return unixTime;
+			}
+			var newDate = new Date();
+			newDate.setTime(unixTime);
+			return newDate.Format("yyyy-MM-dd hh:mm:ss");
 		},
 	}
 

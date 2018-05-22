@@ -91,6 +91,10 @@ var navs = [{
 			"title": "数据导出",
 			"icon": "&#xe615;",
 			"href": "sys_export/exportAll.html"
+		},{
+			"title": "监测记录",
+			"icon": "&#xe615;",
+			"href": "sys_export/exportStatus.html"
 		}, ]
 	},
 ];
