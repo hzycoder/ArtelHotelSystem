@@ -24,20 +24,31 @@
 	var iView = {
 		init: function() {
 			//三个发送指令按钮
-			$("body").on("click",".lockerBtn",function(e){
-				$this = $(this);
-				iEvent.sendInstructions("lock",$this.parent().parent().attr("id"));
+			$("body").on("click", ".lockerBtn", function() {
+				var $this = $(this);
+				var str = $this.attr("class");
+				var slot = str.match(/slot(\S*)slot/)[1];
+				var roomNum = str.match(/room(\S*)room/)[1];
+				iEvent.sendInstructions("lock", slot,roomNum);
 			});
-			$("body").on("click",".remoteBtn",function(){
-				iEvent.sendInstructions("remote",$this.parent().parent().attr("id"));
+			$("body").on("click", ".remoteBtn", function() {
+				var $this = $(this);
+				var str = $this.attr("class");
+				var slot = str.match(/slot(\S*)slot/)[1];
+				var roomNum = str.match(/room(\S*)room/)[1];
+				iEvent.sendInstructions("remote", slot,roomNum);
 			});
-			$("body").on("click",".infraredBtn",function(){
-				iEvent.sendInstructions("infrare",$this.parent().parent().attr("id"));
+			$("body").on("click", ".infraredBtn", function() {
+				var $this = $(this);
+				var str = $this.attr("class");
+				var slot = str.match(/slot(\S*)slot/)[1];
+				var roomNum = str.match(/room(\S*)room/)[1];
+				iEvent.sendInstructions("infrare", slot,roomNum);
 			});
 
-//			$(".deviceStatusExplainIcon").on("click",function(){
-//				iEvent.changeRoomStatus();
-//			});
+			//			$(".deviceStatusExplainIcon").on("click",function(){
+			//				iEvent.changeRoomStatus();
+			//			});
 			//鼠标停留中继事件
 			$("#repeatersContent").on("mouseover", ".repeatersList_repeater", function(e) {
 				$this = $(this);
@@ -137,7 +148,7 @@
 					$.each(data.data, function(index, item) {
 						var soltHtml = '<div class="solt" id=soltId>' +
 							'<div class="upLine"></div>' +
-							'<div class="soltHead slotId'+ item.idSoltList+'">' +
+							'<div class="soltHead slotId' + item.idSoltList + '">' +
 							'<span class="roomNum">' +
 							item.roomNum +
 							'</span>' +
@@ -149,13 +160,13 @@
 							'</div>' +
 							'</div>' +
 							'<div class="soltOperations">' +
-							'<div class="lockerBtn">' +
+							'<div class="slot' + item.idSoltList + 'slot room'+item.roomNum+'room lockerBtn">' +
 							'<span> 门锁</span>' +
 							'</div>' +
-							'<div class="remoteBtn">' +
+							'<div class="slot' + item.idSoltList + 'slot room'+item.roomNum+'room remoteBtn">' +
 							'<span>遥控</span>' +
 							'</div>' +
-							'<div class="infraredBtn">' +
+							'<div class="slot' + item.idSoltList + 'slot room'+item.roomNum+'room infraredBtn">' +
 							'<span>红外</span>' +
 							'</div>' +
 							'</div>' +
@@ -185,7 +196,7 @@
 				iEvent.getSolt(agentData);
 			} else {
 				var html = '<div class="solt"  id="soltId' + agentData[0].idsoltList + '">' +
-					'<div class="soltHead slotId' +  agentData[0].idsoltList + '">' +
+					'<div class="soltHead slotId' + agentData[0].idsoltList + '">' +
 					'<span class="roomNum">' +
 					agentData[0].roomNum +
 					'</span>' +
@@ -206,14 +217,15 @@
 				$("#" + slotId + " > .soltHead").on("mouseover", function(e) {
 					layer.open({
 						type: 4,
-						content: ['当前时间：' + new Date() 
-						+ '</br>房灯状态：' + tempItem.isRoomLightOn 
-						+ '</br>门锁状态：' + tempItem.lockStatus.isLock
-						+',&nbsp;'+tempItem.lockStatus.isOnline
-						+',&nbsp;'+tempItem.lockStatus.lockInside
-						+',&nbsp;'+tempItem.lockStatus.unlockType
-						+ '</br>子设备注册状态：' + tempItem.isChildDeviceRegister 
-						+ '</br>子设备在线状态：' + tempItem.isChildDeviceOnline, e.target], //数组第二项即吸附元素选择器或者DOM
+						content: ['当前时间：' + new Date() +
+							'</br>房灯状态：' + tempItem.isRoomLightOn +
+							'</br>门锁状态：' + tempItem.lockStatus.isLock +
+							',&nbsp;' + tempItem.lockStatus.isOnline +
+							',&nbsp;' + tempItem.lockStatus.lockInside +
+							',&nbsp;' + tempItem.lockStatus.unlockType +
+							'</br>子设备注册状态：' + tempItem.isChildDeviceRegister +
+							'</br>子设备在线状态：' + tempItem.isChildDeviceOnline, e.target
+						], //数组第二项即吸附元素选择器或者DOM
 						shade: 0,
 					});
 				}).on("mouseout", function(e) {
@@ -342,13 +354,13 @@
 							'</div>' +
 							'</div>' +
 							'<div class="soltOperations">' +
-							'<div class="lockerBtn">' +
+							'<div class="slot' + item.idSoltList + 'slot room'+item.roomNum+'room lockerBtn">' +
 							'<span> 门锁</span>' +
 							'</div>' +
-							'<div class="remoteBtn">' +
+							'<div class="slot' + item.idSoltList + 'slot room'+item.roomNum+'room remoteBtn">' +
 							'<span>遥控</span>' +
 							'</div>' +
-							'<div class="infraredBtn">' +
+							'<div class="slot' + item.idSoltList + 'slot room'+item.roomNum+'room infraredBtn">' +
 							'<span>红外</span>' +
 							'</div>' +
 							'</div>' +
@@ -356,7 +368,7 @@
 						var $soltHtml = $(soltHtml);
 						$("#soltList").append($soltHtml);
 					});
-					iEvent.startWebSocket(data.value);
+					//					iEvent.startWebSocket(data.value);
 					//从数据库获取当前设备的状态
 					iView.renderDeviceStatus();
 				}
@@ -448,15 +460,15 @@
 		},
 		changeRoomStatus: function(statusData) {
 			var statusData = JSON.parse(statusData);
-			if (deviceStatus["slotId"+statusData.slotId] == undefined) {//当前监测没有该卡槽
-				return ;
+			if(deviceStatus["slotId" + statusData.slotId] == undefined) { //当前监测没有该卡槽
+				return;
 			}
 			//更新deviceStatus
-			deviceStatus["slotId"+statusData.slotId]["isRoomLightOn"] = statusData.isRoomLightOn;
-			deviceStatus["slotId"+statusData.slotId]["lockStatus"] = statusData.lockStatus;
-			deviceStatus["slotId"+statusData.slotId]["isChildDeviceRegister"] = statusData.isChildDeviceRegister;
-			deviceStatus["slotId"+statusData.slotId]["isChildDeviceOnline"] = statusData.isChildDeviceOnline;
-			if(!statusData.isDeviceOnline) {//设备是否在线
+			deviceStatus["slotId" + statusData.slotId]["isRoomLightOn"] = statusData.isRoomLightOn;
+			deviceStatus["slotId" + statusData.slotId]["lockStatus"] = statusData.lockStatus;
+			deviceStatus["slotId" + statusData.slotId]["isChildDeviceRegister"] = statusData.isChildDeviceRegister;
+			deviceStatus["slotId" + statusData.slotId]["isChildDeviceOnline"] = statusData.isChildDeviceOnline;
+			if(!statusData.isDeviceOnline) { //设备是否在线
 				$(".slotId" + statusData.slotId).css("background-color", "darkgray");
 				return false;
 			} else {
@@ -471,56 +483,56 @@
 			var serverLightArray = new Array();
 			var serverLightData = statusData.isServiceLightOn;
 			serverLightArray = serverLightData.split("");
-			$.each(serverLightArray, function(index,item) {
-				if (item=="1") {
-						var index = Number(index)+1
-					$(".slotId" + statusData.slotId +"> .serverLights div:nth-child("+ index +")" ).addClass("layui-anim layui-anim-fadein layui-anim-loop").css("background-color", "#ff5722");
-				} else{
-					$(".slotId" + statusData.slotId +"> .serverLights div:nth-child("+ index +")" ).removeClass("layui-anim layui-anim-fadein layui-anim-loop").css("background-color", "white");
+			$.each(serverLightArray, function(index, item) {
+				if(item == "1") {
+					var index = Number(index) + 1
+					$(".slotId" + statusData.slotId + "> .serverLights div:nth-child(" + index + ")").addClass("layui-anim layui-anim-fadein layui-anim-loop").css("background-color", "#ff5722");
+				} else {
+					$(".slotId" + statusData.slotId + "> .serverLights div:nth-child(" + index + ")").removeClass("layui-anim layui-anim-fadein layui-anim-loop").css("background-color", "white");
 				}
 			});
 		},
-		analyzeItem:function(item){
+		analyzeItem: function(item) {
 			var array = new Array();
 			var tempData;
 			var tempItem = {
 				"isRoomLightOn": "",
 				"lockStatus": {
-					"isLock":"",
-					"unlockType":"",
-					"lockInside":"",
-					"isOnline":"",
+					"isLock": "",
+					"unlockType": "",
+					"lockInside": "",
+					"isOnline": "",
 				},
 				"isChildDeviceRegister": "",
 				"isChildDeviceOnline": ""
 			};
 			//是否开灯
-			if (item["isRoomLightOn"]) {
+			if(item["isRoomLightOn"]) {
 				tempItem.isRoomLightOn = "开灯";
-			} else{
+			} else {
 				tempItem.isRoomLightOn = "关灯";
 			}
 			//门锁状态
 			tempData = item.lockStatus;
 			array = tempData.split("");
-			if (array[0]=="1") {
+			if(array[0] == "1") {
 				tempItem.lockStatus["isLock"] = "开门";
-			}else{
+			} else {
 				tempItem.lockStatus["isLock"] = "关门";
 			}
-			if (array[1]=="1") {
+			if(array[1] == "1") {
 				tempItem.lockStatus["unlockType"] = "密码";
-			}else{
+			} else {
 				tempItem.lockStatus["unlockType"] = "房卡";
 			}
-			if (array[2]=="1") {
+			if(array[2] == "1") {
 				tempItem.lockStatus["lockInside"] = "已反锁";
-			}else{
+			} else {
 				tempItem.lockStatus["lockInside"] = "未反锁";
 			}
-			if (array[3]=="1") {
+			if(array[3] == "1") {
 				tempItem.lockStatus["isOnline"] = "在线";
-			}else{
+			} else {
 				tempItem.lockStatus["isOnline"] = "离线";
 			}
 			//子设备注册状态
@@ -530,14 +542,65 @@
 			return tempItem;
 		},
 		//发送指令
-		sendInstructions:function(type,slotId){
-			console.log("当前酒店:"+SELECTED_HOTELID);
+		sendInstructions: function(type, slotId,roomNum) {
+			console.log("当前酒店:" + SELECTED_HOTELID + "点中的id" + slotId+"  房间号"+roomNum);
+			if(!iEvent.isNumber(slotId)) {
+				layer.msg("出现错误!", {
+					icon: 2,
+					time: 2000,
+				});
+				return;
+			}
+			var thisHotel;
+			$.each(hotelData, function(index, item) {
+				if(item.idHotelList == SELECTED_HOTELID) {
+					thisHotel = item;
+					return false; //在each中跳出整个循环相当于break
+				}
+			});
 			var json = {
-				"hotelId":SELECTED_HOTELID,
+				"time":(new Date()).Format("yyyy-MM-dd hh:mm:ss"),
 				"type":type,
-				"slotId":slotId,
+				"data": {
+					"hotelId": SELECTED_HOTELID,
+					"hotelName":thisHotel.hotelName,
+					"slotId": slotId,
+					"roomNum": roomNum
+				}
 			};
-			ws.send(JSON.stringify(json))
+			//暂不使用websocket
+			//			ws.send(JSON.stringify(json))
+			var index = layer.msg('发送指令中...', {
+				icon: 16,
+				shade: 0.01
+			});
+			ZY.ajax({
+				"url": "tcp/roomOperation",
+				"type": "POST",
+				"data": {
+					"json":JSON.stringify(json),
+				},
+				"success": function(data) {
+					layer.close(index);
+					if(data.success) {
+						layer.msg("发送指令成功！", { //显示成功信息
+							icon: 1,
+						});
+					} else {
+						layer.msg("发送指令失败！", { //显示失败信息
+							icon: 2,
+						});
+					}
+				}
+			});
+		},
+		isNumber: function(val) {
+			var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+			if(regPos.test(val)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	};
 }());

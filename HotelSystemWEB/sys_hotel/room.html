@@ -12,8 +12,8 @@
 		<link rel="stylesheet" type="text/css" href="../css/table.css" />
 		<style type="text/css">
 			.layui-elem-field {
-				margin: 20px;
-				height: 578px;
+				margin: 0px 20px;
+				height: 522px;
 			}
 			
 			.layui-form-label {
@@ -54,10 +54,36 @@
 				right: 6px;
 			}
 			
+			td {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
 			.layui-none {
 				margin: 10px 20px;
 				font-size: 18px;
 				color: darkgray;
+			}
+			
+			.layui-table-box {
+				display: block;
+				height: auto;
+			}
+			
+			.layui-table-page {
+				position: absolute;
+				bottom: -49px;
+			}
+			
+			.layui-table {
+				width: 100%;
+				margin: -1px 0;
+				background-color: #fff;
+			}
+			
+			fieldset>div {
+				position: relative;
 			}
 		</style>
 	</head>

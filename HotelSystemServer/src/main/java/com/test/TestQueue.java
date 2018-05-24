@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tcp.MsgQueue;
-import com.tcp.jsonMsg.JsonMsg;
 import com.tcp.newStruct.JsonStruct;
 
 public class TestQueue {

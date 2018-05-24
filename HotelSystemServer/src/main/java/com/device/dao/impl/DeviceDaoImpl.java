@@ -140,11 +140,11 @@ public class DeviceDaoImpl implements DeviceDao {
 
 	@Override
 	public void saveFile(UpgradeFile file) {
-		sessionFactory.getCurrentSession().createQuery("UPDATE UpgradeFile SET fileContent =:content,uploadTime =:time WHERE fileId = 1")
-								.setParameter("content", file.getFileContent())
-								.setParameter("time", file.getUploadTime()).executeUpdate();
-//		byte[] content = (byte[]) sessionFactory.getCurrentSession()
-//				.createQuery("Select fileContent from UpgradeFile where fileId = ?").setParameter(0, 1).uniqueResult();
-//		System.out.println("测试从数据库获取byte:\n" + new String(content));
+		sessionFactory.getCurrentSession().saveOrUpdate(file);
+	}
+
+	@Override
+	public void binding(RoomSoltList rsList) {
+		sessionFactory.getCurrentSession().save(rsList);
 	}
 }

@@ -107,7 +107,7 @@ public class UserDaoImpl implements UserDao {
 				+ " HotelList"
 				+ " AS"
 				+ " H"
-				+ " )");
+				+ " ) AND L.permission='1'");
 		return sessionFactory.getCurrentSession().createSQLQuery(sql.toString())
 				.addScalar("idUserList").addScalar("account").addScalar("userName")
 				.addScalar("userPhone").addScalar("position").addScalar("creator")

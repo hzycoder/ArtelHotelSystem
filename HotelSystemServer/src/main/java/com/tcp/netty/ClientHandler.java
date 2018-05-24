@@ -2,7 +2,6 @@ package com.tcp.netty;
 
 import com.tcp.ChannelSession;
 import com.tcp.MsgQueue;
-import com.tcp.jsonMsg.JsonMsg;
 import com.tcp.newStruct.JsonStruct;
 
 import io.netty.buffer.ByteBuf;

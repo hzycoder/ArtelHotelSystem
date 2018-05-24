@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.common.pojo.AgentList;
+import com.common.pojo.RoomSoltList;
 import com.common.pojo.UpgradeFile;
 import com.device.controller.DeviceController;
 import com.device.dao.DeviceDao;
@@ -82,14 +83,27 @@ public class DeviceServiceImpl implements DeviceService {
 
 	@Override
 	public void saveFile(CommonsMultipartFile commonsMultipartFile) {
-		UpgradeFile upgradeFile = new UpgradeFile();
-		String fileName = commonsMultipartFile.getOriginalFilename();
-		byte[] bytes = commonsMultipartFile.getBytes();
-		upgradeFile.setFileContent(bytes);
-		upgradeFile.setUploadTime(new Timestamp(new Date().getTime()));
-		logger.info("尝试输出内容1："+new String(bytes));
-		logger.info("上传文件名:" + fileName);
-		deviceDao.saveFile(upgradeFile);
+		try {
+			UpgradeFile upgradeFile = new UpgradeFile();
+			String fileName = commonsMultipartFile.getOriginalFilename();
+			byte[] bytes = commonsMultipartFile.getBytes();
+			upgradeFile.setFileContent(bytes);
+			upgradeFile.setUploadTime(new Timestamp(new Date().getTime()));
+			logger.info("尝试输出内容1："+new String(bytes));
+			logger.info("上传文件名:" + fileName);
+			deviceDao.saveFile(upgradeFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void binding(Integer roomId, Integer slotId) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		RoomSoltList rsList = new RoomSoltList();
+		rsList.setIdRoomList(roomId);
+		rsList.setIdsoltList(slotId);
+		deviceDao.binding(rsList);
 	}
 
 }

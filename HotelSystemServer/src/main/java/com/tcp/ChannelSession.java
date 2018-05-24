@@ -23,4 +23,10 @@ public class ChannelSession {
 	public static void removeChannel(String id) {
 		map.remove(id);
 	}
+	
+	public static void print(){
+		System.out.println("=======当前session中的channel有=======");
+		System.out.println(map.toString());
+		System.out.println("====================================");
+	}
 }

@@ -183,4 +183,23 @@ public class DeviceController extends BaseController {
 		}
 		return map;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "binding", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	public Map<String, Object> binding(Integer roomId,Integer slotId) throws Exception {
+		Map<String, Object> map = new HashMap<String,Object>();
+		try {
+			deviceService.binding(roomId,slotId);
+			success = true;
+			msg = "获取数据成功！";
+		} catch (Exception e) {
+			e.printStackTrace();
+			success = false;
+			msg = "系统内部错误";
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
 }

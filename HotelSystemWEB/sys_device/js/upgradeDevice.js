@@ -5,6 +5,7 @@
 		table;
 	var btnArray = new Array();
 	var hotelList = null;
+	var hotelId = null;
 	btnArray.push('<span style="color: #ffffff;transition:color 1s linear;">确定</span>');
 	btnArray.push('<span>取消<span>');
 	layui.use(["form", "upload"], function() {
@@ -23,6 +24,7 @@
 			iEvent.getAllHotel();
 			//监听酒店选择下拉框
 			form.on('select(hotelSelect)', function(data) {
+				hotelId = data.value;
 				iEvent.getDeviceCount(data.value);
 				$.each(hotelList, function(index, item) {
 					if(data.value == item.idHotelList) {
@@ -96,7 +98,9 @@
 				btn: btnArray,
 				btnAlign: "c",
 				success: function(layero, index) {
-
+					var body = layer.getChildFrame('body', index);
+					var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+					body.find('#hotelIdInput').val(hotelId);
 				},
 				yes: function(index, layero) {
 					var $body = layer.getChildFrame("body", index);

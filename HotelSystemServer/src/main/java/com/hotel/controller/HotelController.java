@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
 
 import com.alibaba.fastjson.JSON;
 import com.common.base.BaseController;
@@ -23,11 +18,6 @@ import com.hotel.dto.HotelDto;
 import com.hotel.dto.RoomDto;
 import com.hotel.services.HotelService;
 import com.tcp.ChannelSession;
-import com.user.dto.UserDto;
-import com.webSocket.AssociatedSession;
-import com.webSocket.WebSocketHandler;
-import com.webSocket.WebSocketHandlerAgentIdSession;
-import com.webSocket.WebSocketHandlerSession;
 
 import io.netty.channel.Channel;
 

@@ -1,6 +1,7 @@
 package com.common.pojo;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 /**
  * File entity. @author MyEclipse Persistence Tools
@@ -51,5 +52,13 @@ public class UpgradeFile implements java.io.Serializable {
 	public void setUploadTime(Timestamp uploadTime) {
 		this.uploadTime = uploadTime;
 	}
+
+	@Override
+	public String toString() {
+		return "UpgradeFile [fileId=" + fileId + ", fileContent=" + Arrays.toString(fileContent) + ", uploadTime="
+				+ uploadTime + "]";
+	}
+	
+	
 
 }

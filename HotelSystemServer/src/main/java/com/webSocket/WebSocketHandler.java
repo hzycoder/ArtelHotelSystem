@@ -14,7 +14,6 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tcp.jsonMsg.JsonMsg;
 import com.tcp.netty.ClientHandler;
 import com.tcp.newStruct.JsonStruct;
 import com.test.TestQueue;
@@ -64,6 +63,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	// 接收到数据后的回调（可以处理text，pong,binary等数据）
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+//		String msg = message.getPayload().toString();
+//		JSONObject json = JSONObject.parseObject(msg);
+//		String type = (String) json.get("type");
+//		logger.info("[类型：]:" + type);
 		logger.info("[接收来自ID:" + session.getId() + "客户端的消息]:" + message.getPayload());
 		super.handleMessage(session, message);
 	}
@@ -121,7 +124,7 @@ class ErgodicThread implements Runnable {
 					JSONObject jsonObject = jsonStruct.getContent();
 					String jsonContent = jsonObject.toJSONString();
 					if (key.equals(jsonObject.getString(name))) {
-						System.out.println("##找到一个叛徒:" + jsonContent);
+//						System.out.println("##找到一个叛徒:" + jsonContent);
 						WebSocketSession session = WebSocketHandlerAgentIdSession.get(key);
 						ClientHandler.queueu.getStorage().remove(jsonStruct);
 						session.sendMessage(new TextMessage(jsonContent));

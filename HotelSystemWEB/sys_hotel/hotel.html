@@ -12,11 +12,17 @@
 		<link rel="stylesheet" type="text/css" href="../css/table.css" />
 		<style type="text/css">
 			.layui-elem-field {
-				margin: 20px;
+				margin: 0px 20px;
+				height: 522px;
 			}
 			
 			.layui-form-label {
 				text-align: center;
+			}
+			
+			.layui-inline {
+				margin-bottom: 5px;
+				margin-left: 5px;
 			}
 			
 			.layui-laypage-skip .layui-input {
@@ -34,6 +40,12 @@
 				display: none;
 			}
 			
+			td {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
 			tr>td:nth-child(6)>div {
 				margin-right: -63px;
 			}
@@ -42,7 +54,24 @@
 				margin-right: -63px;
 			}
 			
+			.layui-table-box {
+				display: block;
+				height: auto;
+			}
+			
 			.layui-table-page {
+				position: absolute;
+				bottom: -159px;
+			}
+			
+			.layui-table {
+				width: 100%;
+				margin: -1px 0;
+				background-color: #fff;
+			}
+			
+			fieldset>div {
+				position: relative;
 			}
 		</style>
 	</head>
@@ -62,21 +91,24 @@
 						<input id="addressInput" type="text" name="title" placeholder="请输入地址" autocomplete="off" class="layui-input">
 					</div>
 				</div>
-				<button class="layui-btn" id="research">
+				<div class="layui-inline">
+					<button class="layui-btn" id="research">
 					<i class="layui-icon">&#xe615;</i>搜索
 				</button>
-				<button class="layui-btn" id="refresh">
+					<button class="layui-btn" id="refresh">
 					<i class="layui-icon">&#xe615;</i>刷新
 				</button>
+				</div>
+
 			</blockquote>
 			<fieldset class="layui-elem-field">
 				<legend>酒店列表</legend>
 				<table id="hotelTable" lay-filter="hotelTableFilter"></table>
-				<div class="admin-table-page">
-					<div id="paged" class="page">
-					</div>
-				</div>
 			</fieldset>
+			<div class="admin-table-page">
+				<div id="paged" class="page">
+				</div>
+			</div>
 		</div>
 		<!--  表头工具   -->
 		<script type="text/html" id="hotelTableBar">

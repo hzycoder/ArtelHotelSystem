@@ -27,6 +27,8 @@
 					<input id="password" type="password" name="password" required lay-verify="required" class="layui-input">
 				</div>
 			</div>
+			<input id="hotelIdInput" type="text" hidden="hidden">
+			</div>
 			<div class="layui-form-item" style="display: none;">
 				<div class="layui-input-block">
 					<button type="button" id="commit" class="layui-btn" lay-submit lay-filter="commit">立即提交</button>
@@ -53,27 +55,41 @@
 							"type": "GET",
 							"data": {
 								"userId": userData.idUserList,
-								"password": $("#password").val()
+								"password": hex_md5($("#password").val())
 							},
 							"contentType": "application/json;charset=UTF-8",
 							"success": function(data) {
 								console.log(JSON.stringify(data));
-								if(data && data.success) { //如果登录成功
-									if(data.data) {
-										layer.msg("验证成功！", { //显示失败信息
-											icon: 1,
-										});
-										setTimeout(function() {
-											parent.layer.close(index);
-										}, 600);
-										//验证成功后做的下发指令动作
-									} else {
-										layer.msg("验证失败！", { //显示失败信息
-											icon: 2,
-										});
-									}
+								if(data.data) {
+									//验证成功后做的下发指令动作
+									var index = layer.msg('发送升级指令中...', {
+										icon: 16,
+										shade: 0.01
+									});
+									ZY.ajax({
+										"url": "tcp/upgrade",
+										"type": "POST",
+										"data": {
+											"hotelId": $("#hotelIdInput").val()
+										},
+										"success": function(data) {
+											layer.close(index);
+											if(data.success) {
+												layer.msg("发送指令成功！", { //显示成功信息
+													icon: 1,
+												});
+											} else {
+												layer.msg("发送指令失败！", { //显示失败信息
+													icon: 2,
+												});
+											}
+										}
+									});
+									setTimeout(function() {
+										parent.layer.close(index);
+									}, 600);
 								} else {
-									layer.msg("系统内部错误！", { //显示失败信息
+									layer.msg("验证失败！", { //显示失败信息
 										icon: 2,
 									});
 								}
@@ -87,6 +103,7 @@
 		<script src="../common/js/jQuery/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/CONFIG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../common/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../common/js/ZY.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 

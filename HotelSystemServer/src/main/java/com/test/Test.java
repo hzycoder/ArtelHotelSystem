@@ -11,13 +11,16 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.common.util.CharacterUtils;
 import com.mchange.v1.lang.GentleThread;
 import com.tcp.MsgQueue;
-import com.tcp.jsonMsg.JsonMsg;
 import com.tcp.netty.ClientBootstrap;
+
+import io.netty.handler.codec.json.JsonObjectDecoder;
 
 public class Test {
 	public static void main(String[] args) {
@@ -35,8 +38,20 @@ public class Test {
 		// GeneratedMsg gentleThread = new GeneratedMsg();
 		// Thread thread = new Thread(gentleThread, "生成msg");
 		// thread.start();
-//		testBeginEnd();
-		testsqlbuffer();
+		// testBeginEnd();
+		// testsqlbuffer();
+		testFastjson();
+	}
+
+	public static void testFastjson() {
+		String upgradeJson = "{\"type\":\"upgrade\",\"data\":{\"hotelId\":\"" + "111" + "\",\"hotelName\":\""
+				+ "AThotel" + "\"," + "\"macAddress\":\"" + "123123,13123124,14124" + "\"},\"time\":\""
+				+ new Date().getTime() + "\"}";
+		JSONObject jsonObject = JSONObject.parseObject(upgradeJson);
+		JSONObject data = (JSONObject) jsonObject.get("data");
+		System.out.println(data.get("hotelName"));
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(simpleDateFormat.format(new Date().getTime()));
 	}
 
 	public static void testsqlbuffer() {

@@ -2,6 +2,7 @@
 	//全局变量定义：
 	var form;
 	var ws;
+	var unbindedRoom, unbindedSolt;
 	layui.use(["form", ], function() {
 		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 		layer = layui.layer; //获取当前窗口的layer对象
@@ -15,21 +16,26 @@
 	var iView = {
 		init: function() {
 			iEvent.getAllHotel();
+			$("#bindingBtn").on("click", function() {
+				iEvent.binding();
+			});
 			$("#listenBtn").on("click", function() {
 				iEvent.listening($("#cardNum").val());
 			});
 			$("#stopListenBtn").on("click", function() {
 				ws.close(); //停止监听
 			});
-			$("body").on("click","#roomData>tr",function(){
+			$("body").on("click", "#roomData>tr", function(e) {
 				$this = $(this);
-				console.log()
 				$this.addClass("trSelected");
+				//				console.log($this.children()[2].innerText);
+				unbindedRoom = $this.children()[2].innerText;
 				$this.siblings().removeClass("trSelected");
 			});
-			$("body").on("click","#cardData>tr",function(){
+			$("body").on("click", "#cardData>tr", function() {
 				$this = $(this);
-				console.log()
+				//				console.log($this.children()[1].innerText)
+				unbindedSolt = $this.children()[1].innerText;
 				$this.addClass("trSelected");
 				$this.siblings().removeClass("trSelected");
 			});
@@ -91,12 +97,13 @@
 		},
 		//生成房间表格
 		generatedRommList: function(roomData) {
+			$("#roomData").empty();
 			$.each(roomData, function(index, item) {
 				var roomListElement = '<tr><td>' +
 					item.roomNum + '</td><td>' +
 					item.floor + '</td><td style="display:none">' +
 					item.idRoomList + '</td>';
-//					+item.idRoomList + '</td></tr>'
+				//					+item.idRoomList + '</td></tr>'
 
 				var $roomListElement = $(roomListElement);
 				$("#roomData").append($roomListElement);
@@ -141,9 +148,50 @@
 			var receviedListElement = '<tr><td>' +
 				receviedJson["卡号"] + '</td><td>' +
 				receviedJson["卡槽号"] + '</td><td>' +
-				iEvent.switchUnixTime(receviedJson["发送时间"]) + '</td></tr>'
+				iEvent.switchUnixTime(receviedJson["发送时间"]) + '</td></tr>';
 			var $receviedListElement = $(receviedListElement);
 			$("#cardData").append($receviedListElement);
+		},
+		binding: function() {
+			console.log("房间号" + unbindedRoom + "======设备号：" + unbindedSolt);
+			if(unbindedRoom == undefined || unbindedSolt == undefined) {
+				layer.msg("请选择设备和房间", {
+					icon: 2,
+					time: 2000,
+					anim: 6
+				});
+				return;
+			}
+			console.log("房间号" + unbindedRoom + "======设备号：" + unbindedSolt);
+			var index = layer.msg('绑定中,请稍等...', {
+				icon: 16,
+				shade: 0.01
+			});
+			ZY.ajax({
+				"url": "device/binding",
+				"type": "POST",
+				"data": {
+					"roomId": unbindedRoom,
+					"slotId": unbindedSolt
+				},
+				"success": function(data) {
+					layer.close(index);
+					if(data.success) {
+						layer.msg("绑定成功！", { //显示失败信息
+							icon: 1,
+						});
+						console.log(JSON.stringify(data));
+						unbindedRoom = undefined;
+						unbindedSolt = undefined;
+						$("#cardData>tr").removeClass("trSelected");
+						$("#roomData>tr").removeClass("trSelected");
+					} else {
+						layer.msg("绑定失败！", { //显示失败信息
+							icon: 2,
+						});
+					}
+				}
+			});
 		},
 		switchUnixTime: function(unixTime) {
 			var newDate = new Date();
