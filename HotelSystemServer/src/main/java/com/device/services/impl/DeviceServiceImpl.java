@@ -98,12 +98,12 @@ public class DeviceServiceImpl implements DeviceService {
 	}
 
 	@Override
-	public void binding(Integer roomId, Integer slotId) {
+	public void binding(Integer roomId, Integer slotId,String subNet) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		RoomSoltList rsList = new RoomSoltList();
 		rsList.setIdRoomList(roomId);
 		rsList.setIdsoltList(slotId);
-		deviceDao.binding(rsList);
+		deviceDao.binding(rsList,subNet);
 	}
 
 }

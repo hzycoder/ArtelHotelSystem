@@ -186,10 +186,10 @@ public class DeviceController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "binding", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-	public Map<String, Object> binding(Integer roomId,Integer slotId) throws Exception {
+	public Map<String, Object> binding(Integer roomId,Integer slotId,String subNet) throws Exception {
 		Map<String, Object> map = new HashMap<String,Object>();
 		try {
-			deviceService.binding(roomId,slotId);
+			deviceService.binding(roomId,slotId,subNet);
 			success = true;
 			msg = "获取数据成功！";
 		} catch (Exception e) {

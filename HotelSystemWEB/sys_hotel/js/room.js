@@ -84,7 +84,7 @@
 							},
 							{
 								field: 'soltNum',
-								title: '设备地址',
+								title: '设备子网段',
 								width: 240,
 							}, {
 								field: 'floor',

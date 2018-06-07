@@ -194,11 +194,12 @@ public class HotelServiceImpl implements HotelService {
 
 	@Override
 	public void batchAddRoom(RoomDto roomDto) {
+		int roomCount = hotelDao.getRoomCountByHotelID(roomDto.getHotelId());
 		int roomNumSize = roomDto.getRoomNumList().size();
 		for (int i = 0; i < roomNumSize; i++) {
 			RoomList roomList = new RoomList();
-			int roomCount = hotelDao.getRoomCountByHotelID(roomDto.getHotelId());
 			roomList.setRoomId(roomDto.getHotelNum() + "_" + String.valueOf(roomCount));
+			roomCount++;
 			roomList.setHotelId(roomDto.getHotelId());
 			roomList.setFloor(roomDto.getFloor());
 			roomList.setRoomNum(roomDto.getRoomNumList().get(i));

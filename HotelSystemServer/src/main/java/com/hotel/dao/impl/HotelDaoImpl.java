@@ -172,10 +172,10 @@ public class HotelDaoImpl implements HotelDao {
 
 	@Override
 	public Integer getRoomCountByHotelID(int hotelID) {
-		Object object = sessionFactory.getCurrentSession()
-				.createQuery("SELECT MAX(idRoomList) FROM RoomList WHERE hotelId = ?").setParameter(0, hotelID)
+		Integer count = (Integer) sessionFactory.getCurrentSession()
+				.createSQLQuery("select count(*) from RoomList where HotelList_idHotelList = '"+hotelID+"' or HotelList_idHotelList = '-"+hotelID+"'")
 				.uniqueResult();
-		int temp = object == null ? 0 : (int) object;
+		int temp = count == null ? 0 : (int) count;
 		return temp;
 	}
 

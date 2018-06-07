@@ -144,7 +144,10 @@ public class DeviceDaoImpl implements DeviceDao {
 	}
 
 	@Override
-	public void binding(RoomSoltList rsList) {
+	public void binding(RoomSoltList rsList,String subNet) {
 		sessionFactory.getCurrentSession().save(rsList);
+		StringBuffer sql = new StringBuffer();
+		sql.append("update roomList set soltNum='"+subNet+"' where idRoomList = '"+rsList.getIdRoomList()+"'");
+		sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).executeUpdate();
 	}
 }

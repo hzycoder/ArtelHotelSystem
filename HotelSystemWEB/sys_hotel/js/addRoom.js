@@ -114,6 +114,7 @@
 						"roomNum": form["roomNum"].value,
 						"floor": form["floor"].value,
 					}
+					console.log(JSON.stringify(roomDataJSON))
 					iEvent.addRoom(roomDataJSON);
 				},
 				highlight: function(element, errorClass) { //设置错误提示样式

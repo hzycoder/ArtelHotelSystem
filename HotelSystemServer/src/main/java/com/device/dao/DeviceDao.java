@@ -16,6 +16,6 @@ public interface DeviceDao {
 	public List<DeviceDto> getAgentByInn(String hotelId);
 	public List<AgentDto> getAgentAndRoomRelations(String agentId);
 	public Integer getslotIdByAgentId(String agentId);
-	public void binding(RoomSoltList rsList);
+	public void binding(RoomSoltList rsList,String subNet);
 	public void saveFile(UpgradeFile file);
 }

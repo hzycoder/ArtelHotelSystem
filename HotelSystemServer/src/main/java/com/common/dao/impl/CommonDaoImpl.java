@@ -66,7 +66,7 @@ public class CommonDaoImpl implements CommonDao {
 	public List<SlotStatusDto> exportSlotStatus(String hotelId) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT R.roomNum AS roomNum,"
-				+ "CASE WHEN SS.SlotStatus = 0 THEN '插卡' ELSE '供电' END AS slotStatus,"
+				+ "CASE WHEN SS.slotStatus = 0 THEN '插卡' ELSE '供电' END AS slotStatus,"
 				+ "CASE WHEN SS.is_slot_illegal = 0 THEN '非法用电' ELSE '正常供电' END AS isSlotIllegal,"
 				+ "CASE WHEN SS.lockStatus = '0' THEN '开门' ELSE '关门' END AS lockStatus,"
 				+ "CASE WHEN SS.is_roomLight_on = 0 THEN '关灯' ELSE '开灯' END AS isRoomLightOn,"
@@ -75,7 +75,7 @@ public class CommonDaoImpl implements CommonDao {
 				+ "FROM RoomList AS R,"
 				+ "SoltList AS S,"
 				+ "RoomSoltList AS RS,"
-				+ "slotStatus AS SS "
+				+ "SlotStatus AS SS "
 				+ "WHERE S.idsoltList = RS.soltList_idsoltList "
 				+ "AND R.idRoomList = RS.RoomList_idRoomList "
 				+ "AND SS.idslotList = S.idsoltList "

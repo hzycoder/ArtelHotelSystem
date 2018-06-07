@@ -33,7 +33,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		if (null != cardNum) {
 			WebSocketHandlerAgentIdSession.put(cardNum, session);
 			System.out.println("卡号id:" + cardNum);
-			System.out.println(ClientHandler.queueu.toString());// 打印消息队列
+			System.out.println(ClientHandler.queue.toString());// 打印消息队列
 			ErgodicThread ergodicThread = new ErgodicThread(cardNum, "卡号");// 启动遍历线程
 			Thread thread2 = new Thread(ergodicThread, "遍历进程");
 			thread2.start();
@@ -115,7 +115,7 @@ class ErgodicThread implements Runnable {
 		int count = 0;
 		try {
 			while (WebSocketHandler.ergodicFlag) {
-				ConcurrentLinkedQueue<JsonStruct> queue = ClientHandler.queueu.getStorage();
+				ConcurrentLinkedQueue<JsonStruct> queue = ClientHandler.queue.getStorage();
 				Iterator iter = queue.iterator();
 //				System.out.println("-----------开始遍历-----------");
 				while (iter.hasNext()) {
@@ -126,7 +126,7 @@ class ErgodicThread implements Runnable {
 					if (key.equals(jsonObject.getString(name))) {
 //						System.out.println("##找到一个叛徒:" + jsonContent);
 						WebSocketSession session = WebSocketHandlerAgentIdSession.get(key);
-						ClientHandler.queueu.getStorage().remove(jsonStruct);
+						ClientHandler.queue.getStorage().remove(jsonStruct);
 						session.sendMessage(new TextMessage(jsonContent));
 						continue;
 					}

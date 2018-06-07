@@ -2,7 +2,7 @@
 	//全局变量定义：
 	var form;
 	var ws;
-	var unbindedRoom, unbindedSolt;
+	var unbindedRoom, unbindedSolt,subNet;
 	layui.use(["form", ], function() {
 		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 		layer = layui.layer; //获取当前窗口的layer对象
@@ -20,6 +20,7 @@
 				iEvent.binding();
 			});
 			$("#listenBtn").on("click", function() {
+				$("#cardData").empty();
 				iEvent.listening($("#cardNum").val());
 			});
 			$("#stopListenBtn").on("click", function() {
@@ -36,6 +37,7 @@
 				$this = $(this);
 				//				console.log($this.children()[1].innerText)
 				unbindedSolt = $this.children()[1].innerText;
+				subNet = $this.children()[2].innerText;
 				$this.addClass("trSelected");
 				$this.siblings().removeClass("trSelected");
 			});
@@ -148,9 +150,11 @@
 			var receviedListElement = '<tr><td>' +
 				receviedJson["卡号"] + '</td><td>' +
 				receviedJson["卡槽号"] + '</td><td>' +
+				receviedJson["子网段"] + '</td><td>' +
 				iEvent.switchUnixTime(receviedJson["发送时间"]) + '</td></tr>';
 			var $receviedListElement = $(receviedListElement);
 			$("#cardData").append($receviedListElement);
+			$('#receviedTableBody').scrollTop( $('#receviedTableBody')[0].scrollHeight );
 		},
 		binding: function() {
 			console.log("房间号" + unbindedRoom + "======设备号：" + unbindedSolt);
@@ -172,7 +176,8 @@
 				"type": "POST",
 				"data": {
 					"roomId": unbindedRoom,
-					"slotId": unbindedSolt
+					"slotId": unbindedSolt,
+					"subNet":subNet
 				},
 				"success": function(data) {
 					layer.close(index);
@@ -183,6 +188,7 @@
 						console.log(JSON.stringify(data));
 						unbindedRoom = undefined;
 						unbindedSolt = undefined;
+						subNet = undefined;
 						$("#cardData>tr").removeClass("trSelected");
 						$("#roomData>tr").removeClass("trSelected");
 					} else {
