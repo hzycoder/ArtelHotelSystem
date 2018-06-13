@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.common.util.CharacterUtils;
 import com.mchange.v1.lang.GentleThread;
 import com.tcp.MsgQueue;
+import com.tcp.frameStruct.ConstantValue;
 import com.tcp.netty.ClientBootstrap;
 
 import io.netty.handler.codec.json.JsonObjectDecoder;
@@ -40,7 +41,11 @@ public class Test {
 		// thread.start();
 		// testBeginEnd();
 		// testsqlbuffer();
-		testFastjson();
+		StringBuffer sb = new StringBuffer();
+		sb.append("00000000000000");
+		
+		System.out.println(sb.toString().length());
+//		testFastjson();
 	}
 
 	public static void testFastjson() {

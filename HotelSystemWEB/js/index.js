@@ -64,7 +64,7 @@
 					title: '系统提示'
 				});
 				setTimeout(function() {
-						window.location.href = "login.html";
+						window.location.href = "index.html";
 					}, 3000);
 				return;
 			}
@@ -237,7 +237,7 @@
 		signOut: function() {
 			sessionStorage.removeItem("user");
 			setTimeout(function() {
-				window.location.href = "login.html";
+				window.location.href = "index.html";
 			}, 300);
 		},
 	};

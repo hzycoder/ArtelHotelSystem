@@ -148,10 +148,10 @@
 		generatedReceviedList: function(receviedData) {
 			var receviedJson = JSON.parse(receviedData);
 			var receviedListElement = '<tr><td>' +
-				receviedJson["卡号"] + '</td><td>' +
-				receviedJson["卡槽号"] + '</td><td>' +
-				receviedJson["子网段"] + '</td><td>' +
-				iEvent.switchUnixTime(receviedJson["发送时间"]) + '</td></tr>';
+				receviedJson["PARM"] + '</td><td>' +
+				receviedJson["SOLT_ID"] + '</td><td>' +
+//				receviedJson["子网段"] + '</td><td>' +
+				iEvent.switchUnixTime(receviedJson["TIME"]) + '</td></tr>';
 			var $receviedListElement = $(receviedListElement);
 			$("#cardData").append($receviedListElement);
 			$('#receviedTableBody').scrollTop( $('#receviedTableBody')[0].scrollHeight );
@@ -200,6 +200,9 @@
 			});
 		},
 		switchUnixTime: function(unixTime) {
+			if(typeof unixTime != "number") {
+				return unixTime;
+			}
 			var newDate = new Date();
 			newDate.setTime(unixTime);
 			return newDate.Format("hh:mm:ss");

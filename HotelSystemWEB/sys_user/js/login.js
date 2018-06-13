@@ -66,7 +66,7 @@
 			//已登录
 			if(sessionStorage.getItem("user") != null) {
 				setTimeout(function() {
-					window.location.href = "index.html";
+					window.location.href = "main.html";
 				}, 300);
 			}
 		},
@@ -132,7 +132,7 @@
 						//跳转页面
 						sessionStorage.setItem("user", JSON.stringify(data.data));
 						setTimeout(function() {
-							window.location.href = "index.html";
+							window.location.href = "main.html";
 						}, 300);
 					} else {
 						layer.msg(data.error, { //显示失败信息

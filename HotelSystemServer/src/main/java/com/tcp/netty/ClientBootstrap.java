@@ -1,5 +1,9 @@
 package com.tcp.netty;
 
+import java.util.concurrent.TimeUnit;
+
+import com.tcp.frameStruct.SyncFrameCoder;
+import com.tcp.frameStruct.SyncFrameDecoder;
 import com.tcp.newStruct.JsonDecoder;
 import com.tcp.newStruct.JsonEncoder;
 
@@ -11,6 +15,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 
 public class ClientBootstrap {
 	private static void connect(String ip, int port) {
@@ -30,14 +35,12 @@ public class ClientBootstrap {
 			protected void initChannel(SocketChannel socketChannel) throws Exception {
 				// 添加消息编解码
 				ChannelPipeline pipeline = socketChannel.pipeline();
-				// pipeline.addLast(new SyncFrameCoder());
-				// pipeline.addLast(new SyncFrameDecoder());
-				// pipeline.addLast(new JsonMsgEncoder());
-				// pipeline.addLast(new JsonMsgDecoder());
-				
 				//自定义json编解码
-				pipeline.addLast(new JsonDecoder());
-				pipeline.addLast(new JsonEncoder());
+				pipeline.addLast(new SyncFrameDecoder());
+				pipeline.addLast(new SyncFrameCoder());
+//				pipeline.addLast(new JsonEncoder());
+//				pipeline.addLast(new JsonDecoder());
+				pipeline.addLast(new IdleStateHandler(0,10,0, TimeUnit.SECONDS));
 				// 添加handler
 				pipeline.addLast(new ClientHandler());
 			}
