@@ -41,13 +41,15 @@ public class Test {
 		// thread.start();
 		// testBeginEnd();
 		// testsqlbuffer();
-		StringBuffer sb = new StringBuffer();
-		sb.append("00000000000000");
-		
-		System.out.println(sb.toString().length());
+//		StringBuffer sb = new StringBuffer();
+//		sb.append("00000000000000");
 //		testFastjson();
+		string2Hex();
 	}
-
+	public static void string2Hex(){
+		String jsonContent = "{\"METHOD\":\"SOLT_STATUS\",\"SOLT_ID\":\"6\",\"TYPE\":\"SOLT_STATUS\",\"PARM\":\"1234567890123456\",\"STATUS\":\"CARD_IN\",\"TIME\":\""+"2018-06-05 17:00:35"+"\"}";
+		
+	}
 	public static void testFastjson() {
 		String upgradeJson = "{\"type\":\"upgrade\",\"data\":{\"hotelId\":\"" + "111" + "\",\"hotelName\":\""
 				+ "AThotel" + "\"," + "\"macAddress\":\"" + "123123,13123124,14124" + "\"},\"time\":\""

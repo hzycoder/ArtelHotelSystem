@@ -2,7 +2,12 @@
 	//全局变量定义：
 	var form;
 	var ws;
-	var unbindedRoom, unbindedSolt,subNet;
+	var unbindedRoom, unbindedSolt,unbindeRoomNum,subNet;
+	var curHotelId = undefined;
+	var hotelData;
+	var btnArray = new Array();
+		btnArray.push('<span style="color: #ffffff;transition:color 1s linear;">确定</span>');
+		btnArray.push('<span>取消<span>');
 	layui.use(["form", ], function() {
 		layerTips = parent.layer === undefined ? layui.layer : parent.layer; //获取父窗口的layer对象
 		layer = layui.layer; //获取当前窗口的layer对象
@@ -17,13 +22,16 @@
 		init: function() {
 			iEvent.getAllHotel();
 			$("#bindingBtn").on("click", function() {
-				iEvent.binding();
+				iEvent.checkBinding();
+//				iEvent.binding();
 			});
 			$("#listenBtn").on("click", function() {
 				$("#cardData").empty();
 				iEvent.listening($("#cardNum").val());
 			});
 			$("#stopListenBtn").on("click", function() {
+				unbindedSolt = undefined;
+				$("#cardData").empty();
 				ws.close(); //停止监听
 			});
 			$("body").on("click", "#roomData>tr", function(e) {
@@ -31,6 +39,7 @@
 				$this.addClass("trSelected");
 				//				console.log($this.children()[2].innerText);
 				unbindedRoom = $this.children()[2].innerText;
+				unbindeRoomNum = $this.children()[0].innerText;
 				$this.siblings().removeClass("trSelected");
 			});
 			$("body").on("click", "#cardData>tr", function() {
@@ -43,7 +52,17 @@
 			});
 			//监听酒店选择下拉框
 			form.on('select(hotelSelect)', function(data) {
-				iEvent.getRoom(data.value);
+				$("#roomData").empty();
+				curHotelId  = undefined;
+				console.log(ws);
+				if(ws != undefined) {
+					ws.close();
+				}
+				console.log("选择酒店" + data.value)
+				if(data.value != "") {
+					curHotelId = data.value;
+					iEvent.getRoom(data.value);
+				}
 			});
 		},
 	};
@@ -73,6 +92,7 @@
 				},
 				"contentType": "application/json;charset=UTF-8",
 				"success": function(data) {
+					hotelData = data.data;
 					iEvent.initHotelSelect(data.data);
 					layer.closeAll();
 				}
@@ -99,7 +119,6 @@
 		},
 		//生成房间表格
 		generatedRommList: function(roomData) {
-			$("#roomData").empty();
 			$.each(roomData, function(index, item) {
 				var roomListElement = '<tr><td>' +
 					item.roomNum + '</td><td>' +
@@ -114,6 +133,14 @@
 		//发送监听的卡号
 		//连接websocket
 		listening: function(cardNum) {
+			if($("#hotelSelect").val() == "") {
+				layer.msg("请先选择酒店", {
+					icon: 2,
+					time: 2000,
+					anim: 6
+				});
+				return;
+			}
 			var url = 'ws://' + CONFIG.WS_URL + '?cardNum=' + cardNum;
 			if('WebSocket' in window) {
 				ws = new ReconnectingWebSocket(url, null, {
@@ -147,16 +174,130 @@
 		},
 		generatedReceviedList: function(receviedData) {
 			var receviedJson = JSON.parse(receviedData);
-			var receviedListElement = '<tr><td>' +
-				receviedJson["PARM"] + '</td><td>' +
-				receviedJson["SOLT_ID"] + '</td><td>' +
-//				receviedJson["子网段"] + '</td><td>' +
-				iEvent.switchUnixTime(receviedJson["TIME"]) + '</td></tr>';
-			var $receviedListElement = $(receviedListElement);
-			$("#cardData").append($receviedListElement);
-			$('#receviedTableBody').scrollTop( $('#receviedTableBody')[0].scrollHeight );
+			if(receviedJson["STATUS"] == "CARD_OUT") {
+				console.log("拔卡动作")
+				$("#cardData").find("tr").each(function(index, item) {
+					if($(item).find("td").eq(1).text() == receviedJson["SOLT_ID"]) {
+						console.log("CARD_OUT_CARD_OUT_CARD_OUT_CARD_OUT_CARD_OUT_");
+						item.remove()
+						return false;
+					}
+					console.log(item.childNodes[3].textContent)
+				});
+			} else {
+				console.log("插卡动作")
+				var flag = 0;
+				console.log(receviedJson["SOLT_ID"])
+				$("#cardData").find("tr").each(function(index, item) {
+					console.log(item);
+					console.log($(item).find("td").eq(1).text()+"   "+receviedJson["SOLT_ID"])
+					if($(item).find("td").eq(1).text() == receviedJson["SOLT_ID"]) {
+						console.log("已经 插卡");
+						flag = 1;
+						return false;
+					}
+				});
+				console.log(flag)
+				if (flag == 0) {
+					var receviedListElement = '<tr><td class="cardNumTD">' +
+					receviedJson["PARM"] + '</td><td class="slotIdTD">' +
+					receviedJson["SOLT_ID"] + '</td><td class="timeTD">' +
+					iEvent.switchUnixTime(receviedJson["TIME"]) + '</td></tr>';
+				var $receviedListElement = $(receviedListElement);
+				$("#cardData").append($receviedListElement);
+				$('#receviedTableBody').scrollTop($('#receviedTableBody')[0].scrollHeight);
+				}
+			}
+			//			console.log($("#cardData").find("#slotIdTD")).html());
+			//			$("#cardData").find("#slotIdTD")).html
 		},
-		binding: function() {
+		checkBinding:function(){
+			console.log("房间号" + unbindedRoom + "======设备号：" + unbindedSolt+"=====酒店ID："+curHotelId);
+			if (curHotelId == undefined) {
+				layer.msg("请选择酒店", {
+					icon: 2,
+					time: 2000,
+					anim: 6
+				});
+				return;
+			}
+			if(unbindedRoom == undefined || unbindedSolt == undefined) {
+				layer.msg("请选择设备和房间", {
+					icon: 2,
+					time: 2000,
+					anim: 6
+				});
+				return;
+			}
+			//获取当前选择酒店的数据
+			var thisHotel;
+			$.each(hotelData, function(index, item) {
+				if(item.idHotelList == curHotelId) {
+					thisHotel = item;
+					return false; //在each中跳出整个循环相当于break
+				}
+			});
+			console.log(JSON.stringify(thisHotel));
+			var index = layer.msg('查询绑定信息中，请稍等...', {
+				icon: 16,
+				shade: 0.01
+			});
+			ZY.ajax({
+				"url": "device/checkBinding",
+				"type": "GET",
+				"data": {
+					"hotelId": curHotelId,
+					"slotId": unbindedSolt,
+				},
+				"contentType": "application/json;charset=UTF-8",
+				"success": function(data) {
+					console.log(JSON.stringify(data.data));
+					var datas = data.data;
+					layer.close(index);
+					if(data.success) {
+						console.log(JSON.stringify(data));
+						//未绑定设备
+						if (datas["hotel"] == null || datas["room"] == null || datas["agent"] == null) {
+						layer.open({
+							title:"请核对以下绑定信息",
+							area:["400px","200px"],
+							content:
+							"该设备未绑定"
+							+ "</br>即将绑定酒店："+thisHotel.hotelName
+							+ "</br>即将绑定房间："+unbindeRoomNum
+							,
+							btn:["确定","取消"],
+							yes:function(index,layero){
+								iEvent.binding(thisHotel.idHotelList,);
+							},
+						});
+					}else{
+						layer.open({
+							title:"请核对以下绑定信息",
+							area:["420px","300px"],
+							content:
+							"该设备已绑定酒店："+datas.hotel.hotelName
+							+ "</br>该设备已绑定的中继："+datas.agent.macAddress
+							+ "</br>该设备已绑定的房间："+datas.room.roomNum
+							+ "</br>"
+							+ "</br>即将绑定酒店："+thisHotel.hotelName
+							+ "</br>即将绑定房间："+unbindeRoomNum
+							,
+							btn:["确定","取消"],
+							yes:function(index,layero){
+								iEvent.binding(thisHotel.idHotelList);
+							},
+						});
+					}
+					} else {
+						layer.msg("查询信息失败！", { //显示失败信息
+							icon: 2,
+						});
+					}
+				}
+			});
+		},
+		binding: function(hotelId) {
 			console.log("房间号" + unbindedRoom + "======设备号：" + unbindedSolt);
 			if(unbindedRoom == undefined || unbindedSolt == undefined) {
 				layer.msg("请选择设备和房间", {
@@ -177,7 +318,7 @@
 				"data": {
 					"roomId": unbindedRoom,
 					"slotId": unbindedSolt,
-					"subNet":subNet
+					"hotelId":hotelId,
 				},
 				"success": function(data) {
 					layer.close(index);
@@ -196,6 +337,8 @@
 							icon: 2,
 						});
 					}
+					$("#roomData").empty();
+					iEvent.getRoom($("#hotelSelect").val());
 				}
 			});
 		},

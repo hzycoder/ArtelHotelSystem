@@ -1,66 +1,71 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>iChos - 后台管理</title>
-    <style type="text/css">
-        .main {
-            background: #888;
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            bottom: 0px;
-            right: 0px;
-            display: table;
-            height: 100%;
-            width: 100%;
-        }
-        .row {
-            display: table-row;
-        }
 
-        .top, .bottom {
-            display: table-cell;
-        }
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>iChos - 后台管理</title>
+		<style type="text/css">
+			.main {
+				background: #888;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				bottom: 0px;
+				right: 0px;
+				display: table;
+				height: 100%;
+				width: 100%;
+			}
+			
+			.row {
+				display: table-row;
+			}
+			
+			.top,
+			.bottom {
+				display: table-cell;
+			}
+			
+			.top {
+				background: red;
+			}
+			
+			.bottom {
+				background: blue;
+				height: 100%;
+			}
+			
+			.left,
+			.right,
+			.center {
+				float: left;
+			}
+			
+			.left {
+				height: 100%;
+				background: #eee;
+				width: 200px;
+			}
+			
+			.center {
+				background: #eee;
+				width: 400px;
+				margin-left: 10px;
+			}
+			
+			.right {
+				height: 100%;
+				background: #ccc;
+				width: 300px;
+				margin-left: 10px;
+			}
+		</style>
 
-        .top {
-            background: red;
-        }
+	</head>
 
-        .bottom {
-            background: blue;
-            height: 100%;
-        }
-
-        .left, .right, .center {
-            float: left;
-        }
-
-        .left {
-            height: 100%;
-            background: #eee;
-            width: 200px;
-        }
-
-        .center {
-            background: #eee;
-            width: 400px;
-            margin-left: 10px;
-        }
-
-        .right {
-            height: 100%;
-            background: #ccc;
-            width: 300px;
-            margin-left: 10px;
-        }
-    </style>
-
-
-</head>
-<body style="overflow:hidden">
-    <div class="main">
+	<body style="overflow:hidden">
+		<!--<div class="main">
         <div class="row">
             <div class=top>我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上我是上<br>我是上</div>
         </div>
@@ -71,6 +76,60 @@
                 <div class="right">我是右边</div>
             </div>
         </div>
-    </div>
-</body>
+    </div>-->
+		<table class="table" id="cardData">
+			<tr>
+				<td class="cardNumTD">12345678</td>
+				<td class="slotIdTD">28</td>
+				<td class="timeTD">2018-06-16 00:24:30</td>
+			</tr>
+			<tr>
+				<td class="cardNumTD">12345678</td>
+				<td class="slotIdTD">28</td>
+				<td class="timeTD">2018-06-16 00:24:32</td>
+			</tr>
+			<tr>
+				<td class="cardNumTD">12345678</td>
+				<td class="slotIdTD">29</td>
+				<td class="timeTD">2018-06-16 00:24:32</td>
+			</tr>
+			<tr>
+				<td class="cardNumTD">12345678</td>
+				<td class="slotIdTD">28</td>
+				<td class="timeTD">2018-06-16 00:24:32</td>
+			</tr>
+			<tr>
+				<td class="cardNumTD">12345678</td>
+				<td class="slotIdTD">28</td>
+				<td class="timeTD">2018-06-16 00:24:32</td>
+			</tr>
+
+		</table>
+		<script src="common/js/jQuery/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			window.onload = function() {
+				//				console.log($(".slotIdTD").html())
+				//				$("#cardData tbody").find("tr").each(function(index,item){
+				//					console.log(index+"     "+item);
+				//					if (item.childNodes[3].textContent == 29) {
+				//						console.log("findfindfindfind");
+				//						item.remove()
+				//						return false;
+				//					}
+				//					console.log(item.childNodes[3].textContent)
+				//				});
+				var flag = 0;
+				$("#cardData").find("tr").each(function(index, item) {
+					console.log(item.childNodes[3].textContent)
+					if(item.childNodes[3].textContent == 29) {
+						console.log("已经 插卡");
+						flag = 1;
+						return false;
+					}
+				});
+				console.log(flag)
+			}
+		</script>
+	</body>
+
 </html>

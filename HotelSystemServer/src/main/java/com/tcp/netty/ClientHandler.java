@@ -38,7 +38,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		//web token 验证包
 		StringBuffer sb = new StringBuffer();
 		sb.append("00000000000000");
-		sb.append(ConstantValue.WEB_TOKEN_ID);
+		sb.append("03bc156ac796828d0d08625f86f6dc55");
 		byte[] tokenByte = sb.toString().getBytes();
 		
 		FrameStruct token  = new FrameStruct(tokenByte.length, tokenByte);

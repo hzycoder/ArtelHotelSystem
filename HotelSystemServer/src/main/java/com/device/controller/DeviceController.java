@@ -186,10 +186,29 @@ public class DeviceController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "binding", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-	public Map<String, Object> binding(Integer roomId,Integer slotId,String subNet) throws Exception {
+	public Map<String, Object> binding(Integer roomId,Integer slotId,Integer hotelId) throws Exception {
 		Map<String, Object> map = new HashMap<String,Object>();
 		try {
-			deviceService.binding(roomId,slotId,subNet);
+			deviceService.binding(roomId,slotId,hotelId);
+			success = true;
+			msg = "获取数据成功！";
+		} catch (Exception e) {
+			e.printStackTrace();
+			success = false;
+			msg = "系统内部错误";
+		} finally {
+			map.put("msg", msg);
+			map.put("success", success);
+		}
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "checkBinding", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public Map<String, Object> checkBinding(Integer slotId,Integer hotelId) throws Exception {
+		Map<String, Object> map = new HashMap<String,Object>();
+		try {
+			map.put("data",deviceService.checkBinding(slotId,hotelId));
 			success = true;
 			msg = "获取数据成功！";
 		} catch (Exception e) {

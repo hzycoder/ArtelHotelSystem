@@ -13,8 +13,8 @@
 	<property name="connection.password">@huawang2017</property>
 	<property name="connection.username">sa</property>
 	<property name="connection.url">
-		<!-- jdbc:sqlserver://39.108.233.97:1433;databaseName=test -->
-		jdbc:sqlserver://47.106.99.219:1433;databaseName=test
+		<!-- jdbc:sqlserver://39.108.233.97:1433;databaseName=room_manager_db -->
+		jdbc:sqlserver://47.106.99.219:1433;databaseName=room_manager_db
 	</property>
 	<property name="connection.driver_class">
 		com.microsoft.sqlserver.jdbc.SQLServerDriver

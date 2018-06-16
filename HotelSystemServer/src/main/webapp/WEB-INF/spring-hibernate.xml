@@ -19,7 +19,7 @@
 	<bean name="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="url"
-			value="jdbc:sqlserver://47.106.99.219:1433;databaseName=test" />
+			value="jdbc:sqlserver://47.106.99.219:1433;databaseName=room_manager_db" />
 		<property name="username" value="sa" />
 		<property name="password" value="@huawang2017" />
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/> 

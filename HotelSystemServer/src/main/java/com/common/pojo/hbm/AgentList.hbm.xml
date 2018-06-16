@@ -6,7 +6,7 @@
 -->
 <hibernate-mapping>
     <!-- <class name="com.common.pojo.AgentList" table="AgentList" schema="dbo" catalog="room_manager_db"> -->
-    <class name="com.common.pojo.AgentList" table="AgentList" schema="dbo" catalog="test">
+    <class name="com.common.pojo.AgentList" table="AgentList" schema="dbo" catalog="room_manager_db">
         <id name="idAgentList" type="java.lang.Integer">
             <column name="idAgentList" />
             <generator class="increment" />

@@ -17,9 +17,11 @@ import com.common.pojo.SoltList;
 import com.common.pojo.UpgradeFile;
 import com.device.dao.DeviceDao;
 import com.device.dto.AgentDto;
+import com.device.dto.BindingAgentDto;
+import com.device.dto.BindingHotelDto;
+import com.device.dto.BindingRoomDto;
 import com.device.dto.DeviceDto;
 
-import freemarker.ext.dom.Transform;
 import javassist.convert.Transformer;
 
 /**
@@ -147,7 +149,114 @@ public class DeviceDaoImpl implements DeviceDao {
 	public void binding(RoomSoltList rsList,String subNet) {
 		sessionFactory.getCurrentSession().save(rsList);
 		StringBuffer sql = new StringBuffer();
-		sql.append("update roomList set soltNum='"+subNet+"' where idRoomList = '"+rsList.getIdRoomList()+"'");
+		sql.append("update RoomList set soltNum='"+subNet+"' where idRoomList = '"+rsList.getIdRoomList()+"'");
 		sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).executeUpdate();
 	}
+
+	@Override
+	public BindingAgentDto getAgentBySlotId(String slotId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("SELECT "
+				+ "S.idsoltList AS slotId,"
+				+ "S.subNetNum AS subNetNum,"
+				+ "S.AgentList_idAgentList AS agentId,"
+				+ "A.macAddress AS macAddress,"
+				+ "A.createTime AS agentCreateTime,"
+				+ "A.deviceCount AS deviceCount "
+				+ "FROM "
+				+ "SoltList AS S LEFT JOIN AgentList AS A "
+				+ "ON "
+				+ "A.idAgentList = S.AgentList_idAgentList "
+				+ "WHERE S.idsoltList = "
+				+ "'"+slotId+"'");
+		return (BindingAgentDto) sessionFactory.getCurrentSession().createSQLQuery(sb.toString())
+				.addScalar("slotId")
+				.addScalar("subNetNum")
+				.addScalar("agentId")
+				.addScalar("macAddress")
+				.addScalar("agentCreateTime")
+				.addScalar("deviceCount")
+				.setResultTransformer(Transformers.aliasToBean(BindingAgentDto.class)).uniqueResult();
+	}
+
+	@Override
+	public BindingHotelDto getHotelByAgentId(String agentId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("SELECT "
+				+ "H.idHotelList AS hotelId,"
+				+ "H.hotelID AS hotelCode,"
+				+ "H.hotelName,"
+				+ "H.address AS hotelAddress "
+				+ "FROM "
+				+ "HotelAgentList AS HA LEFT JOIN HotelList AS H "
+				+ "ON "
+				+ "HA.HotelList_idHotelList = H.idHotelList "
+				+ "WHERE HA.AgentList_idAgentList = '"+agentId+"'");
+		return (BindingHotelDto) sessionFactory.getCurrentSession().createSQLQuery(sb.toString())
+				.addScalar("hotelId")
+				.addScalar("hotelCode")
+				.addScalar("hotelName")
+				.addScalar("hotelAddress")
+				.setResultTransformer(Transformers.aliasToBean(BindingHotelDto.class)).uniqueResult();
+	}
+
+	@Override
+	public BindingRoomDto getRoomBySlotId(String SlotId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("SELECT "
+				+ "R.RoomID AS roomCode,"
+				+ "R.roomNum,"
+				+ "R.floor "
+				+ "FROM "
+				+ "RoomSoltList AS RS LEFT JOIN RoomList AS R "
+				+ "ON "
+				+ "RS.RoomList_idRoomList = R.idRoomList "
+				+ "WHERE "
+				+ "RS.soltList_idsoltList = '"+SlotId+"'");
+		return (BindingRoomDto) sessionFactory.getCurrentSession().createSQLQuery(sb.toString())
+				.addScalar("roomCode")
+				.addScalar("roomNum")
+				.addScalar("floor")
+				.setResultTransformer(Transformers.aliasToBean(BindingRoomDto.class)).uniqueResult();
+	}
+
+	@Override
+	public RoomSoltList getRoomSoltListBySlotId(Integer slotId) {
+		return (RoomSoltList) sessionFactory.getCurrentSession().createQuery("FROM RoomSoltList WHERE idsoltList =:slotId")
+		.setInteger("slotId", slotId).uniqueResult();
+	}
+
+	@Override
+	public HotelAgentList getHotelAgentListByAgentId(Integer agentId) {
+		return (HotelAgentList) sessionFactory.getCurrentSession().createQuery("FROM HotelAgentList WHERE idAgentList =:agentId")
+				.setInteger("agentId", agentId).uniqueResult();
+	}
+
+	@Override
+	public SoltList getSlotListBySlotId(Integer slotId) {
+		return (SoltList) sessionFactory.getCurrentSession().createQuery("FROM SoltList WHERE idsoltList =:slotId")
+				.setInteger("slotId", slotId).uniqueResult();
+	}
+
+	@Override
+	public void saveInstance(Object o) {
+		sessionFactory.getCurrentSession().save(o);
+	}
+
+	@Override
+	public void updateRoomSlotList(RoomSoltList roomSoltList) {
+		sessionFactory.getCurrentSession().createQuery("UPDATE RoomSoltList SET idRoomList = :roomId WHERE idsoltList =:slotId")
+		.setInteger("roomId", roomSoltList.getIdRoomList())
+		.setInteger("slotId", roomSoltList.getIdsoltList());
+	}
+
+	@Override
+	public void updateHotelAgentList(HotelAgentList hotelAgentList) {
+		sessionFactory.getCurrentSession().createQuery("UPDATE HotelAgentList SET idHotelList = :hotelId WHERE idAgentList =:agentId")
+		.setInteger("hotelId", hotelAgentList.getIdHotelList())
+		.setInteger("agentId", hotelAgentList.getIdAgentList());
+	}
+	
+	
+	
 }
