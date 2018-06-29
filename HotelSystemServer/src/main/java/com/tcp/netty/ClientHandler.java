@@ -1,8 +1,5 @@
 package com.tcp.netty;
 
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
@@ -11,13 +8,10 @@ import java.util.concurrent.TimeUnit;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tcp.ChannelSession;
-import com.tcp.frameStruct.ConstantValue;
 import com.tcp.MsgQueue;
 import com.tcp.frameStruct.FrameStruct;
 import com.tcp.newStruct.JsonStruct;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -32,8 +26,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		String id = ctx.channel().id().asLongText();
-		System.out.println("※※※※※※※※※※※客户端与服务端通道激活" + id);
-		ChannelSession.addChannelSession(id, ctx.channel());
+		System.out.println("--------客户端与服务端通道激活--------" + id);
+		ChannelSession.addChannelSession("channel", ctx.channel());
 		
 		//web token 验证包
 		StringBuffer sb = new StringBuffer();
@@ -46,8 +40,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		channelFuture.await();
 		System.out.println("验证包是否发送成功："+channelFuture.isSuccess());
 		
-		ScheduledExecutorService service = Executors.newScheduledThreadPool(8);// 先定义8个线程空间
-		service.scheduleAtFixedRate(new DelThread(), 0, 8, TimeUnit.SECONDS);
+//		System.out.println("--------启动删除线程--------");
+//		ScheduledExecutorService service = Executors.newScheduledThreadPool(8);// 先定义8个线程空间
+//		service.scheduleAtFixedRate(new DelThread(), 0, 30, TimeUnit.SECONDS);
 		// CrawlerTest()是一个实现Runnable接口的类，会自动运行里面的run()方法，0的意思就是启动等待时间，这里就是直接运行，
 		// 10是10分钟，要是想小时，就把TimeUnit.MINUTES换成 TimeUnit.HOURS
 		super.channelActive(ctx);
@@ -56,6 +51,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("通道失效");
+		ChannelSession.removeChannel("channel");
 		super.channelInactive(ctx);
 	}
 
@@ -79,10 +75,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		jsonStruct.setContent(JSONObject.parseObject(msg1));
 		
 		queue.push(jsonStruct);// 把消息放进消息队列
-		long l = new Date().getTime();
-		if ((int) l % 3 == 0) {
-			System.out.println("当前消息队列数据量：" + queue.getStorage().size());
-		}
+//		long l = new Date().getTime();
+//		if ((int) l % 3 == 0) {
+//			System.out.println("当前消息队列数据量：" + queue.getStorage().size());
+//		}
 		// count++;
 		super.channelRead(ctx, msg);
 	}
@@ -94,8 +90,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-hh HH:mm:ss");
-		System.out.println("~~~~~~~~heart~~~~~~~~: "+sdf.format(new Date()));
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-hh HH:mm:ss");
+//		System.out.println("~~~~~~~~heart~~~~~~~~: "+sdf.format(new Date()));
 	    if (evt instanceof IdleStateEvent){
 	        IdleStateEvent event = (IdleStateEvent)evt;
 	        if (event.state() == IdleState.WRITER_IDLE){
@@ -122,25 +118,25 @@ class DelThread implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("--------执行删除线程--------");
 		ConcurrentLinkedQueue<JsonStruct> queue = ClientHandler.queue.getStorage();
-		while (true) {
+		try {
 			long time = new Date().getTime();
 			JsonStruct jsonStruct = queue.peek();
 			if (jsonStruct != null) {
 				JSONObject json = jsonStruct.getContent();
 				// System.out.println("获取头部："+json.toJSONString());
 				long l = new Date().getTime();
-//				System.out.println("当前时间：" + time + "   消息发送时间：" + json.getLong("发送时间"));
 				if (json.getLong("TIME") == null) {
 					queue.poll();
 					System.out.println("消息超时，1条消息被移除队列，当前队列数据量为：" + queue.size());
-				}else if (time - json.getLong("TIME") > 1000 * 10) {
+				} else if (time - json.getLong("TIME") > 1000 * 10) {
 					queue.poll();
 					System.out.println("消息超时，1条消息被移除队列，当前队列数据量为：" + queue.size());
-					continue;
 				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		// Iterator iter = queue.iterator();
 		// while (iter.hasNext()) {
@@ -152,19 +148,6 @@ class DelThread implements Runnable {
 		// continue;
 		// }
 		// }
-	}
-
-}
-
-
-class HeartThread implements Runnable {
-	Channel channel = null;
-	
-
-	@Override
-	public void run() {
-		while (true) {
-		}
 	}
 
 }

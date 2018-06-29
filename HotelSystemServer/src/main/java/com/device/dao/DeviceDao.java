@@ -29,7 +29,7 @@ public interface DeviceDao {
 	public SoltList getSlotListBySlotId(Integer slotId);
 	public void updateRoomSlotList(RoomSoltList roomSoltList);
 	public void updateHotelAgentList(HotelAgentList hotelAgentList);
-	public void binding(RoomSoltList rsList,String subNet);
+	public void updateRoomList(Integer roomID,Integer subNet);
 	public void saveFile(UpgradeFile file);
 	public void saveInstance(Object o);
 }

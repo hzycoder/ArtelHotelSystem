@@ -68,6 +68,8 @@
 					});
 					return;
 				}
+				$this.addClass("repeatersList_repeater_selected");
+				$this.siblings().removeClass("repeatersList_repeater_selected");
 				iView.repeaterListClick($this.attr("id"));
 			});
 			//监听酒店选择下拉框

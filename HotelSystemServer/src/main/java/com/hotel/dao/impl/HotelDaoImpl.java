@@ -158,7 +158,7 @@ public class HotelDaoImpl implements HotelDao {
 	}
 
 	@Override
-	public Integer getRoomsCount(String hotelId) {
+	public Integer getRoomsCountByHotelID(String hotelId) {
 		long temp = (Long) sessionFactory.getCurrentSession()
 				.createQuery("SELECT COUNT(*) FROM RoomList WHERE hotelId = ?")
 				.setParameter(0, Integer.parseInt(hotelId)).uniqueResult();
@@ -171,9 +171,9 @@ public class HotelDaoImpl implements HotelDao {
 	}
 
 	@Override
-	public Integer getRoomCountByHotelID(int hotelID) {
+	public Integer getRoomCount() {
 		Integer count = (Integer) sessionFactory.getCurrentSession()
-				.createSQLQuery("select count(*) from RoomList where HotelList_idHotelList = '"+hotelID+"' or HotelList_idHotelList = '-"+hotelID+"'")
+				.createSQLQuery("select count(*) from RoomList")
 				.uniqueResult();
 		int temp = count == null ? 0 : (int) count;
 		return temp;
@@ -192,9 +192,14 @@ public class HotelDaoImpl implements HotelDao {
 
 	@Override
 	public Integer getMaxHotelId() {
-		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT " + "max(H.idHotelList) " + "FROM HotelList " + "AS " + "H");
-		return (Integer) sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).uniqueResult();
+		Integer count = (Integer) sessionFactory.getCurrentSession()
+				.createSQLQuery("select count(*) from HotelList")
+				.uniqueResult();
+		int temp = count == null ? 0 : (int) count;
+		return temp;
+//		StringBuffer sql = new StringBuffer();
+//		sql.append("SELECT " + "max(H.idHotelList) " + "FROM HotelList " + "AS " + "H");
+//		return (Integer) sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).uniqueResult();
 	}
 
 	@Override

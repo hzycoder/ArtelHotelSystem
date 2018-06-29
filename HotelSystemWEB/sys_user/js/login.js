@@ -138,6 +138,7 @@
 						layer.msg(data.error, { //显示失败信息
 							icon: 2,
 						});
+						
 					}
 				},
 			});

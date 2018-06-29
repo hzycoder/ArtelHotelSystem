@@ -14,10 +14,10 @@ public interface HotelDao {
 	public void addHotel(HotelList hotelList);
 	public List<RoomList> getRooms(String hotelId);
 	public List<RoomList> getUnbindedRooms(String hotelId);
-	public Integer getRoomsCount(String hotelId);
+	public Integer getRoomsCountByHotelID(String hotelId);
 	public int delRoom(String roomID);
 	public void addRoom(RoomList roomList);
-	public Integer getRoomCountByHotelID(int hotelID);
+	public Integer getRoomCount();
 	public List<HotelList> gethotelsByConditions(String hotelName,String hotelAddress,String userID);
 	public List<HotelList> gethotelsByConditions(String hotelName,String hotelAddress);
 	public List<String> getTypeOfHotel(String hotelId);

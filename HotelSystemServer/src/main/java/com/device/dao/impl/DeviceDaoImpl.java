@@ -22,6 +22,7 @@ import com.device.dto.BindingHotelDto;
 import com.device.dto.BindingRoomDto;
 import com.device.dto.DeviceDto;
 
+import io.netty.handler.codec.http.HttpContentEncoder.Result;
 import javassist.convert.Transformer;
 
 /**
@@ -144,14 +145,22 @@ public class DeviceDaoImpl implements DeviceDao {
 	public void saveFile(UpgradeFile file) {
 		sessionFactory.getCurrentSession().saveOrUpdate(file);
 	}
-
+	
 	@Override
-	public void binding(RoomSoltList rsList,String subNet) {
-		sessionFactory.getCurrentSession().save(rsList);
+	public void updateRoomList(Integer roomID, Integer subNet) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("update RoomList set soltNum='"+subNet+"' where idRoomList = '"+rsList.getIdRoomList()+"'");
+		sql.append("update RoomList set soltNum='" + subNet + "' where idRoomList = '" + roomID + "'");
 		sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).executeUpdate();
 	}
+
+//	@Override
+//	public void binding(RoomSoltList rsList,String subNet) {
+//		sessionFactory.getCurrentSession().save(rsList);
+//		StringBuffer sql = new StringBuffer();
+//		sql.append("update RoomList set soltNum='"+subNet+"' where idRoomList = '"+rsList.getIdRoomList()+"'");
+//		int retsult = sessionFactory.getCurrentSession().createSQLQuery(sql.toString()).executeUpdate();
+//		System.out.println(sql.toString()+"===="+retsult);
+//	}
 
 	@Override
 	public BindingAgentDto getAgentBySlotId(String slotId) {
@@ -256,7 +265,5 @@ public class DeviceDaoImpl implements DeviceDao {
 		.setInteger("hotelId", hotelAgentList.getIdHotelList())
 		.setInteger("agentId", hotelAgentList.getIdAgentList());
 	}
-	
-	
 	
 }

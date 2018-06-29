@@ -31,11 +31,16 @@
 				 * @param {Object} type 可能值: null, timeout, error, notmodified, parsererror
 				 * @param {Object} errorThrown
 				 */
-				error: function(xhr, type, errorThrown) {
-					console.log(JSON.stringify(xhr))
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log(JSON.stringify(XMLHttpRequest))
 					if(option.error) {
-						option.error(xhr, type, errorThrown);
+						option.error(XMLHttpRequest, textStatus, errorThrown);
 						return;
+					}
+					if (textStatus == "error") {
+						setTimeout(function() {
+							window.location.href = "404.html";
+						}, 300);
 					}
 					//异常处理
 					layer.closeAll(); //关闭layer等待框等等

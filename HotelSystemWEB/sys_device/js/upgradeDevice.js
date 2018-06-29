@@ -94,7 +94,7 @@
 				type: 2,
 				title: "验证密码",
 				area: ["400px", "150px"],
-				content: ["verifypass.html"],
+				content: ["verifyPass.html"],
 				btn: btnArray,
 				btnAlign: "c",
 				success: function(layero, index) {

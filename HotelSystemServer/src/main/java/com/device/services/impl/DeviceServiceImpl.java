@@ -105,21 +105,31 @@ public class DeviceServiceImpl implements DeviceService {
 
 	@Override
 	public void binding(Integer roomId, Integer slotId,Integer hotelId) {
-		Map<String,Object> map = new HashMap<String,Object>();
+		//获取roomSoltList
 		RoomSoltList roomSoltList = deviceDao.getRoomSoltListBySlotId(slotId);
+		//获取slotList
 		SoltList soltList = deviceDao.getSlotListBySlotId(slotId);
+		//获取hotelAgentList
 		HotelAgentList hotelAgentList = deviceDao.getHotelAgentListByAgentId(soltList.getAgentId());
+		//判断卡槽是否与房间绑定
 		if (null == roomSoltList) {//未绑定
 			roomSoltList = new RoomSoltList();
 			roomSoltList.setIdRoomList(roomId);
 			roomSoltList.setIdsoltList(slotId);
+			//添加roomSoltlist数据
 			deviceDao.saveInstance(roomSoltList);
+			//修改roomlist中的子网段字段
+			deviceDao.updateRoomList(roomId, soltList.getSubNetNum());
 		}else{//已绑定 更改绑定信息
 			roomSoltList.setIdRoomList(roomId);
 			roomSoltList.setIdsoltList(slotId);
+			//修改roomSoltlist数据
 			deviceDao.updateRoomSlotList(roomSoltList);
+			//修改roomlist中的子网段字段
+			deviceDao.updateRoomList(roomId, soltList.getSubNetNum());
 		}
-		if(null == hotelAgentList){//已绑定
+		//判断该卡槽所属的中继是否与酒店绑定
+		if(null == hotelAgentList){//未绑定
 			hotelAgentList = new HotelAgentList();
 			hotelAgentList.setIdAgentList(soltList.getAgentId());
 			hotelAgentList.setIdHotelList(hotelId);

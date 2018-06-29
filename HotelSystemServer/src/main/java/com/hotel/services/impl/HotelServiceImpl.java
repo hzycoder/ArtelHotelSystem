@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.common.base.BaseException;
 import com.common.dao.CommonDao;
 import com.common.pojo.HotelList;
 import com.common.pojo.LoginUserList;
@@ -20,6 +22,15 @@ import com.hotel.dao.HotelDao;
 import com.hotel.dto.HotelDto;
 import com.hotel.dto.RoomDto;
 import com.hotel.services.HotelService;
+import com.tcp.ChannelSession;
+import com.tcp.dto.NewBatchRoomMsg;
+import com.tcp.dto.NewHotelMsg;
+import com.tcp.dto.NewRoomMsg;
+import com.tcp.dto.Msg;
+import com.tcp.frameStruct.FrameStruct;
+
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 
 @Transactional
 @Service
@@ -124,11 +135,21 @@ public class HotelServiceImpl implements HotelService {
 			String hotelId = generateId(String.valueOf(++formatId));//
 			boolean b = testHotelID(hotelId);
 			if (!b) {
-				throw new Exception("Generating ID failure");
+				throw new BaseException("Generating ID failure");
 			}
 			hotelList.setHotelId(hotelId);
 		}
 		hotelDao.addHotel(hotelList);
+		//新增酒店发送消息
+		Channel channel = ChannelSession.getChannelById("channel");
+		String json = JSON.toJSONString(new Msg("TRANSPOND",new NewHotelMsg(hotelList.getHotelId())));
+		System.out.println("tcp发送消息"+json);
+		FrameStruct frameStruct = new FrameStruct(json.length(), json.getBytes());
+		ChannelFuture channelFuture = channel.writeAndFlush(frameStruct);
+		channelFuture.await();
+		if (!channelFuture.isSuccess()) {
+			throw new BaseException("newHotelMsg send failure");
+		}
 	}
 
 	@Override
@@ -164,12 +185,16 @@ public class HotelServiceImpl implements HotelService {
 	 * @return 生成酒店编号
 	 */
 	public String generateId(String id) {
-		StringBuffer sb = new StringBuffer(id);
-		while (sb.toString().length() != 6) {
-			sb.insert(0, "0");
-		}
+//		StringBuffer sb = new StringBuffer(id);
+//		while (sb.toString().length() != 6) {
+//			sb.insert(0, "0");
+//		}
+//		sb.insert(0, "H");
+//		System.out.println("生成的主键" + sb.toString());
+//		return sb.toString();
+		String str = String.format("%06d", Integer.valueOf(id));
+		StringBuffer sb = new StringBuffer(str);
 		sb.insert(0, "H");
-		System.out.println("生成的主键" + sb.toString());
 		return sb.toString();
 	}
 
@@ -184,26 +209,56 @@ public class HotelServiceImpl implements HotelService {
 	@Override
 	public void addRoom(RoomDto roomDto) {
 		RoomList roomList = new RoomList();
-		int roomCount = hotelDao.getRoomCountByHotelID(roomDto.getHotelId());
-		roomList.setRoomId(roomDto.getHotelNum() + "_" + String.valueOf(roomCount));
+		int roomCount = hotelDao.getRoomCount();
+		roomList.setRoomId(roomDto.getHotelNum().replace("H", "R") + String.format("%08d", roomCount));
 		roomList.setHotelId(roomDto.getHotelId());
 		roomList.setFloor(roomDto.getFloor());
 		roomList.setRoomNum(roomDto.getRoomNum());
 		hotelDao.addRoom(roomList);
+		Channel channel = ChannelSession.getChannelById("channel");
+		String json = JSON.toJSONString(new Msg("TRANSPOND",new NewRoomMsg(roomDto.getHotelNum(),roomDto.getRoomId())));
+		System.out.println("tcp发送消息"+json);
+		FrameStruct frameStruct = new FrameStruct(json.length(), json.getBytes());
+		ChannelFuture channelFuture = channel.writeAndFlush(frameStruct);
+		try {
+			channelFuture.await();
+			if (!channelFuture.isSuccess()) {
+				throw new BaseException("newRoomMsg send failure");
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void batchAddRoom(RoomDto roomDto) {
-		int roomCount = hotelDao.getRoomCountByHotelID(roomDto.getHotelId());
+		int roomCount = hotelDao.getRoomCount();
 		int roomNumSize = roomDto.getRoomNumList().size();
+		String[] roomStr = new String[roomNumSize];
 		for (int i = 0; i < roomNumSize; i++) {
 			RoomList roomList = new RoomList();
-			roomList.setRoomId(roomDto.getHotelNum() + "_" + String.valueOf(roomCount));
+			roomList.setRoomId(roomDto.getHotelNum().replace("H", "R") + String.format("%08d", roomCount));
 			roomCount++;
 			roomList.setHotelId(roomDto.getHotelId());
 			roomList.setFloor(roomDto.getFloor());
 			roomList.setRoomNum(roomDto.getRoomNumList().get(i));
+			roomStr[i] = roomList.getRoomId();
 			hotelDao.addRoom(roomList);
+		}
+		Channel channel = ChannelSession.getChannelById("channel");
+		String json = JSON.toJSONString(new Msg("TRANSPOND",new NewBatchRoomMsg(roomDto.getHotelNum(),roomStr)));
+		System.out.println("tcp发送消息"+json);
+		FrameStruct frameStruct = new FrameStruct(json.length(), json.getBytes());
+		ChannelFuture channelFuture = channel.writeAndFlush(frameStruct);
+		try {
+			channelFuture.await();
+			if (!channelFuture.isSuccess()) {
+				throw new BaseException("newBatchRoomMsg send failure");
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -211,7 +266,7 @@ public class HotelServiceImpl implements HotelService {
 	public Map<String, Object> getRooms(String hotelId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<RoomList> roomList = hotelDao.getRooms(hotelId);
-		int count = hotelDao.getRoomsCount(hotelId);
+		int count = hotelDao.getRoomsCountByHotelID(hotelId);
 		map.put("data", roomList);
 		map.put("count", count);
 		return map;
@@ -221,7 +276,7 @@ public class HotelServiceImpl implements HotelService {
 	public Map<String, Object> getUnbindedRooms(String hotelId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<RoomList> roomList = hotelDao.getUnbindedRooms(hotelId);
-		int count = hotelDao.getRoomsCount(hotelId);
+		int count = hotelDao.getRoomsCountByHotelID(hotelId);
 		map.put("data", roomList);
 		map.put("count", count);
 		return map;

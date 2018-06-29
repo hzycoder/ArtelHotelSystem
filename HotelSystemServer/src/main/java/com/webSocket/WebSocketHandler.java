@@ -33,18 +33,17 @@ public class WebSocketHandler extends TextWebSocketHandler {
 		if (null != cardNum) { // 绑定房间
 			WebSocketHandlerAgentIdSession.put(cardNum, session);
 			System.out.println("卡号id:" + cardNum);
-			System.out.println(ClientHandler.queue.toString());// 打印消息队列
+			ergodicFlag = true;
 			ErgodicThread ergodicThread = new ErgodicThread(cardNum, "PARM", "binding");// 启动遍历线程
 			Thread thread2 = new Thread(ergodicThread, "遍历进程");
 			thread2.start();
-			ergodicFlag = true;
 		} else if (null != hotelId) { // 房态查询
 			WebSocketHandlerAgentIdSession.put(hotelId, session);
 			System.out.println("酒店id:" + hotelId);
+			ergodicFlag = true;
 			ErgodicThread ergodicThread = new ErgodicThread(hotelId, "hotelId", "roomStatus");// 启动遍历线程
 			Thread thread2 = new Thread(ergodicThread, "遍历进程");
 			thread2.start();
-			ergodicFlag = true;
 		} else {
 			session.close();
 		}
@@ -117,7 +116,6 @@ class ErgodicThread implements Runnable {
 			while (WebSocketHandler.ergodicFlag) {
 				ConcurrentLinkedQueue<JsonStruct> queue = ClientHandler.queue.getStorage();
 				Iterator iter = queue.iterator();
-				// System.out.println("-----------开始遍历-----------");
 				switch (type) {
 				case "binding":
 					while (iter.hasNext()) {

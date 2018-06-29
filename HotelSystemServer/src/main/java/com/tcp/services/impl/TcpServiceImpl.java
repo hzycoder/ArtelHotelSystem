@@ -12,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.common.base.BaseException;
 import com.common.pojo.HotelList;
 import com.tcp.ChannelSession;
 import com.tcp.dao.TcpDao;
+import com.tcp.dto.NewHotelMsg;
+import com.tcp.dto.Msg;
 import com.tcp.frameStruct.FrameStruct;
 import com.tcp.newStruct.JsonStruct;
 import com.tcp.services.TcpService;
@@ -35,15 +39,20 @@ public class TcpServiceImpl implements TcpService{
 	public void upgrade(String hotelId) {
 		List<String> macList = tcpDao.getMacAddress(hotelId);
 		HotelList hotel = tcpDao.getHotel(hotelId);
-		Map<String, Channel> channelMap = ChannelSession.getChannels();
-		Iterator<String> it = channelMap.keySet().iterator();
-		while (it.hasNext()) {
-			String key = it.next();
-			Channel channel = channelMap.get(key);
-			String upgradeJson = "{\"type\":\"upgrade\",\"data\":{\"hotelId\":\""+hotelId+"\",\"hotelName\":\""+hotel.getHotelName()+"\","
-					+ "\"macAddress\":\""+StringUtils.strip(macList.toString(),"[]")+"\"},\"time\":\""+simpleDateFormat.format(new Date().getTime())+"\"}";
-			JsonStruct json = new JsonStruct(JSONObject.parseObject(upgradeJson));
-			channel.writeAndFlush(json);
+		
+		Channel channel = ChannelSession.getChannelById("channel");
+		String json = JSON.toJSONString(new Msg("OTA_CMD",hotelId));
+		System.out.println("tcp发送消息"+json);
+		FrameStruct frameStruct = new FrameStruct(json.length(), json.getBytes());
+		ChannelFuture channelFuture = channel.writeAndFlush(frameStruct);
+		try {
+			channelFuture.await();
+			if (!channelFuture.isSuccess()) {
+				throw new BaseException("OTAUpgrade send failure");
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

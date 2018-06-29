@@ -18,6 +18,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.common.util.CharacterUtils;
 import com.mchange.v1.lang.GentleThread;
 import com.tcp.MsgQueue;
+import com.tcp.dto.NewBatchRoomMsg;
+import com.tcp.dto.NewHotelMsg;
+import com.tcp.dto.NewRoomMsg;
+import com.tcp.dto.Msg;
 import com.tcp.frameStruct.ConstantValue;
 import com.tcp.netty.ClientBootstrap;
 
@@ -41,15 +45,46 @@ public class Test {
 		// thread.start();
 		// testBeginEnd();
 		// testsqlbuffer();
-//		StringBuffer sb = new StringBuffer();
-//		sb.append("00000000000000");
-//		testFastjson();
-		string2Hex();
+		// StringBuffer sb = new StringBuffer();
+		// sb.append("00000000000000");
+		// testFastjson();
+		// string2Hex();
+		// generateRoomNum();
+		newHotelAndRoomMsg();
 	}
-	public static void string2Hex(){
-		String jsonContent = "{\"METHOD\":\"SOLT_STATUS\",\"SOLT_ID\":\"6\",\"TYPE\":\"SOLT_STATUS\",\"PARM\":\"1234567890123456\",\"STATUS\":\"CARD_IN\",\"TIME\":\""+"2018-06-05 17:00:35"+"\"}";
+
+	public static void newHotelAndRoomMsg() {
+		Msg transpond = new Msg();
+		NewHotelMsg newHotelMsg = new NewHotelMsg();
+		newHotelMsg.setHOTEL_LIST("H000001");
+//		transpond.setPARM(newHotelMsg);
+//		String str = JSON.toJSONString(transpond, false);
+//		System.out.println(str);
 		
+//		NewRoomMsg newRoomMsg = new NewRoomMsg("H00001","R000010000001");
+//		transpond.setPARM(newRoomMsg);
+//		String str = JSON.toJSONString(transpond);
+//		System.out.println(str);
+		
+		String[] strs = {"R000010000001","R000010000001","R000010000001"};
+		NewBatchRoomMsg newBatchRoomMsg = new NewBatchRoomMsg("H00001",strs);
+		transpond.setPARM(newBatchRoomMsg);
+		String str = JSON.toJSONString(transpond);
+		System.out.println(str);
 	}
+
+	public static void generateRoomNum() {
+		int roomCount = 8000;
+		String str = String.format("%08d", roomCount);
+		System.out.println(str);
+	}
+
+	public static void string2Hex() {
+		String jsonContent = "{\"METHOD\":\"SOLT_STATUS\",\"SOLT_ID\":\"6\",\"TYPE\":\"SOLT_STATUS\",\"PARM\":\"1234567890123456\",\"STATUS\":\"CARD_IN\",\"TIME\":\""
+				+ "2018-06-05 17:00:35" + "\"}";
+
+	}
+
 	public static void testFastjson() {
 		String upgradeJson = "{\"type\":\"upgrade\",\"data\":{\"hotelId\":\"" + "111" + "\",\"hotelName\":\""
 				+ "AThotel" + "\"," + "\"macAddress\":\"" + "123123,13123124,14124" + "\"},\"time\":\""
