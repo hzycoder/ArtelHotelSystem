@@ -4,17 +4,17 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 public class Msg {
 	private String METHOD;
-	private Object PARM;
+	private String PARM;
 
 	public Msg() {
 	}
 
-	public Msg(String METHOD, Object PARM) {
+	public Msg(String METHOD, String PARM) {
 		this.METHOD = METHOD;
 		this.PARM = PARM;
 	}
 
-	public Msg(Object PARM) {
+	public Msg(String PARM) {
 		this.METHOD = "TRANSPOND";
 		this.PARM = PARM;
 	}
@@ -29,12 +29,12 @@ public class Msg {
 	}
 
 	@JSONField(name = "PARM")
-	public Object getPARM() {
+	public String getPARM() {
 		return PARM;
 	}
 
-	public void setPARM(Object PARM) {
-		this.PARM = PARM;
+	public void setPARM(String pARM) {
+		PARM = pARM;
 	}
 
 }

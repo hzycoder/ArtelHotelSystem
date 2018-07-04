@@ -32,15 +32,17 @@ public class HotelController extends BaseController {
 	@RequestMapping(value = "getHotels", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public Map<String, Object> getHotels(String userID, String permission) throws Exception {
 		JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
-		Map<String, Channel> channelMap = ChannelSession.getChannels();
-		Iterator<String> it = channelMap.keySet().iterator();
-		while (it.hasNext()) {
-			String key = it.next();
-			Channel channel = channelMap.get(key);
-			logger.info("Channel id is " + key);
-			logger.info("channel:" + channel.isActive());
-			channel.writeAndFlush("酒店发送消息");
-		}
+		
+//		Map<String, Channel> channelMap = ChannelSession.getChannels();
+//		Iterator<String> it = channelMap.keySet().iterator();
+//		while (it.hasNext()) {
+//			String key = it.next();
+//			Channel channel = channelMap.get(key);
+//			logger.info("Channel id is " + key);
+//			logger.info("channel:" + channel.isActive());
+//			channel.writeAndFlush("酒店发送消息");
+//		}
+		
 		// WebSocketHandlerSession.print();
 		// WebSocketHandlerAgentIdSession.print();
 		// AssociatedSession.print();

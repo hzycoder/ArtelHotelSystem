@@ -4,12 +4,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.tcp.frameStruct.SyncFrameCoder;
 import com.tcp.frameStruct.SyncFrameDecoder;
-import com.tcp.newStruct.JsonDecoder;
-import com.tcp.newStruct.JsonEncoder;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -18,7 +15,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 
 public class ClientBootstrap {
-	private static void connect(String ip, int port) {
+	public void connect(String ip, int port) {
 		// 创建客户端NIO线程组
 		NioEventLoopGroup eventLoopGroup = new NioEventLoopGroup();
 
@@ -48,24 +45,36 @@ public class ClientBootstrap {
 		});
 
 		// 让客户端和服务端连接
-		ChannelFuture channelFuture = bootstrap.connect(ip, port);
-
-		channelFuture.addListener(new ChannelFutureListener() {
-			@Override
-			public void operationComplete(ChannelFuture future) throws Exception {
-				if (future.isSuccess()) {
-					System.out.println("※※※※※※※※※※※Connect susccess");
-				} else {
-					System.out.println("※※※※※※※※※※※Connect failure");
-				}
-
-			}
-		});
+		ChannelFuture channelFuture = bootstrap.connect(ip, port).addListener(new ConnectionListener(this));
+//		channelFuture.addListener(new ChannelFutureListener() {
+//			@Override
+//			public void operationComplete(ChannelFuture future) throws Exception {
+//				if (future.isSuccess()) {
+//					System.out.println("connect Server susccess");
+//					reConnectCount = 0;
+//				} else {
+//					System.out.println("connected Server failure");
+//					future.channel().eventLoop().shutdownGracefully();
+//					System.out.println("reConnect");
+//					final EventLoop loop = future.channel().eventLoop();
+//					loop.schedule(new Runnable() {
+//						@Override
+//						public void run() {
+//							System.out.println("run method");
+//							connect("192.168.0.110", 7777);
+//						}
+//					}, 1L, TimeUnit.SECONDS);
+//					Thread.sleep(80);
+//				}
+//
+//			}
+//		});
 
 	}
 
 	public static void connectServer(String ip, int port) {
 		System.out.println("开始尝试连接");
-		connect(ip, port);
+		new ClientBootstrap().connect(ip, port);
+		
 	}
 }

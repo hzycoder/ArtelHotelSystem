@@ -113,11 +113,13 @@ class ErgodicThread implements Runnable {
 		long time = new Date().getTime();
 		int count = 0;
 		try {
+			System.out.println("是否true:"+WebSocketHandler.ergodicFlag);
 			while (WebSocketHandler.ergodicFlag) {
 				ConcurrentLinkedQueue<JsonStruct> queue = ClientHandler.queue.getStorage();
 				Iterator iter = queue.iterator();
 				switch (type) {
 				case "binding":
+					System.out.println("type:"+type);
 					while (iter.hasNext()) {
 						count++;
 						JsonStruct jsonStruct = (JsonStruct) iter.next();

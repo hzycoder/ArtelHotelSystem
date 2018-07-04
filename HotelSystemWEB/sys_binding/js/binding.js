@@ -177,7 +177,7 @@
 			if(receviedJson["STATUS"] == "CARD_OUT") {
 				console.log("拔卡动作")
 				$("#cardData").find("tr").each(function(index, item) {
-					if($(item).find("td").eq(1).text() == receviedJson["SOLT_ID"]) {
+					if($(item).find("td").eq(1).text() == receviedJson["SLOT_ID"]) {
 						console.log("CARD_OUT_CARD_OUT_CARD_OUT_CARD_OUT_CARD_OUT_");
 						item.remove()
 						return false;
@@ -187,11 +187,11 @@
 			} else {
 				console.log("插卡动作")
 				var flag = 0;
-				console.log(receviedJson["SOLT_ID"])
+				console.log(receviedJson["SLOT_ID"])
 				$("#cardData").find("tr").each(function(index, item) {
 					console.log(item);
-					console.log($(item).find("td").eq(1).text()+"   "+receviedJson["SOLT_ID"])
-					if($(item).find("td").eq(1).text() == receviedJson["SOLT_ID"]) {
+					console.log($(item).find("td").eq(1).text()+"   "+receviedJson["SLOT_ID"])
+					if($(item).find("td").eq(1).text() == receviedJson["SLOT_ID"]) {
 						console.log("已经 插卡");
 						flag = 1;
 						return false;
@@ -201,7 +201,7 @@
 				if (flag == 0) {
 					var receviedListElement = '<tr><td class="cardNumTD">' +
 					receviedJson["PARM"] + '</td><td class="slotIdTD">' +
-					receviedJson["SOLT_ID"] + '</td><td class="timeTD">' +
+					receviedJson["SLOT_ID"] + '</td><td class="timeTD">' +
 					iEvent.switchUnixTime(receviedJson["TIME"]) + '</td></tr>';
 				var $receviedListElement = $(receviedListElement);
 				$("#cardData").append($receviedListElement);

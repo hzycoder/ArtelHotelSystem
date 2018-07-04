@@ -45,32 +45,46 @@ public class Test {
 		// thread.start();
 		// testBeginEnd();
 		// testsqlbuffer();
-		// StringBuffer sb = new StringBuffer();
+		// StringBuffer sb = new StringBuffer();j
 		// sb.append("00000000000000");
 		// testFastjson();
 		// string2Hex();
 		// generateRoomNum();
-		newHotelAndRoomMsg();
+		// newHotelAndRoomMsg();
+		remoteCalc();
+	}
+
+	private static void remoteCalc() {
+		int a = 1;
+		Long result = (long) 0;
+		for (int i = 1; i < 211; i++) {
+			int time = a << 2;
+			System.out.println("第" + i + "次等待时长：" + time);
+			result += time;
+			a++;
+		}
+		System.out.println("总用时："+result/60+"分钟");
+		System.out.println("总用时："+result/3600+"小时");
 	}
 
 	public static void newHotelAndRoomMsg() {
 		Msg transpond = new Msg();
 		NewHotelMsg newHotelMsg = new NewHotelMsg();
 		newHotelMsg.setHOTEL_LIST("H000001");
-//		transpond.setPARM(newHotelMsg);
-//		String str = JSON.toJSONString(transpond, false);
-//		System.out.println(str);
-		
-//		NewRoomMsg newRoomMsg = new NewRoomMsg("H00001","R000010000001");
-//		transpond.setPARM(newRoomMsg);
-//		String str = JSON.toJSONString(transpond);
-//		System.out.println(str);
-		
-		String[] strs = {"R000010000001","R000010000001","R000010000001"};
-		NewBatchRoomMsg newBatchRoomMsg = new NewBatchRoomMsg("H00001",strs);
-		transpond.setPARM(newBatchRoomMsg);
-		String str = JSON.toJSONString(transpond);
-		System.out.println(str);
+		// transpond.setPARM(newHotelMsg);
+		// String str = JSON.toJSONString(transpond, false);
+		// System.out.println(str);
+
+		// NewRoomMsg newRoomMsg = new NewRoomMsg("H00001","R000010000001");
+		// transpond.setPARM(newRoomMsg);
+		// String str = JSON.toJSONString(transpond);
+		// System.out.println(str);
+
+		// String[] strs = {"R000010000001","R000010000001","R000010000001"};
+		// NewBatchRoomMsg newBatchRoomMsg = new NewBatchRoomMsg("H00001",strs);
+		// transpond.setPARM(newBatchRoomMsg);
+		// String str = JSON.toJSONString(transpond);
+		// System.out.println(str);
 	}
 
 	public static void generateRoomNum() {

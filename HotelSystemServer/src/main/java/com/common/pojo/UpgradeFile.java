@@ -14,6 +14,7 @@ public class UpgradeFile implements java.io.Serializable {
 	private Integer fileId;
 	private byte[] fileContent;
 	private Timestamp uploadTime;
+	private String fileName;
 
 	// Constructors
 
@@ -22,15 +23,19 @@ public class UpgradeFile implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public UpgradeFile(byte[] fileContent, Timestamp uploadTime) {
-		this.fileContent = fileContent;
-		this.uploadTime = uploadTime;
-	}
 
 	// Property accessors
 
 	public Integer getFileId() {
 		return this.fileId;
+	}
+
+	public UpgradeFile(Integer fileId, byte[] fileContent, Timestamp uploadTime, String fileName) {
+		super();
+		this.fileId = fileId;
+		this.fileContent = fileContent;
+		this.uploadTime = uploadTime;
+		this.fileName = fileName;
 	}
 
 	public void setFileId(Integer fileId) {
@@ -53,12 +58,18 @@ public class UpgradeFile implements java.io.Serializable {
 		this.uploadTime = uploadTime;
 	}
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 	@Override
 	public String toString() {
 		return "UpgradeFile [fileId=" + fileId + ", fileContent=" + Arrays.toString(fileContent) + ", uploadTime="
-				+ uploadTime + "]";
+				+ uploadTime + ", fileName=" + fileName + "]";
 	}
-	
-	
 
 }

@@ -43,6 +43,8 @@
 	<mapping resource="com/common/pojo/hbm/SoltList.hbm.xml" />
 	<mapping resource="com/common/pojo/hbm/TokenIdList.hbm.xml" />
 	<mapping resource="com/common/pojo/hbm/UserHotelList.hbm.xml" />
+	<mapping resource="com/common/pojo/hbm/SlotStatus.hbm.xml"/>
+	<mapping resource="com/common/pojo/hbm/SlotStatus2.hbm.xml"/>
 </session-factory>
 
 </hibernate-configuration>

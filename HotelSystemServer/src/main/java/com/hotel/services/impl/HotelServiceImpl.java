@@ -142,7 +142,7 @@ public class HotelServiceImpl implements HotelService {
 		hotelDao.addHotel(hotelList);
 		//新增酒店发送消息
 		Channel channel = ChannelSession.getChannelById("channel");
-		String json = JSON.toJSONString(new Msg("TRANSPOND",new NewHotelMsg(hotelList.getHotelId())));
+		String json = JSON.toJSONString(new Msg("TRANSPOND",JSON.toJSONString(new NewHotelMsg(hotelList.getHotelId()))));
 		System.out.println("tcp发送消息"+json);
 		FrameStruct frameStruct = new FrameStruct(json.length(), json.getBytes());
 		ChannelFuture channelFuture = channel.writeAndFlush(frameStruct);
@@ -216,7 +216,7 @@ public class HotelServiceImpl implements HotelService {
 		roomList.setRoomNum(roomDto.getRoomNum());
 		hotelDao.addRoom(roomList);
 		Channel channel = ChannelSession.getChannelById("channel");
-		String json = JSON.toJSONString(new Msg("TRANSPOND",new NewRoomMsg(roomDto.getHotelNum(),roomDto.getRoomId())));
+		String json = JSON.toJSONString(new Msg("TRANSPOND",JSON.toJSONString(new NewRoomMsg(roomDto.getHotelNum(),roomDto.getRoomId()))));
 		System.out.println("tcp发送消息"+json);
 		FrameStruct frameStruct = new FrameStruct(json.length(), json.getBytes());
 		ChannelFuture channelFuture = channel.writeAndFlush(frameStruct);
@@ -226,7 +226,6 @@ public class HotelServiceImpl implements HotelService {
 				throw new BaseException("newRoomMsg send failure");
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -247,7 +246,7 @@ public class HotelServiceImpl implements HotelService {
 			hotelDao.addRoom(roomList);
 		}
 		Channel channel = ChannelSession.getChannelById("channel");
-		String json = JSON.toJSONString(new Msg("TRANSPOND",new NewBatchRoomMsg(roomDto.getHotelNum(),roomStr)));
+		String json = JSON.toJSONString(new Msg("TRANSPOND",JSON.toJSONString(new NewBatchRoomMsg(roomDto.getHotelNum(),roomStr))));
 		System.out.println("tcp发送消息"+json);
 		FrameStruct frameStruct = new FrameStruct(json.length(), json.getBytes());
 		ChannelFuture channelFuture = channel.writeAndFlush(frameStruct);
@@ -257,7 +256,6 @@ public class HotelServiceImpl implements HotelService {
 				throw new BaseException("newBatchRoomMsg send failure");
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

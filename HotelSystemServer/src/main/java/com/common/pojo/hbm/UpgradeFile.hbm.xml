@@ -16,5 +16,8 @@
         <property name="uploadTime" type="java.sql.Timestamp">
             <column name="uploadTime" length="23" />
         </property>
+        <property name="fileName" type="java.lang.String">
+            <column name="fileName" length="100" />
+        </property>
     </class>
 </hibernate-mapping>
