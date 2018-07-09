@@ -133,6 +133,8 @@
 		//发送监听的卡号
 		//连接websocket
 		listening: function(cardNum) {
+			cardNum = cardNum.toUpperCase();
+			$("#cardNum").val(cardNum);
 			if($("#hotelSelect").val() == "") {
 				layer.msg("请先选择酒店", {
 					icon: 2,
@@ -156,6 +158,7 @@
 				console.log("websocket连接上");
 				$("#listenBtn").hide();
 				$("#stopListenBtn").show();
+				$("#cardNum").attr("disabled","disabled");
 				ws.send("我是客户端")
 			};
 			ws.onmessage = function(evnt) {
@@ -169,28 +172,29 @@
 			ws.onclose = function(evnt) {
 				$("#listenBtn").show();
 				$("#stopListenBtn").hide();
+				$("#cardNum").removeAttr("disabled","disable");
 				console.log("websocket关闭");
 			}
 		},
 		generatedReceviedList: function(receviedData) {
 			var receviedJson = JSON.parse(receviedData);
 			if(receviedJson["STATUS"] == "CARD_OUT") {
-				console.log("拔卡动作")
+//				console.log("拔卡动作")
 				$("#cardData").find("tr").each(function(index, item) {
 					if($(item).find("td").eq(1).text() == receviedJson["SLOT_ID"]) {
-						console.log("CARD_OUT_CARD_OUT_CARD_OUT_CARD_OUT_CARD_OUT_");
+//						console.log("CARD_OUT_CARD_OUT_CARD_OUT_CARD_OUT_CARD_OUT_");
 						item.remove()
 						return false;
 					}
-					console.log(item.childNodes[3].textContent)
+//					console.log(item.childNodes[3].textContent)
 				});
 			} else {
-				console.log("插卡动作")
+//				console.log("插卡动作")
 				var flag = 0;
-				console.log(receviedJson["SLOT_ID"])
+//				console.log(receviedJson["SLOT_ID"])
 				$("#cardData").find("tr").each(function(index, item) {
-					console.log(item);
-					console.log($(item).find("td").eq(1).text()+"   "+receviedJson["SLOT_ID"])
+//					console.log(item);
+//					console.log($(item).find("td").eq(1).text()+"   "+receviedJson["SLOT_ID"])
 					if($(item).find("td").eq(1).text() == receviedJson["SLOT_ID"]) {
 						console.log("已经 插卡");
 						flag = 1;
@@ -208,8 +212,6 @@
 				$('#receviedTableBody').scrollTop($('#receviedTableBody')[0].scrollHeight);
 				}
 			}
-			//			console.log($("#cardData").find("#slotIdTD")).html());
-			//			$("#cardData").find("#slotIdTD")).html
 		},
 		checkBinding:function(){
 			console.log("房间号" + unbindedRoom + "======设备号：" + unbindedSolt+"=====酒店ID："+curHotelId);

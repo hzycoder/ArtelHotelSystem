@@ -28,6 +28,19 @@
 	<context:component-scan base-package="com.common.pojo"></context:component-scan>
 	<context:component-scan base-package="com.webSocket"></context:component-scan>
 	<context:component-scan base-package="com.common.load"></context:component-scan>
+	<!-- 全局变量 -->
+	<!-- <context:component-scan base-package="com.common.constant"></context:component-scan>
+	<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location">
+			<list>
+				<value>/WEB-INF/config.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="propertiesConfiguration" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		<property name="properties" ref="configProperties"/>
+	</bean> -->
+	
 	<!-- <bean id="websocket" class="com.webSocket.ChatWebSocketHandler" /> -->
 
 	<!-- <websocket:handlers>

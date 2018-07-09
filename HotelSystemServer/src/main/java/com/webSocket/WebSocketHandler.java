@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -14,9 +13,10 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tcp.netty.ClientHandler;
+import com.common.base.BaseException;
+import com.hotel.controller.HotelController;
+import com.tcp.QueueSession;
 import com.tcp.newStruct.JsonStruct;
-import com.test.TestQueue;
 
 public class WebSocketHandler extends TextWebSocketHandler {
 	private static final Logger logger = Logger.getLogger(WebSocketHandler.class);
@@ -34,7 +34,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			WebSocketHandlerAgentIdSession.put(cardNum, session);
 			System.out.println("卡号id:" + cardNum);
 			ergodicFlag = true;
-			ErgodicThread ergodicThread = new ErgodicThread(cardNum, "PARM", "binding");// 启动遍历线程
+			ErgodicThread ergodicThread = new ErgodicThread(cardNum, "PARM", "binding",QueueSession.getQueue());// 启动遍历线程
 			Thread thread2 = new Thread(ergodicThread, "遍历进程");
 			thread2.start();
 		} else if (null != hotelId) { // 房态查询
@@ -106,46 +106,70 @@ public class WebSocketHandler extends TextWebSocketHandler {
 }
 
 class ErgodicThread implements Runnable {
-
+	String key;
+	String name;
+	String type;
+	ConcurrentLinkedQueue<JsonStruct> queue;
+	private static final Logger logger = Logger.getLogger(ErgodicThread.class);
+	
 	@Override
 	public void run() {
 		System.out.println("key:" + key + "name:" + name + " type:" + type);
 		long time = new Date().getTime();
 		int count = 0;
 		try {
-			System.out.println("是否true:"+WebSocketHandler.ergodicFlag);
 			while (WebSocketHandler.ergodicFlag) {
-				ConcurrentLinkedQueue<JsonStruct> queue = ClientHandler.queue.getStorage();
+				Thread.sleep(500);
 				Iterator iter = queue.iterator();
+				System.out.println("======================");
+				logger.info("======================");
+				logger.info("遍历进程");
+//				System.out.println("当前消息队列数据:"+queue.size());
+//				System.out.println("对比hashcode：");
+//				System.out.println("当前队列地址："+queue.hashCode());
+//				System.out.println("系统初始化队列地址"+QueueSession.getHashCode());
+//				if (QueueSession.getHashCode() != queue.hashCode()) {
+//					throw new BaseException("消息队列出错！！！！");
+//				}
+//				QueueSession.getHashCode();
+				logger.info("======================");
 				switch (type) {
 				case "binding":
-					System.out.println("type:"+type);
-					while (iter.hasNext()) {
-						count++;
-						JsonStruct jsonStruct = (JsonStruct) iter.next();
-						JSONObject jsonObject = jsonStruct.getContent();
-						String jsonContent = jsonObject.toJSONString();
-						System.out.println("遍历CARD_IN消息");
-						if (key.equals(jsonObject.getString("PARM"))) {
-							// System.out.println("##找到一个叛徒:" + jsonContent);
-							WebSocketSession session = WebSocketHandlerAgentIdSession.get(key);
-							ClientHandler.queue.getStorage().remove(jsonStruct);
-							session.sendMessage(new TextMessage(jsonContent));
-							continue;
+//					while (iter.hasNext()) {
+					while (!queue.isEmpty()&&WebSocketHandler.ergodicFlag) {
+						logger.info("遍历消息，卡号："+key);
+						Thread.sleep(1000);
+						for(JsonStruct jsonStruct : queue){
+//							count++;
+//							JsonStruct jsonStruct = (JsonStruct) iter.next();
+							JSONObject jsonObject = jsonStruct.getContent();
+							String jsonContent = jsonObject.toJSONString();
+							if (key.equals(jsonObject.getString("PARM"))) {
+								// System.out.println("##找到一个叛徒:" + jsonContent);
+								WebSocketSession session = WebSocketHandlerAgentIdSession.get(key);
+								QueueSession.getQueue().remove(jsonStruct);
+								synchronized(session){
+									if (session.isOpen()) {
+										session.sendMessage(new TextMessage(jsonContent));
+									}
+								}
+								continue;
+							}
 						}
 					}
 					break;
 				case "roomStatus":
 					while (iter.hasNext()) {
+						Thread.sleep(500);
 						count++;
 						JsonStruct jsonStruct = (JsonStruct) iter.next();
 						JSONObject jsonObject = jsonStruct.getContent();
 						String jsonContent = jsonObject.toJSONString();
-						System.out.println("遍历房态消息");
+						logger.info("遍历房态消息");
 						if (key.equals(jsonObject.getString(name))) {
 							// System.out.println("##找到一个叛徒:" + jsonContent);
 							WebSocketSession session = WebSocketHandlerAgentIdSession.get(key);
-							ClientHandler.queue.getStorage().remove(jsonStruct);
+							QueueSession.getQueue().remove(jsonStruct);
 							session.sendMessage(new TextMessage(jsonContent));
 							continue;
 						}
@@ -157,7 +181,6 @@ class ErgodicThread implements Runnable {
 				// System.out.println("--遍历结束，一共遍历个数：" +
 				// ClientHandler.queueu.getStorage().size() + "休息3秒--");
 				// System.out.println("当前时间" + (new Date().getTime() - time));
-				Thread.sleep(3000);
 				// if (new Date().getTime() - time > 10000) {
 				// System.out.println("✘✘✘✘✘✘✘✘用户停止了监听");
 				// TestQueue.msgQueue = new MsgQueue<JsonMsg>();
@@ -166,17 +189,11 @@ class ErgodicThread implements Runnable {
 				// }
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-	String key;
-	String name;
-	String type;
 
 	public ErgodicThread() {
 		super();
@@ -188,6 +205,14 @@ class ErgodicThread implements Runnable {
 		this.key = key;
 		this.name = name;
 		this.type = type;
+	}
+
+	public ErgodicThread(String key, String name, String type, ConcurrentLinkedQueue<JsonStruct> queue) {
+		super();
+		this.key = key;
+		this.name = name;
+		this.type = type;
+		this.queue = queue;
 	}
 
 	public String getKey() {

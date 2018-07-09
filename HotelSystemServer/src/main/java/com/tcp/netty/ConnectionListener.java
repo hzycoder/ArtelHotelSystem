@@ -26,7 +26,7 @@ public class ConnectionListener implements ChannelFutureListener {
 
 				@Override
 				public void run() {
-					clientBootstrap.connect("192.168.0.110", 7777);
+					clientBootstrap.connect("47.106.99.219", 8007);
 				}
 			}, reConnectCount << 2, TimeUnit.SECONDS);
 		} else {

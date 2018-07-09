@@ -17,7 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.common.util.CharacterUtils;
 import com.mchange.v1.lang.GentleThread;
-import com.tcp.MsgQueue;
+import com.tcp.QueueSession;
 import com.tcp.dto.NewBatchRoomMsg;
 import com.tcp.dto.NewHotelMsg;
 import com.tcp.dto.NewRoomMsg;
