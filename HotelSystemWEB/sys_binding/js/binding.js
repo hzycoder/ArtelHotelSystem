@@ -159,7 +159,7 @@
 				$("#listenBtn").hide();
 				$("#stopListenBtn").show();
 				$("#cardNum").attr("disabled","disabled");
-				ws.send("我是客户端")
+//				ws.send("我是客户端")
 			};
 			ws.onmessage = function(evnt) {
 				console.log("[接收来自服务端的数据]:" + event.data)

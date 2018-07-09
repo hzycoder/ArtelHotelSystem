@@ -11,6 +11,7 @@ import com.tcp.ChannelSession;
 import com.tcp.QueueSession;
 import com.tcp.frameStruct.FrameStruct;
 import com.tcp.newStruct.JsonStruct;
+import com.tcp.thread.DelThread;
 
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -108,47 +109,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		super.exceptionCaught(ctx, cause);
 		cause.printStackTrace();
 		ctx.close();
-	}
-
-}
-
-/**
- * @author huangzhenyang 删除线程
- */
-class DelThread implements Runnable {
-
-	@Override
-	public void run() {
-		ConcurrentLinkedQueue<JsonStruct> queue = QueueSession.getQueue();
-		try {
-			long time = new Date().getTime();
-			JsonStruct jsonStruct = queue.peek();
-			if (jsonStruct != null) {
-				JSONObject json = jsonStruct.getContent();
-				long l = new Date().getTime();
-//				json.containsKey("TIME");
-				if (json.getLong("TIME") == null) {
-					queue.poll();
-//					System.out.println("消息超时，1条消息被移除队列，当前队列数据量为：" + queue.size());
-				} else if (time - json.getLong("TIME") > 1000 * 10) {
-					queue.poll();
-//					System.out.println("消息超时，1条消息被移除队列，当前队列数据量为：" + queue.size());
-				}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// Iterator iter = queue.iterator();
-		// while (iter.hasNext()) {
-		// JsonStruct jsonStruct = (JsonStruct) iter.next();
-		// JSONObject json = jsonStruct.getContent();
-		// String jsonContent = json.toJSONString();
-		// if (time - json.getLong("sendTime") > 1000*60) {
-		//// System.out.println("这个数据包已超时，将被删除：" + jsonContent);
-		// continue;
-		// }
-		// }
 	}
 
 }
